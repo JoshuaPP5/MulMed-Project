@@ -37,6 +37,7 @@
 		17: 'control',  // control
 		18: 'control',  // alt
 		27: 'escape',   // escape
+		8: 'escape',   // backspace
 		32: 'ok',       // space
 		33: 'pageup',   // pageup
 		34: 'pagedown', // pagedown
