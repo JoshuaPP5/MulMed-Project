@@ -92,6 +92,198 @@ VisuMZ.MessageCore.version = 1.39;
  * ---
  *
  * ============================================================================
+ * Text Language Information
+ * ============================================================================
+ *
+ * As of Message Core version 1.46, Text Language has been added. 
+ * 
+ * The "Text Language" feature allows your players to switch between different
+ * languages for your game to allow people from around the globe to enjoy what
+ * story you have to tell.
+ * 
+ * Disclaimers: This is not an automatic translation tool. Translations made
+ * through the "Text Language" feature of the VisuStella MZ Message Core
+ * will require manual input by the game developer.
+ * 
+ * As of Message Core version 1.53, we've decided to add support for TSV.
+ * 
+ * This is because we have done our research and decided that CSV's are too
+ * restricted to use due to their default nature of wanting to use commas as
+ * separators. Thus, we've decided to switch to TSV where the default separator
+ * is a tab space, something that is almost never used in RPG Maker text.
+ *
+ * ---
+ * 
+ * === How to Enable Switching ===
+ * 
+ * Text Language is NOT enabled by default. Here's what you have to do:
+ * 
+ * #1. Open up the Message Core's Plugin Parameters
+ * #2. Plugin Parameters > Text Language Settings > Enable Switching?
+ * #3. Change the "Enable Switching?" parameter setting to "true".
+ * #4. Adjust any other settings as needed.
+ * #5. Save the Plugin Parameter changes.
+ * #6. Save your game.
+ * 
+ * Now, it's time to get the CSV/TSV file that will contain all of the text
+ * used to translate your game's script.
+ * 
+ * #1. Play test your game. Make sure Play test mode is NOT disabled.
+ * #2. A popup will appear asking to create a language CSV/TSV file.
+ * #3. Click "OK" and let the plugin do its thing.
+ * #4. The project's /data/ folder will appear with Language.csv/tsv made.
+ * #5. The plugin will then ask you to restart your game.
+ * 
+ * '''IMPORTANT!''' The separator used for the CSV file must be a semicolon (;)
+ * and not a comma (,) as to reduce the amount of punctuation conflicts. Keep
+ * this in mind as most CSV editors will default to comma (,) instead of the
+ * semicolon (;) for their separator.
+ * 
+ * ---
+ * 
+ * === How to Edit the Language CSV/TSV ===
+ * 
+ * The Language CSV/TSV is structured as a normal CSV/TSV file would be, which
+ * also means it can be modified in programs like Microsoft Excel or Google
+ * Sheets. We recommend using either of those programs to modify the text.
+ * 
+ * We do not recommend modifying the CSV/TSV file in programs like notepad
+ * directly due to the way certain things like commas (,) and tabs are handled
+ * and how easy it is to be error-prone.
+ * 
+ * The table will appear something like this at first:
+ * 
+ *     Key        English    Chinese    Japanese     Korean
+ *     Greeting   Hello      你好       こんにちは    안녕하세요
+ *     Farewell   Good-bye   再见       さようなら    안녕히
+ *     Wow        Wow        哇         ワオ          와우
+ * 
+ * The "Key" column refers to the reference key used to determine which lines
+ * will be inserted into the text. The columns with the languages will utilize
+ * the respective phrases for that language.
+ * 
+ * You can remove columns containing languages that you aren't planning to
+ * translate for your game.
+ * 
+ * ---
+ * 
+ * === Things to Keep in Mind ===
+ * 
+ * When adding text to the CSV/TSV file via the spreadsheet editor (Excel or
+ * Google Sheets), there's a few things to keep in mind.
+ * 
+ * ---
+ * 
+ * ==== How to Load the CSV/TSV in Google Sheets ====
+ * 
+ * If you are using Google Sheets and wish to edit the CSV/TSV without it
+ * converting all the separators into commas, here's what you do:
+ * 
+ * #1. Go to "https://sheets.google.com"
+ * #2. Create a "Blank spreadsheet"
+ * #3. File > Import > Upload > Select the CSV/TSV file that was created in
+ *     your game project's /data/ folder. You may need to select "All Files"
+ *     for file type if uploading a TSV.
+ * #4. For "Separator Type", if you are using CSV, change it to "Custom" and
+ *     insert the Semicolon ";". Otherwise, if you are using TSV, select "tab"
+ *     as your separator type.
+ * #5. Uncheck "Convert text to numbers, dates, and formulas"
+ * 
+ * ==== How to Load the CSV/TSV in VS Code ===
+ * 
+ * #1. Go to "https://code.visualstudio.com/"
+ * #2. Download and install it
+ * #3. Open up VS Code and go to View > Extensions
+ * #4. Search for an extension called "Edit CSV"
+ * #5. Load the CSV/TSV file into VS Code and view with the CSV Editor
+ * #6. Click the button that says "Edit CSV" in the upper right
+ * 
+ * ==== Line Breaks ====
+ * 
+ * When you want to insert line breaks into the translated phrases, use the
+ * <br> text code. This is best used for text that is to be transferred into
+ * the message window or help window.
+ * 
+ * ==== Text Codes ====
+ * 
+ * Text codes like \C[2] can be inserted normally. However, they only work in
+ * windows that support text codes, such as the message window or help window.
+ * Otherwise, the text codes will not transfer over properly.
+ * 
+ * ==== Semicolons (CSV Only) ====
+ * 
+ * Due to the nature of the CSV file, we used the semicolon (;) as the
+ * separator. As such, semicolons should not be used in the text entries.
+ * Though some sentences will work with the semicolon, not all of them will. If
+ * you do want to use a semicolon, use the text code <semicolon> instead.
+ * 
+ *   Example:
+ * 
+ *   "The pancakes were delicious<semicolon> they were fluffy and sweet."
+ * 
+ * Other variations of the semicolon text code are <semi> and <semi-colon>.
+ * The <semicolon> text code and variants only work with the Language CSV and
+ * are ignored otherwise when typed in a regular message box entry.
+ * 
+ * ---
+ * 
+ * ==== Macros and Language Switches ====
+ * 
+ * For those using both text macros and text language switches, macros will be
+ * converted to text before language switches as it allows for better text
+ * transitions that way.
+ * 
+ * ---
+ * 
+ * === How to Use the Reference Keys ===
+ * 
+ * Remember the "Key" column and the reference keys? Those are used to
+ * determine which lines will be inserted into the text for the message window
+ * and just about any other window. However, there's a specific way these keys
+ * must be used in order for them to work.
+ * 
+ * The "text code" format works like this. Use any of the following:
+ * 
+ *   \tl{keyName}
+ *   \translate{keyName}
+ *   \loc{keyName}
+ *   \locale{keyName}
+ *   \localize{keyName}
+ * 
+ * or for those coming from different translation plugins but want to switch
+ * over to the VisuStella MZ Message Core's translation system:
+ * 
+ *   ${keyName}
+ * 
+ * For example, to use one of the default keys made with the Language CSV/TSV:
+ * 
+ *   \tl{Greeting}
+ * 
+ * This will yield "Hello" in English, "你好" in Chinese, "こんにちは" in
+ * Japanese, and "안녕하세요" in Korean.
+ * 
+ * Key names are not case sensitive and any trailing spaces will be removed
+ * from them in order to make sure the CSV/TSV table is stable to reference any
+ * translated text from.
+ * 
+ * You can insert these language "text codes" into item names, skill names,
+ * etc. as well as system entries like for Attack, Defense, etc.
+ * 
+ * ---
+ * 
+ * === Naming Weapon Types, Armor Types, Equip Types, Item Categories ===
+ * 
+ * You might have noticed that if you've decided to use \tl{keyName} for weapon
+ * or other database types, other parts of the game will error out. Don't
+ * worry, for these, you don't have to change the currently used database name.
+ * Go straight to the CSV/TSV and insert in a new key for that particular
+ * database name. For example, the equip type "Accessory" will use "Accessory"
+ * as the automatic key to look for a translated phrase. If there isn't any in
+ * the CSV/TSV file, then the default database text entry will be used.
+ * 
+ * ---
+ *
+ * ============================================================================
  * Available Text Codes
  * ============================================================================
  *
@@ -157,14 +349,20 @@ VisuMZ.MessageCore.version = 1.39;
  * <i>                  Makes subsequent text italic.
  * </i>                 Removes italic from subsequent text.
  * 
- * <left>               Makes subsequent text left-aligned.
+ * <left>               Makes subsequent text left-aligned. *Note1*
  * </left>              Removes left-alignment for subsequent text.
- * <center>             Makes subsequent text center-aligned.
+ * <center>             Makes subsequent text center-aligned. *Note1*
  * </center>            Removes center-alignment for subsequent text.
- * <right>              Makes subsequent text right-aligned.
+ * <right>              Makes subsequent text right-aligned. *Note1*
  * </right>             Removes right-alignment for subsequent text.
  *
- * Note1: Use at line-start.
+ * Note1: Use at line-start. Does not work with Word Wrap.
+ *
+ * ---
+ * 
+ * ------------------   -------------------------------------------------------
+ * Text Code            Effect (Global)
+ * ------------------   -------------------------------------------------------
  *
  * <ColorLock>          Text codes can't change text color for subsequent text.
  * </ColorLock>         Removes Color Lock property.
@@ -175,10 +373,90 @@ VisuMZ.MessageCore.version = 1.39;
  * <line break>         Adds a line break. Requires Word Wrap enabled.
  *
  * Note2: Some windows cannot use Word Wrap such as the Choice Window.
+ * Word Wrap also cannot be used together with <left>, <center>, or <right> and
+ * will disable itself if text alignment text codes are detected.
+ *
+ * ---
+ * 
+ * ------------------   -------------------------------------------------------
+ * Text Code            Effect (Global)
+ * ------------------   -------------------------------------------------------
  *
  * \picture<x>          Draws picture x (filename) at current text position.
  * \CenterPicture<x>    Draws picture x (filename) centered at the window.
+ * 
+ * While these text codes are available globally, they are best suited for use
+ * in the message window or any other window that does not change its contents.
+ * The reason being is because the picture drawn is drawn into the background
+ * of the window.
+ * 
+ * Therefore, we do not recommend using this in windows that change contents
+ * often like Help Windows or Quest Descriptions. Instead, we recommend using
+ * icons instead.
+ * 
+ * As of the version 1.53 update, the Help Window now supports both of these
+ * text codes. However, we still recommend using icons over using pictures as
+ * there will be loading delays.
  *
+ * ---
+ * 
+ * ------------------   -------------------------------------------------------
+ * Text Code            Effect (Map Name)
+ * ------------------   -------------------------------------------------------
+ * <left>               Makes map name align to left side of screen.
+ * <center>             Makes map name align to horizontally center of screen.
+ * <right>              Makes map name align to right side of screen.
+ * 
+ * <top>                Makes map name align to top of screen.
+ * <middle>             Makes map name align to vertically middle of screen.
+ * <bottom>             Makes map name align to bottom of screen.
+ * 
+ * <X: +n>              Adjusts the horizontal position of map name by n.
+ * <X: -n>              Adjusts the horizontal position of map name by n.
+ * 
+ * <Y: +n>              Adjusts the vertical position of map name by n.
+ * <Y: -n>              Adjusts the vertical position of map name by n.
+ * 
+ * Note: All of these text codes require VisuMZ_0_CoreEngine installed and its
+ * "Map Name Text Code" plugin parameter enabled.
+ * 
+ * ---
+ * 
+ * ------------------   -------------------------------------------------------
+ * Text Code            Effect (Global)
+ * ------------------   -------------------------------------------------------
+ * <Caps>               Makes all text after this capitalized.
+ *                      Turns off other auto-text case modes.
+ *                      ie: "hello world" becomes "HELLO WORLD"
+ * </Caps>              Turns off auto text-casing effects.
+ * 
+ * <Upper>              Makes the first letter of any word after a space to be
+ *                      capitalized. Other letters are left alone.
+ *                      Turns off other auto-text case modes.
+ *                      ie. "old mcDonald" becomes "Old McDonald"
+ * </Upper>             Turns off auto text-casing effects.
+ * 
+ * <Lower>              Makes all text after this lowercase.
+ *                      Turns off other auto-text case modes.
+ *                      ie: "THE QUICK BROWN FOX" becomes "the quick brown fox"
+ * </Lower>             Turns off auto text-casing effects.
+ * 
+ * <Alt>                Makes all text after this alternate between uppercase
+ *                      and lowercase. Turns off other auto-text case modes.
+ *                      ie: "Hello" becomes "HeLlO"
+ * </Alt>               Turns off auto text-casing effects.
+ * 
+ * <Chaos>              Makes all text after this randomize between uppercase
+ *                      and lowercase. Turns off other auto-text case modes.
+ *                      ie: "Wassup" becomes "waSsUP" or "WasSuP"
+ * </Chaos>             Turns off auto text-casing effects.
+ * 
+ * **Clarity:** In case you're wondering, the text codes </Caps>, </Upper>,
+ * </Lower>, </Alt>, and </Chaos> all do the same thing and can be used
+ * interchangeably with each other. For example, you can do this:
+ * <Caps>hello world</Lower> and it would still accomplish the same effect, but
+ * you won't do that because you're not a monster of a developer.
+ * 
  * ---
  *
  * ------------------   -------------------------------------------------------
@@ -265,6 +543,109 @@ VisuMZ.MessageCore.version = 1.39;
  *                                Applies to whole choice window.
  * <Choice Indent: x>             Sets the indent to x value. Applies to
  *                                current choice selection only.
+ * 
+ * <BgColor: x>                   Requires VisuMZ_0_CoreEngine! Sets background
+ *                                color of this choice to 'x' text color. This
+ *                                will be combined with a fading
+ * <BgColor: x,y>                 Requires VisuMZ_0_CoreEngine! Sets background
+ *                                color of this choice to 'x' to 'y' gradient
+ *                                text color.
+ * <BgColor: #rrggbb>             Requires VisuMZ_0_CoreEngine! Sets background
+ *                                color of this choice to '#rrggbb' color using
+ *                                hex color values.
+ * <BgColor: #rrggbb, #rrggbb>    Requires VisuMZ_0_CoreEngine! Sets background
+ *                                color of this choice to '#rrggbb' gradient
+ *                                using hex color values.
+ * 
+ * <Help> text </Help>            Makes a help window appear and have it show
+ *                                'text' in its contents. The help window will
+ *                                disappear if no text is displayed.
+ * 
+ * <Shuffle>                      Shuffles the order of all choices. Any cancel
+ *                                shortcuts other than "Branch" will be undone.
+ * <Shuffle: x>                   Shuffles the order of all choices and only
+ *                                x number of them will appear. Any cancel
+ *                                shortcuts other than "Branch" will be undone.
+ *                                Hidden choices do not count towards x number.
+ *
+ * ---
+ *
+ * -----------------------------  ---------------------------------------------
+ * Text Code                      Background Effects (Choice Window Only)
+ * -----------------------------  ---------------------------------------------
+ * 
+ * <BgImg: filename>              Creates a background image from img/pictures/
+ *                                stretched across the choice rectangle.
+ * <BgImg LowerLeft: filename>    Creates a background image from img/pictures/
+ *                                scaled to the lower left of choice rect.
+ * <BgImg LowerCenter: filename>  Creates a background image from img/pictures/
+ *                                scaled to the lower center of choice rect.
+ * <BgImg LowerRight: filename>   Creates a background image from img/pictures/
+ *                                scaled to the lower right of choice rect.
+ * <BgImg MidLeft: filename>      Creates a background image from img/pictures/
+ *                                scaled to the middle left of choice rect.
+ * <BgImg Center: filename>       Creates a background image from img/pictures/
+ *                                scaled to the center of choice rect.
+ * <BgImg MidRight: filename>     Creates a background image from img/pictures/
+ *                                scaled to the middle right of choice rect.
+ * <BgImg UpperLeft: filename>    Creates a background image from img/pictures/
+ *                                scaled to the upper left of choice rect.
+ * <BgImg UpperCenter: filename>  Creates a background image from img/pictures/
+ *                                scaled to the upper center of choice rect.
+ * <BgImg UpperRight: filename>   Creates a background image from img/pictures/
+ *                                scaled to the upper right of choice rect.
+ * 
+ * *Note:* For the <BgImg: filename> text code variants, even if the background
+ * image is smaller than the choice contents, it will overscale to match its
+ * choice rectangle dimensions.
+ * 
+ * *Note:* Using a background image will clear the dimmed background rectangle
+ * that is normally behind each selectable choice.
+ * 
+ * *Note:* Each choice can only have one background image but can use a
+ * combination of one background and one foreground image.
+ * 
+ * *Note:* Images in the background will appear behind the select cursor.
+ *
+ * ---
+ *
+ * -----------------------------  ---------------------------------------------
+ * Text Code                      Foreground Effects (Choice Window Only)
+ * -----------------------------  ---------------------------------------------
+ * 
+ * <FgImg: filename>              Creates a foreground image from img/pictures/
+ *                                stretched across the choice rectangle.
+ * <FgImg LowerLeft: filename>    Creates a foreground image from img/pictures/
+ *                                scaled to the lower left of choice rect.
+ * <FgImg LowerCenter: filename>  Creates a foreground image from img/pictures/
+ *                                scaled to the lower center of choice rect.
+ * <FgImg LowerRight: filename>   Creates a foreground image from img/pictures/
+ *                                scaled to the lower right of choice rect.
+ * <FgImg MidLeft: filename>      Creates a foreground image from img/pictures/
+ *                                scaled to the middle left of choice rect.
+ * <FgImg Center: filename>       Creates a foreground image from img/pictures/
+ *                                scaled to the center of choice rect.
+ * <FgImg MidRight: filename>     Creates a foreground image from img/pictures/
+ *                                scaled to the middle right of choice rect.
+ * <FgImg UpperLeft: filename>    Creates a foreground image from img/pictures/
+ *                                scaled to the upper left of choice rect.
+ * <FgImg UpperCenter: filename>  Creates a foreground image from img/pictures/
+ *                                scaled to the upper center of choice rect.
+ * <FgImg UpperRight: filename>   Creates a foreground image from img/pictures/
+ *                                scaled to the upper right of choice rect.
+ * 
+ * *Note:* For the <FgImg: filename> text code variants, unlike the background
+ * variant, the foreground image will not overscale past its original size.
+ * Instead, it will maintain its original size or be smaller, so long as it can
+ * be scaled to exist within the choice rectangle unless it is intended to be
+ * stretched by using the <FgImg: filename> variant.
+ * 
+ * *Note:* Text is then written on top of the foreground image.
+ * 
+ * *Note:* Each choice can only have one foreground image but can use a
+ * combination of one background and one foreground image.
+ * 
+ * *Note:* Images in the foreground will appear behind the select cursor.
  *
  * ---
  *
@@ -322,6 +703,19 @@ VisuMZ.MessageCore.version = 1.39;
  * <Menu Button>        Display's VisuMZ_0_CoreEngine's button assist text.
  * <Page Up Button>     Display's VisuMZ_0_CoreEngine's button assist text.
  * <Page Down Button>   Display's VisuMZ_0_CoreEngine's button assist text.
+ * 
+ * ---
+ * 
+ * === Random Text Pool ===
+ * 
+ * <RNG> text1 | text2 | text3 </RNG>
+ * 
+ * Using the above text code format in a Show Message entry, you can get a
+ * random result out of the various inserted texts. Use "|" (without quotes) as
+ * a separator between text entries. You can have unlimited entries. The result
+ * will have any excess white space trimmed.
+ * 
+ * This text code cannot be inserted into a macro and parsed properly.
  * 
  * ---
  *
@@ -407,6 +801,10 @@ VisuMZ.MessageCore.version = 1.39;
  *
  * \TextDelay[x]        Sets delay in frames between characters to x frames.
  * 
+ * Note: These text codes only work with the Message Window. Keep in mind that
+ *   even if some windows might look like the Message Window, it may not
+ *   necessarily be one.
+ * 
  * ---
  * 
  * As these text codes can be added, removed, and/or altered, their functions
@@ -462,13 +860,27 @@ VisuMZ.MessageCore.version = 1.39;
  * === Choice Plugin Commands ===
  * 
  * ---
+ * 
+ * Choices: Distance
+ * - Change the distance from choice window to the message window.
+ * 
+ *   Distance:
+ *   - Change distance between the choice and message windows.
+ *   - Default distance is 0.
+ *   - Use negative to center align with remaining space.
+ * 
+ * ---
  *
- * Choice: Properties
- *   Change the properties found in the Show Choices event command.
+ * Choices: Properties
+ * - Change the properties found in the Show Choices event command.
  *
  *   Line Height:
  *   - Change the line height for the show choices.
  *   - Leave at 0 to keep this unchanged.
+ * 
+ *   Minimum Choice Width:
+ *   - What is the minimum width size for each choice?
+ *   - 96 is the default width.
  *
  *   Max Rows:
  *   - Maximum number of choice rows to be displayed.
@@ -481,6 +893,66 @@ VisuMZ.MessageCore.version = 1.39;
  *   Text Alignment:
  *   - Text alignment for Show Choice window.
  *
+ * ---
+ * 
+ * === Select Plugin Commands ===
+ * 
+ * ---
+ * 
+ * Select: Weapon
+ * - Opens the Event Select Item Window to let the player pick a weapon to
+ *   choose from.
+ * - Can be opened while the Message Window is open.
+ * 
+ *   Variable ID:
+ *   - This variable will be used to record the ID of the selected weapon.
+ *   - It will result in 0 otherwise.
+ * 
+ *   Weapon Type ID:
+ *   - Reduce all the weapons to a specific weapon type.
+ *   - Leave at 0 to not use filters.
+ * 
+ * ---
+ * 
+ * Select: Armor
+ * - Opens the Event Select Item Window to let the player pick an armor to
+ *   choose from.
+ * - Can be opened while the Message Window is open.
+ * 
+ *   Variable ID:
+ *   - This variable will be used to record the ID of the selected armor.
+ *   - It will result in 0 otherwise.
+ * 
+ *   Armor Type ID:
+ *   - Reduce all the armors to a specific armor type.
+ *   - Leave at 0 to not use filters.
+ * 
+ *   Equip Type ID:
+ *   - Reduce all the armors to a specific equip type.
+ *   - Leave at 0 to not use filters.
+ * 
+ * ---
+ * 
+ * Select: Skill
+ * - Opens the Event Select Item Window to let the player pick a skill to
+ *   choose from.
+ * - Requires VisuMZ_1_SkillsStatesCore!
+ * - Can be opened while the Message Window is open.
+ * - Skills will not be listed if they are hidden by the actor.
+ * - Skills will not be listed if the actor lacks access to their Skill Type.
+ * 
+ *   Variable ID:
+ *   - This variable will be used to record the ID of the selected skill.
+ *   - It will result in 0 otherwise.
+ * 
+ *   Actor ID:
+ *   - Select an actor to get the skill list from.
+ *   - Use 0 to select from the party leader.
+ * 
+ *   Skill Type ID:
+ *   - Reduce all the skills to a specific skill type.
+ *   - Leave at 0 to not use filters.
+ * 
  * ---
  * 
  * === Picture Plugin Commands ===
@@ -569,6 +1041,17 @@ VisuMZ.MessageCore.version = 1.39;
  * 
  *   Default Outline Width:
  *   - Changes the default outline width to this many pixels thick.
+ * 
+ *   Each Message Start:
+ *   Each Message End:
+ *   - This is text that is added at the start/end of each message.
+ *   - You may use text codes.
+ *   - Keep in mind that if a message extends to a different page (due to word
+ *     wrap, excess lines, etc), that does not mean the starting text will
+ *     be added to where the next page begins or the ending text will be added
+ *     where the previous page ends.
+ *   - Can be used for things like adding "<center>" to the start of each 
+ *     message without having to type it every time.
  *
  * ---
  *
@@ -591,6 +1074,10 @@ VisuMZ.MessageCore.version = 1.39;
  *
  *   Line Height:
  *   - What is the default line height for Show Choices?
+ * 
+ *   Minimum Choice Width:
+ *   - What is the minimum choice width for each choice?
+ *   - 96 is the default width.
  *
  *   Max Rows:
  *   - Maximum number of rows to visibly display?
@@ -685,6 +1172,43 @@ VisuMZ.MessageCore.version = 1.39;
  *   - These are lists of all the words that will be automatically colored with
  *     the x text color.
  *
+ * ---
+ *
+ * ============================================================================
+ * Plugin Parameters: Custom Font Manager
+ * ============================================================================
+ *
+ * Custom fonts that aren't the message or number fonts cannot be used without
+ * registration. If you try to use custom fonts in RPG Maker MZ without
+ * registering their font family first, you will find out that they will not
+ * work. These plugin parameters allow you to register your game's custom fonts
+ * here.
+ * 
+ * ---
+ * 
+ * Settings:
+ * 
+ *   Font Family:
+ *   - This will be what's used by RPG Maker MZ and plugins to reference this
+ *     specific font.
+ *   - NO filename extensions!
+ * 
+ *   Filename:
+ *   - What is the filename of the custom font you would like to use?
+ *   - Located inside the project's "fonts" folder.
+ * 
+ * ---
+ * 
+ * Examples:
+ * 
+ *   Font Family: WildWords
+ *   Filename: WildWords-Regular.ttf
+ * 
+ * How you would use this in other plugins as a preface to the font face or
+ * font family would be to use "WildWords" as the font face/family name. Then
+ * RPG Maker MZ will use its own innate FontManager to refer that to the
+ * "WildWords-Regular.ttf" file found in the game's "fonts" folder.
+ * 
  * ---
  *
  * ============================================================================
@@ -800,6 +1324,242 @@ VisuMZ.MessageCore.version = 1.39;
  * ---
  *
  * ============================================================================
+ * Plugin Parameters: Text Language Settings
+ * ============================================================================
+ *
+ * The "Text Language" feature allows your players to switch between different
+ * languages for your game to allow people from around the globe to enjoy what
+ * story you have to tell.
+ * 
+ * Disclaimers: This is not an automatic translation tool. Translations made
+ * through the "Text Language" feature of the VisuStella MZ Message Core
+ * will require manual input by the game developer.
+ * 
+ * See the "Text Language Information" for more information.
+ *
+ * ---
+ * 
+ * Main Settings:
+ * 
+ *   Enable Switching?:
+ *   - Enable language switching settings for this plugin?
+ * 
+ *   File Type:
+ *   - Which file type do you wish to use?
+ *     - CSV (Legacy)
+ *     - TSV (Recommended)
+ * 
+ *   CSV Filename:
+ *   - What is the filename of the CSV file to read from?
+ *   - Located within the project's /data/ folder.
+ * 
+ *   TSV Filename:
+ *   - What is the filename of the TSV file to read from?
+ *   - Located within the project's /data/ folder.
+ * 
+ * ---
+ * 
+ * Options:
+ * 
+ *   Add Option?:
+ *   - Add the 'Text Language' option to the Options menu?
+ * 
+ *   Adjust Window Height:
+ *   - Automatically adjust the options window height?
+ * 
+ *   Option Name:
+ *   - Command name of the option.
+ * 
+ * ---
+ * 
+ * Languages:
+ * 
+ *   Default Language:
+ *   - What is the default language used for this game?
+ * 
+ *   Supported Languages:
+ *   - What are all the supported languages supported by this game's
+ *     script?
+ *   - Remove any that aren't translated.
+ * 
+ * ---
+ * 
+ * Language Names:
+ * 
+ *   Bengali:
+ *   Chinese (Simplified):
+ *   Chinese (Traditional):
+ *   Czech:
+ *   Danish:
+ *   Dutch:
+ *   English:
+ *   Finnish:
+ *   French:
+ *   German:
+ *   Greek:
+ *   Hindi:
+ *   Hungarian:
+ *   Indonesian:
+ *   Italian:
+ *   Japanese:
+ *   Korean:
+ *   Norwegian:
+ *   Polish:
+ *   Portuguese:
+ *   Romanian:
+ *   Russian:
+ *   Slovak:
+ *   Spanish:
+ *   Swedish:
+ *   Tamil:
+ *   Thai:
+ *   Turkish:
+ *   - How does this language appear in the in-game options?
+ * 
+ * ---
+ *
+ * ============================================================================
+ * Plugin Parameters: Language Fonts
+ * ============================================================================
+ *
+ * Different default fonts used for different languages. This allows different
+ * stylistic choices to be made for different languages in case the current
+ * font you're using doesn't have support for other language types.
+ * 
+ * Keep in mind that players can override this with Options Core if they select
+ * a text option other than 'Default' for the 'Text Font' option.
+ * 
+ * Make sure any new custom fonts used for different languages are registered
+ * with the 'Custom Font Manager' found in this plugin's Plugin Parameters.
+ *
+ * ---
+ * 
+ * Languages:
+ * 
+ *   Bengali:
+ *   Chinese (Simplified):
+ *   Chinese (Traditional):
+ *   Czech:
+ *   Danish:
+ *   Dutch:
+ *   English:
+ *   Finnish:
+ *   French:
+ *   German:
+ *   Greek:
+ *   Hindi:
+ *   Hungarian:
+ *   Indonesian:
+ *   Italian:
+ *   Japanese:
+ *   Korean:
+ *   Norwegian:
+ *   Polish:
+ *   Portuguese:
+ *   Romanian:
+ *   Russian:
+ *   Slovak:
+ *   Spanish:
+ *   Swedish:
+ *   Tamil:
+ *   Thai:
+ *   Turkish:
+ *   - What font face is used for this language?
+ *   - Make sure it is registered under Custom Font Manager.
+ * 
+ * ---
+ *
+ * ============================================================================
+ * Plugin Parameters: Language Images
+ * ============================================================================
+ *
+ * Allows different images to be used when different languages are used. This
+ * is for images that have text on it that you want to appear in different
+ * languages based on the text language selected by the player.
+ * 
+ * There are two ways this works:
+ * 
+ *   #1: Folder Name
+ *   - The name of the folder containing those images will be named something
+ *     like "Scrolls[XX]"
+ *   - When a different language is picked, like English, it can reference
+ *     the 'Scrolls[EN]' folder instead. If Japanese is used, it can refer to
+ *     the 'Scrolls[JP]' folder as well.
+ *   - The text used to replace the [XX] in the folder name can be determined
+ *     in the Plugin Parameters.
+ *     - Make sure you change the settings for each language you wish to use to
+ *       have translated images for.
+ * 
+ *   #2: Filename
+ *   - The filename of the image to be translated can be named something like
+ *     ReidProfile[XX].png
+ *   - When a different language is picked, like English, it will reference the
+ *     'ReidProfile[EN].png' image instead. For Japanese, it will reference the
+ *     'ReidProfile[JP].png' as well.
+ *   - The text used to replace the [XX] in the filename can be determined in
+ *     the Plugin Parameters.
+ *     - Make sure you change the settings for each language you wish to use to
+ *       have translated images for.
+ *
+ * ---
+ * 
+ * Settings
+ * 
+ *   Convert Default?
+ *   - ON: Default language uses converted marker.
+ *   - OFF: Default languages uses [XX] as marker.
+ * 
+ * Here's an explanation of what this does:
+ * 
+ *   - The default language picked is English and the player has English picked
+ *     as their desired language.
+ *   - If the "Convert Default?" Plugin Parameter is ON, then 'ReidProfile[XX]'
+ *     will reference and look for the 'ReidProfile[EN]' image.
+ *   - If the "Convert Default?" Plugin Parameter is OFF, 'ReidProfile[XX]' is
+ *     then used for the English language instead of 'ReidProfile[EN]'.
+ *     - This is to avoid duplicate images and save on file space.
+ *   - The reasoning behind the [XX] is that there needs to be an anchor image
+ *     used for the RPG Maker MZ client in order to have something to reference
+ *     before branching out to different languages.
+ * 
+ * ---
+ * 
+ * Languages 
+ * 
+ *   Bengali:
+ *   Chinese (Simplified):
+ *   Chinese (Traditional):
+ *   Czech:
+ *   Danish:
+ *   Dutch:
+ *   English:
+ *   Finnish:
+ *   French:
+ *   German:
+ *   Greek:
+ *   Hindi:
+ *   Hungarian:
+ *   Indonesian:
+ *   Italian:
+ *   Japanese:
+ *   Korean:
+ *   Norwegian:
+ *   Polish:
+ *   Portuguese:
+ *   Romanian:
+ *   Russian:
+ *   Slovak:
+ *   Spanish:
+ *   Swedish:
+ *   Tamil:
+ *   Thai:
+ *   Turkish:
+ *   - This text will replace [XX] with in image folder names and filenames
+ *     when this language is selected.
+ * 
+ * ---
+ *
+ * ============================================================================
  * Plugin Parameters: Text Speed Option Settings
  * ============================================================================
  *
@@ -845,9 +1605,15 @@ VisuMZ.MessageCore.version = 1.39;
  * method is by enabling it by default with the Plugin Parameters.
  * 
  * Word wrap only supports left-to-right alphabetical languages that utilize
- * spaces. It does not support any Asian languages that do not utilize spaces,
- * such as Chinese, Japanese, Korean, etc.
- *
+ * spaces.
+ * 
+ * Word Wrap also cannot be used together with <left>, <center>, or <right> and
+ * will disable itself if text alignment text codes are detected.
+ * 
+ * As of the v1.44 update, some Asian languages such as Chinese and Japanese
+ * are now supported for word wrap. Korean language is only supported if spaces
+ * are used.
+ * 
  * ---
  *
  * Enable Word Wrap
@@ -931,6 +1697,280 @@ VisuMZ.MessageCore.version = 1.39;
  * ============================================================================
  * Changelog
  * ============================================================================
+ * 
+ * Version 1.53: February 20, 2025, 2025
+ * * Bug Fixes!
+ * ** Fixed an error with text language translations not working properly for
+ *    the last listed language in the translation sheet. Fix made by Irina.
+ * * Compatibility Update!
+ * ** Updated for RPG Maker MZ Core Scripts 1.9.0!
+ * *** Removed picture limit of 100 from Picture-related Plugin Commands.
+ * * Documentation Update!
+ * ** Help file updated for new features.
+ * ** Text Language Information section included for TSV.
+ * ** Updated text code note for \picture<x> and \CenterPicture<x>
+ * *** As of the version 1.53 update, the Help Window now supports both of
+ *     these text codes. However, we still recommend using icons over using
+ *     pictures as there will be loading delays.
+ * * Plugin Parameters
+ * ** New plugin parameters added by Irina:
+ * *** Parameters > Text Language Settings > File Type:
+ * **** Which file type do you wish to use?
+ * ***** CSV (Legacy)
+ * ***** TSV (Recommended)
+ * *** Parameters > Text Language Settings > TSV Filename
+ * **** What is the filename of the TSV file to read from?
+ * **** Located within the project's /data/ folder.
+ * * Feature Updates!
+ * ** We have done our research and decided that CSV's are too restricted to
+ *    use due to their default nature of wanting to use commas as separators.
+ *    Thus, we've decided to switch to TSV where the default separator is a tab
+ *    space, something that is almost never used in RPG Maker text.
+ * ** CSV support will remain as a legacy option but TSV will be recommended as
+ *    the main text languaging switching filetype.
+ * ** When creating a new Language TSV, the plugin will check if a Language CSV
+ *    exists and asks you if you wish to convert the existing CSV to TSV. The
+ *    original CSV file will remain intact as a backup.
+ * 
+ * Version 1.52: December 19, 2024
+ * * Documentation Update!
+ * ** Help file updated for new features.
+ * * New Features!
+ * ** New Text Codes added by Arisu:
+ * *** <left>
+ * *** <center>
+ * *** <right>
+ * **** When used in the Map Name, instead of aligning the text which is
+ *      centered by default, the text code will align the horizontal position
+ *      of the name displayed on the screen.
+ * *** <top>
+ * *** <middle>
+ * *** <bottom>
+ * **** When used in the Map Name, the text code will align the vertical
+ *      position of the name displayed on the screen.
+ * *** <X: +n>
+ * *** <X: -n>
+ * *** <Y: +n>
+ * *** <Y: -n>
+ * **** Adjusts the horizontal/vertical position of map name by 'n' value.
+ * *** All of these text codes require VisuMZ_0_CoreEngine installed and its
+ *     "Map Name Text Code" plugin parameter enabled.
+ * 
+ * Version 1.51: October 17, 2024
+ * * Bug Fixes!
+ * ** Fixed a bug where \LastGainObj text code did not work with text language
+ *    key codes. Fix made by Irina.
+ * * Documentation Update!
+ * ** Help file updated for new features.
+ * ** Added note to Text Language Information > How to Enable Switching
+ * *** IMPORTANT! The separator used for the CSV file must be a semicolon (;)
+ *     and not a comma (,) as to reduce the amount of punctuation conflicts.
+ *     Keep this in mind as most CSV editors will default to comma (,) instead
+ *     of the semicolon (;) for their separator.
+ * ** Added note to Text Language Information > Naming Weapon Types, etc:
+ * *** You might have noticed that if you've decided to use \tl{keyName} for
+ *     weapon or other database types, other parts of the game will error out.
+ *     Don't worry, for these, you don't have to change the currently used
+ *     database name. Go straight to the CSV and insert in a new key for that
+ *     particular database name. For example, the equip type "Accessory" will
+ *     use "Accessory" as the automatic key to look for a translated phrase. If
+ *     there isn't any in the CSV file, then the default database text entry
+ *     will be used.
+ * * New Features!
+ * ** New Plugin Parameters added by Irina:
+ * *** Parameters > Text Language Settings > Language Fonts
+ * **** Different default fonts used for different languages. This allows
+ *      different stylistic choices to be made for different languages in case
+ *      the current font you're using doesn't have support for other language
+ *      types.
+ * **** Keep in mind that players can override this with Options Core if they
+ *      select a text option other than 'Default' for the 'Text Font' option.
+ * **** Make sure any new custom fonts used for different languages are
+ *      registered with the 'Custom Font Manager' found in this plugin's Plugin
+ *      Parameters.
+ * *** Parameters > Text Language Settings > Language Images
+ * **** Allows different images to be used when different languages are used.
+ *      This is for images that have text on it that you want to appear in
+ *      different languages based on the text language selected by the player.
+ * 
+ * Version 1.50: July 18, 2024
+ * * Documentation Update!
+ * ** Help file updated for new features.
+ * * New Features!
+ * ** New text codes added by Irina:
+ * *** <Caps> </Caps>
+ * *** <Upper> </Upper>
+ * *** <Lower> </Lower>
+ * **** Auto-text case textcodes will automatically adjust text inserted
+ *      between them to respectively be completely capitalized, first-letter
+ *      capitalized, or completely lowercase.
+ * **** More information in the help file.
+ * *** <Alt> </Alt>
+ * **** Alternates between uppercase and lowercase for letters.
+ * *** <Chaos> </Chaos>
+ * **** Randomly uses uppercase and lowercase for letters.
+ * 
+ * 
+ * Version 1.49: May 16, 2024
+ * * Bug Fixes!
+ * ** Fixed a problem where using text codes to get database object names did
+ *    not apply translated text.
+ * * Documentation Update!
+ * ** Added note for Message Window Only text code effects:
+ * *** These text codes only work with the Message Window. Keep in mind that
+ *     even if some windows might look like the Message Window, it may not
+ *     necessarily be one.
+ * * Feature Update!
+ * ** Added a failsafe for when Choice List Window doesn't have any viable
+ *    options (due to being hidden or disabled). Update made by Irina.
+ * ** Added a failsafe for Language CSV when empty rows are added.
+ * ** Updated some default Text Code actions in order to make sure they're only
+ *    used by the Message Window and not anything else. Update made by Irina.
+ * 
+ * Version 1.48: April 18, 2024
+ * * Bug Fixes!
+ * ** Added fail safe for help description checks parsing from objects without
+ *    help descriptions normally. Fix made by Irina.
+ * 
+ * Version 1.47: February 15, 2024
+ * * Documentation Update!
+ * ** Help file updated for new features.
+ * * New Features!
+ * ** New Plugin Parameters added by Irina:
+ * *** Plugin Parameters > Custom Font Manager
+ * **** Register custom fonts here.
+ * **** Custom fonts that aren't the message or number fonts cannot be used
+ *      without registration.
+ * **** See help file for more information.
+ * 
+ * Version 1.46: January 18, 2024
+ * * Bug Fixes!
+ * ** Fixed a bug where script calls used to create message choices would not
+ *    work properly. Fix made by Irina.
+ * * Documentation Update!
+ * ** Help file updated for new features.
+ * * New Features!
+ * ** Text Language Switching added by Irina:
+ * *** Plugin Parameters > Text Language Settings
+ * **** The "Text Language" feature allows your players to switch between
+ *      different languages for your game to allow people from around the globe
+ *      to enjoy what story you have to tell.
+ * **** Disclaimers: This is not an automatic translation tool. Translations
+ *      made through the "Text Language" feature of the VisuStella MZ Message
+ *      Core will require manual input by the game developer.
+ * **** Read more about it in detail within the "Text Language Information"
+ *      section in the help file.
+ * ** New Plugin Parameter added by Irina:
+ * *** Choices: Distance
+ * **** Change the distance from choice window to the message window.
+ * ** New parameter added to Plugin Command "Choices: Properties" by Irina:
+ * *** Minimum Choice Width
+ * **** What is the minimum width size for each choice?
+ * ** New Plugin Parameter for "Message Window" added by Irina:
+ * *** Parameters > Message Window: Choice List Window> Minimum Choice Width
+ * **** What is the minimum width size for each choice?
+ * ** New Text Codes for Choice Window added by Irina:
+ * *** <BgImg: filename> and variants
+ * *** <FgImg: filename> and variants
+ * **** These text codes allow adding a background or foreground image to a
+ *      choice rectangle in stretched/scaled size.
+ * 
+ * Version 1.45: December 14, 2023
+ * * Bug Fixes!
+ * ** Punctuation was, for some reason, excluded when using Wordwrap with
+ *    Japanese and Chinese languages. This should be fixed now. Fixed by Irina.
+ * * Documentation Update!
+ * ** Help file updated for new features.
+ * ** Added clarity to the <left>, <center>, and <right> being unable to be
+ *    used together with word wrap.
+ * *** Word Wrap also cannot be used together with <left>, <center>, or <right>
+ *     and will disable itself if text alignment text codes are detected.
+ * * Feature Update!
+ * ** Wordwrap <br> now works properly with Japanese and Chinese languages.
+ * * New Features!
+ * ** New Plugin Parameters added by Irina:
+ * *** Plugin Parameters > General Settings > Each Message Start
+ * *** Plugin Parameters > General Settings > Each Message End
+ * **** This is text that is added at the start/end of each message.
+ * **** Keep in mind that if a message extends to a different page (due to word
+ *      wrap, excess lines, etc), that does not mean the starting text will
+ *      be added to where the next page begins or the ending text will be added
+ *      where the previous page ends.
+ * **** Can be used for things like adding "<center>" to the start of each 
+ *      message without having to type it every time.
+ * 
+ * Version 1.44: October 12, 2023
+ * * Documentation Update!
+ * ** Help file updated for new features.
+ * ** Updated "Plugin Parameters: Word Wrap Settings" section:
+ * *** As of the v1.44 update, some Asian languages such as Chinese and
+ *     Japanese are now supported for word wrap. Korean language is only
+ *     supported if spaces are used.
+ * * Feature Update!
+ * ** Word Wrap is now supported for Japanese and Chinese languages.
+ * ** Feature updated by Irina and sponsored by AndyL.
+ * * New Features!
+ * ** New text codes added by Irina for "Show Choices" event command.
+ * *** <Shuffle>
+ * **** Shuffles the order of all choices. Any cancel shortcuts other than
+ *      "Branch" will be undone.
+ * *** <Shuffle: x>
+ * **** Shuffles the order of all choices and only x number of them appear. Any
+ *      cancel shortcuts other than "Branch" will be undone. Hidden choices do
+ *      not count towards x number.
+ * 
+ * Version 1.43: April 13, 2023
+ * * Compatibility Update!
+ * ** Fixed incompatibilities with auto message positioning with the Map Zoom
+ *    plugin. Update made by Irina.
+ * 
+ * Version 1.42: March 16, 2023
+ * * Bug Fixes!
+ * ** Fixed some text codes that would capture way too much data than intended.
+ *    Fix made by Irina.
+ * * Documentation Update!
+ * ** Help file updated for new features.
+ * * New Features!
+ * ** New text code added by Irina for Show Choice Window only:
+ * *** <Help> text </Help>
+ * **** Makes a help window appear and have it show 'text' in its contents.
+ * **** The help window will disappear if no text is displayed.
+ * ** New Plugin Commands added by Arisu:
+ * *** Select: Weapon
+ * *** Select: Armor
+ * *** Select: Skill
+ * **** Opens the Event Select Item Window to let the player pick a weapon,
+ *      armor, or skill to choose from. The selected object will have its ID
+ *      recorded in a variable. These can be opened while the Message Window is
+ *      opened just like the event "Select Item".
+ * 
+ * Version 1.41: December 15, 2022
+ * * Compatibility Update!
+ * ** Added compatibility functionality for future plugins.
+ * * Documentation Update!
+ * ** Help file updated for new features.
+ * * New Features!
+ * ** New text codes added by Irina!
+ * *** For the Choice Window Only text codes:
+ * **** <BgColor: x>
+ * **** <BgColor: x, y>
+ * **** <BgColor: #rrggbb>
+ * **** <BgColor: #rrggbb, #rrggbb>
+ * ***** Requires VisuMZ_0_CoreEngine! Sets the background color of this choice
+ *       to 'x' text color, 'x' to 'y' gradient text color, or using '#rrggbb'
+ *       hex color values.
+ * 
+ * Version 1.40: November 3, 2022
+ * * Documentation Update!
+ * ** Help file updated for new features.
+ * * New Feature!
+ * ** New text code added by Irina:
+ * *** <RNG> text1 | text2 | text3 </RNG>
+ * **** Using the above text code format in a Show Message entry, you can get a
+ *      random result out of the various inserted texts. Use "|" (without
+ *      quotes) as a separator between text entries. You can have unlimited
+ *      entries. The result will have any excess white space trimmed.
+ * **** This text code cannot be inserted into a macro and parsed properly.
  * 
  * Version 1.39: September 22, 2022
  * * Bug Fixes!
@@ -1285,6 +2325,12 @@ VisuMZ.MessageCore.version = 1.39;
  *
  * @ --------------------------------------------------------------------------
  *
+ * @command Separator_Begin
+ * @text -
+ * @desc -
+ *
+ * @ --------------------------------------------------------------------------
+ *
  * @command MessageWindowProperties
  * @text Message: Properties
  * @desc Change the various properties of the Message Window.
@@ -1338,17 +2384,43 @@ VisuMZ.MessageCore.version = 1.39;
  *
  * @ --------------------------------------------------------------------------
  *
+ * @command Separator_Choice
+ * @text -
+ * @desc -
+ *
+ * @ --------------------------------------------------------------------------
+ *
+ * @command ChoiceWindowDistance
+ * @text Choices: Distance
+ * @desc Change the distance from choice window to the message window.
+ *
+ * @arg Distance:eval
+ * @text Distance
+ * @desc Change distance between the choice and message windows.
+ * Default distance is 0. Use negative to center align.
+ * @default +0
+ *
+ * @ --------------------------------------------------------------------------
+ *
  * @command ChoiceWindowProperties
  * @text Choices: Properties
  * @desc Change the properties found in the Show Choices event command.
  *
  * @arg LineHeight:num
- * @text Line Height
+ * @text Choice Line Height
  * @type number
  * @min 0
  * @desc Change the line height for the show choices.
  * Leave at 0 to keep this unchanged.
  * @default 36
+ *
+ * @arg MinWidth:num
+ * @text Minimum Choice Width
+ * @type number
+ * @min 0
+ * @desc What is the minimum width size for each choice?
+ * 96 is the default width.
+ * @default 96
  *
  * @arg MaxRows:num
  * @text Max Rows
@@ -1382,6 +2454,106 @@ VisuMZ.MessageCore.version = 1.39;
  *
  * @ --------------------------------------------------------------------------
  *
+ * @command Separator_Select
+ * @text -
+ * @desc -
+ *
+ * @ --------------------------------------------------------------------------
+ *
+ * @command SelectWeapon
+ * @text Select: Weapon
+ * @desc Opens the Event Select Item Window to let the player
+ * pick a weapon to choose from.
+ *
+ * @arg VariableID:num
+ * @text Variable ID
+ * @type number
+ * @min 0
+ * @desc This variable will be used to record the ID of the
+ * selected weapon. It will result in 0 otherwise.
+ * @default 1
+ *
+ * @arg WeaponTypeID:num
+ * @text Weapon Type ID
+ * @type number
+ * @min 0
+ * @max 100
+ * @desc Reduce all the weapons to a specific weapon type.
+ * Leave at 0 to not use filters.
+ * @default 0
+ *
+ * @ --------------------------------------------------------------------------
+ *
+ * @command SelectArmor
+ * @text Select: Armor
+ * @desc Opens the Event Select Item Window to let the player
+ * pick an armor to choose from.
+ *
+ * @arg VariableID:num
+ * @text Variable ID
+ * @type number
+ * @min 0
+ * @desc This variable will be used to record the ID of the
+ * selected armor. It will result in 0 otherwise.
+ * @default 1
+ *
+ * @arg ArmorTypeID:num
+ * @text Armor Type ID
+ * @type number
+ * @min 0
+ * @max 100
+ * @desc Reduce all the armors to a specific armor type.
+ * Leave at 0 to not use filters.
+ * @default 0
+ *
+ * @arg EquipTypeID:num
+ * @text Equip Type ID
+ * @type number
+ * @min 0
+ * @max 100
+ * @desc Reduce all the armors to a specific equip type.
+ * Leave at 0 to not use filters.
+ * @default 0
+ *
+ * @ --------------------------------------------------------------------------
+ *
+ * @command SelectSkill
+ * @text Select: Skill
+ * @desc Opens the Event Select Item Window to let the player
+ * pick a skill to choose from. Requires VisuMZ_1_SkillsStatesCore!
+ *
+ * @arg VariableID:num
+ * @text Variable ID
+ * @type number
+ * @min 0
+ * @desc This variable will be used to record the ID of the
+ * selected skill. It will result in 0 otherwise.
+ * @default 1
+ *
+ * @arg ActorID:num
+ * @text Actor ID
+ * @type actor
+ * @desc Select an actor to get the skill list from.
+ * Use 0 to select from the party leader.
+ * @default 0
+ *
+ * @arg SkillTypeID:num
+ * @text Skill Type ID
+ * @type number
+ * @min 0
+ * @max 100
+ * @desc Reduce all the skills to a specific skill type.
+ * Leave at 0 to not use filters.
+ * @default 0
+ *
+ * @ --------------------------------------------------------------------------
+ *
+ * @command Separator_Picture
+ * @text -
+ * @desc -
+ *
+ * @ --------------------------------------------------------------------------
+ *
  * @command PictureTextChange
  * @text Picture: Change Text
  * @desc Change text for target picture(s) to show.
@@ -1391,7 +2563,6 @@ VisuMZ.MessageCore.version = 1.39;
  * @text Picture ID(s)
  * @type number[]
  * @min 1
- * @max 100
  * @desc The ID(s) of the picture(s) to set text to.
  * @default ["1"]
  *
@@ -1485,7 +2656,6 @@ VisuMZ.MessageCore.version = 1.39;
  * @text Picture ID(s)
  * @type number[]
  * @min 1
- * @max 100
  * @desc The ID(s) of the picture(s) to erase text for.
  * @default ["1"]
  *
@@ -1495,6 +2665,12 @@ VisuMZ.MessageCore.version = 1.39;
  * @text Picture: Refresh Text
  * @desc Refreshes the text used for all on-screen pictures.
  * To be used if any dynamic text codes are updated like \n[x].
+ *
+ * @ --------------------------------------------------------------------------
+ *
+ * @command Separator_End
+ * @text -
+ * @desc -
  *
  * @ --------------------------------------------------------------------------
  *
@@ -1528,23 +2704,53 @@ VisuMZ.MessageCore.version = 1.39;
  * @desc Automatically color certain keywords a specific way.
  * @default {"DatabaseHighlighting":"","Actors:str":"0","Classes:str":"0","Skills:str":"0","Items:str":"0","Weapons:str":"0","Armors:str":"0","Enemies:str":"0","States:str":"0","WordHighlighting":"","TextColor1:arraystr":"[]","TextColor2:arraystr":"[]","TextColor3:arraystr":"[]","TextColor4:arraystr":"[]","TextColor5:arraystr":"[]","TextColor6:arraystr":"[]","TextColor7:arraystr":"[]","TextColor8:arraystr":"[]","TextColor9:arraystr":"[]","TextColor10:arraystr":"[]","TextColor11:arraystr":"[]","TextColor12:arraystr":"[]","TextColor13:arraystr":"[]","TextColor14:arraystr":"[]","TextColor15:arraystr":"[]","TextColor16:arraystr":"[]","TextColor17:arraystr":"[]","TextColor18:arraystr":"[]","TextColor19:arraystr":"[]","TextColor20:arraystr":"[]","TextColor21:arraystr":"[]","TextColor22:arraystr":"[]","TextColor23:arraystr":"[]","TextColor24:arraystr":"[]","TextColor25:arraystr":"[]","TextColor26:arraystr":"[]","TextColor27:arraystr":"[]","TextColor28:arraystr":"[]","TextColor29:arraystr":"[]","TextColor30:arraystr":"[]","TextColor31:arraystr":"[]"}
  *
+ * @param CustomFonts:arraystruct
+ * @text Custom Font Manager
+ * @type struct<CustomFont>[]
+ * @desc Register custom fonts here. Custom fonts that aren't the
+ * message or number fonts cannot be used without this.
+ * @default []
+ *
  * @param TextCodeActions:arraystruct
  * @text Text Code Actions
  * @type struct<TextCodeAction>[]
  * @desc Text codes that perform actions.
- * @default ["{\"Match:str\":\"ChangeFace\",\"Type:str\":\"\\\\<(.*?)\\\\>\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst data = this.obtainEscapeString(textState).split(',');\\\\nif (textState.drawing) {\\\\n    const filename = data[0].trim();\\\\n    const index = parseInt(data[1] || '0');\\\\n    $gameMessage.setFaceImage(filename, index);\\\\n    this.loadMessageFace();\\\\n    const rtl = $gameMessage.isRTL();\\\\n    const width = ImageManager.faceWidth;\\\\n    const height = this.innerHeight;\\\\n    const x = rtl ? this.innerWidth - width - 4 : 4;\\\\n    this.contents.clearRect(x, 0, width, height);\\\\n    this._faceBitmap.addLoadListener(this.drawMessageFace.bind(this));\\\\n}\\\"\"}","{\"Match:str\":\"FaceIndex\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst index = this.obtainEscapeParam(textState);\\\\nif (textState.drawing) {\\\\n    const filename = $gameMessage.faceName();\\\\n    $gameMessage.setFaceImage(filename, index);\\\\n    this.loadMessageFace();\\\\n    const rtl = $gameMessage.isRTL();\\\\n    const width = ImageManager.faceWidth;\\\\n    const height = this.innerHeight;\\\\n    const x = rtl ? this.innerWidth - width - 4 : 4;\\\\n    this.contents.clearRect(x, 0, width, height);\\\\n    this._faceBitmap.addLoadListener(this.drawMessageFace.bind(this));\\\\n}\\\"\"}","{\"Match:str\":\"TextDelay\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst delay = this.obtainEscapeParam(textState);\\\\nif (textState.drawing && this.constructor === Window_Message) {\\\\n    this.setTextDelay(delay);\\\\n}\\\"\"}","{\"Match:str\":\"NormalBG\",\"Type:str\":\"\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nif (textState.drawing) {\\\\n    this.setBackgroundType(0);\\\\n}\\\"\"}","{\"Match:str\":\"DimBG\",\"Type:str\":\"\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nif (textState.drawing) {\\\\n    this.setBackgroundType(1);\\\\n}\\\"\"}","{\"Match:str\":\"TransparentBG\",\"Type:str\":\"\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nif (textState.drawing) {\\\\n    this.setBackgroundType(2);\\\\n}\\\"\"}","{\"Match:str\":\"FontChange\",\"Type:str\":\"\\\\<(.*?)\\\\>\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst fontName = this.obtainEscapeString(textState);\\\\nthis.contents.fontFace = fontName;\\\"\"}","{\"Match:str\":\"ResetFont\",\"Type:str\":\"\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"this.resetFontSettings();\\\"\"}","{\"Match:str\":\"ResetColor\",\"Type:str\":\"\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"this.resetTextColor();\\\"\"}","{\"Match:str\":\"HexColor\",\"Type:str\":\"\\\\<(.*?)\\\\>\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst hexColor = this.obtainEscapeString(textState);\\\\nif (!this.isColorLocked() && textState.drawing) {\\\\n    this.changeTextColor(hexColor);\\\\n}\\\"\"}","{\"Match:str\":\"OutlineColor\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst colorIndex = this.obtainEscapeParam(textState);\\\\nif (!this.isColorLocked() && textState.drawing) {\\\\n    this.changeOutlineColor(ColorManager.textColor(colorIndex));\\\\n}\\\"\"}","{\"Match:str\":\"OutlineHexColor\",\"Type:str\":\"\\\\<(.*?)\\\\>\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst hexColor = this.obtainEscapeString(textState);\\\\nif (!this.isColorLocked() && textState.drawing) {\\\\n    this.changeOutlineColor(hexColor);\\\\n}\\\"\"}","{\"Match:str\":\"OutlineWidth\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst width = this.obtainEscapeParam(textState);\\\\nif (textState.drawing) {\\\\n    this.contents.outlineWidth = width;\\\\n}\\\"\"}","{\"Match:str\":\"WindowMoveTo\",\"Type:str\":\"\\\\<(.*?)\\\\>\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst data = this.obtainEscapeString(textState).split(',');\\\\nif (textState.drawing) {\\\\n    const x = !!data[0] ? Number(data[0].trim()) : this.x;\\\\n    const y = !!data[1] ? Number(data[1].trim()) : this.y;\\\\n    const width = !!data[2] ? Number(data[2].trim()) : this.width;\\\\n    const height = !!data[3] ? Number(data[3].trim()) : this.height;\\\\n    const duration = !!data[4] ? Number(data[4].trim()) : 20;\\\\n    const easingType = !!data[5] ? data[5].trim() : 0;\\\\n    this.moveTo(x, y, width, height, duration, easingType);\\\\n}\\\"\"}","{\"Match:str\":\"WindowMoveBy\",\"Type:str\":\"\\\\<(.*?)\\\\>\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst data = this.obtainEscapeString(textState).split(',');\\\\nif (textState.drawing) {\\\\n    const x = !!data[0] ? Number(data[0].trim()) : 0;\\\\n    const y = !!data[1] ? Number(data[1].trim()) : 0;\\\\n    const width = !!data[2] ? Number(data[2].trim()) : 0;\\\\n    const height = !!data[3] ? Number(data[3].trim()) : 0;\\\\n    const duration = !!data[4] ? Number(data[4].trim()) : 20;\\\\n    const easingType = !!data[5] ? data[5].trim() : 0;\\\\n    this.moveBy(x, y, width, height, duration, easingType);\\\\n}\\\"\"}","{\"Match:str\":\"WindowReset\",\"Type:str\":\"\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nif (textState.drawing) {\\\\n    const frames = 20;\\\\n    const easingType = 0;\\\\n    this.resetRect(frames, easingType);\\\\n}\\\"\"}"]
+ * @default ["{\"Match:str\":\"ChangeFace\",\"Type:str\":\"\\\\<(.*?)\\\\>\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst data = this.obtainEscapeString(textState).split(',');\\\\nif (this instanceof Window_Message) {\\\\n    if (textState.drawing) {\\\\n        const filename = data[0].trim();\\\\n        const index = parseInt(data[1] || '0');\\\\n        $gameMessage.setFaceImage(filename, index);\\\\n        this.loadMessageFace();\\\\n        const rtl = $gameMessage.isRTL();\\\\n        const width = ImageManager.faceWidth;\\\\n        const height = this.innerHeight;\\\\n        const x = rtl ? this.innerWidth - width - 4 : 4;\\\\n        this.contents.clearRect(x, 0, width, height);\\\\n        this._faceBitmap.addLoadListener(this.drawMessageFace.bind(this));\\\\n    }\\\\n}\\\"\"}","{\"Match:str\":\"FaceIndex\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst index = this.obtainEscapeParam(textState);\\\\nif (this instanceof Window_Message) {\\\\n    if (textState.drawing) {\\\\n        const filename = $gameMessage.faceName();\\\\n        $gameMessage.setFaceImage(filename, index);\\\\n        this.loadMessageFace();\\\\n        const rtl = $gameMessage.isRTL();\\\\n        const width = ImageManager.faceWidth;\\\\n        const height = this.innerHeight;\\\\n        const x = rtl ? this.innerWidth - width - 4 : 4;\\\\n        this.contents.clearRect(x, 0, width, height);\\\\n        this._faceBitmap.addLoadListener(this.drawMessageFace.bind(this));\\\\n    }\\\\n}\\\"\"}","{\"Match:str\":\"TextDelay\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst delay = this.obtainEscapeParam(textState);\\\\nif (this instanceof Window_Message) {\\\\n    if (textState.drawing && this.constructor === Window_Message) {\\\\n        this.setTextDelay(delay);\\\\n    }\\\\n}\\\"\"}","{\"Match:str\":\"NormalBG\",\"Type:str\":\"\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nif (textState.drawing) {\\\\n    this.setBackgroundType(0);\\\\n}\\\"\"}","{\"Match:str\":\"DimBG\",\"Type:str\":\"\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nif (textState.drawing) {\\\\n    this.setBackgroundType(1);\\\\n}\\\"\"}","{\"Match:str\":\"TransparentBG\",\"Type:str\":\"\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nif (textState.drawing) {\\\\n    this.setBackgroundType(2);\\\\n}\\\"\"}","{\"Match:str\":\"FontChange\",\"Type:str\":\"\\\\<(.*?)\\\\>\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst fontName = this.obtainEscapeString(textState);\\\\nthis.contents.fontFace = fontName;\\\"\"}","{\"Match:str\":\"ResetFont\",\"Type:str\":\"\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"this.resetFontSettings();\\\"\"}","{\"Match:str\":\"ResetColor\",\"Type:str\":\"\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"this.resetTextColor();\\\"\"}","{\"Match:str\":\"HexColor\",\"Type:str\":\"\\\\<(.*?)\\\\>\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst hexColor = this.obtainEscapeString(textState);\\\\nif (!this.isColorLocked() && textState.drawing) {\\\\n    this.changeTextColor(hexColor);\\\\n}\\\"\"}","{\"Match:str\":\"OutlineColor\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst colorIndex = this.obtainEscapeParam(textState);\\\\nif (!this.isColorLocked() && textState.drawing) {\\\\n    this.changeOutlineColor(ColorManager.textColor(colorIndex));\\\\n}\\\"\"}","{\"Match:str\":\"OutlineHexColor\",\"Type:str\":\"\\\\<(.*?)\\\\>\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst hexColor = this.obtainEscapeString(textState);\\\\nif (!this.isColorLocked() && textState.drawing) {\\\\n    this.changeOutlineColor(hexColor);\\\\n}\\\"\"}","{\"Match:str\":\"OutlineWidth\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst width = this.obtainEscapeParam(textState);\\\\nif (textState.drawing) {\\\\n    this.contents.outlineWidth = width;\\\\n}\\\"\"}","{\"Match:str\":\"WindowMoveTo\",\"Type:str\":\"\\\\<(.*?)\\\\>\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst data = this.obtainEscapeString(textState).split(',');\\\\nif (textState.drawing) {\\\\n    const x = !!data[0] ? Number(data[0].trim()) : this.x;\\\\n    const y = !!data[1] ? Number(data[1].trim()) : this.y;\\\\n    const width = !!data[2] ? Number(data[2].trim()) : this.width;\\\\n    const height = !!data[3] ? Number(data[3].trim()) : this.height;\\\\n    const duration = !!data[4] ? Number(data[4].trim()) : 20;\\\\n    const easingType = !!data[5] ? data[5].trim() : 0;\\\\n    this.moveTo(x, y, width, height, duration, easingType);\\\\n}\\\"\"}","{\"Match:str\":\"WindowMoveBy\",\"Type:str\":\"\\\\<(.*?)\\\\>\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst data = this.obtainEscapeString(textState).split(',');\\\\nif (textState.drawing) {\\\\n    const x = !!data[0] ? Number(data[0].trim()) : 0;\\\\n    const y = !!data[1] ? Number(data[1].trim()) : 0;\\\\n    const width = !!data[2] ? Number(data[2].trim()) : 0;\\\\n    const height = !!data[3] ? Number(data[3].trim()) : 0;\\\\n    const duration = !!data[4] ? Number(data[4].trim()) : 20;\\\\n    const easingType = !!data[5] ? data[5].trim() : 0;\\\\n    this.moveBy(x, y, width, height, duration, easingType);\\\\n}\\\"\"}","{\"Match:str\":\"WindowReset\",\"Type:str\":\"\",\"CommonEvent:num\":\"0\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nif (textState.drawing) {\\\\n    const frames = 20;\\\\n    const easingType = 0;\\\\n    this.resetRect(frames, easingType);\\\\n}\\\"\"}","{\"Match:str\":\"heart\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"CommonEvent:num\":\"3\",\"ActionJS:func\":\"\\\"const textState = arguments[0];\\\\nconst index = this.obtainEscapeParam(textState);\\\"\"}"]
  *
  * @param TextCodeReplace:arraystruct
  * @text Text Code Replacements
  * @type struct<TextCodeReplace>[]
  * @desc Text codes that replace themselves with text.
- * @default ["{\"Match:str\":\"ActorFace\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const actorId = parseInt(arguments[1]);\\\\nconst actor = $gameActors.actor(actorId);\\\\nif (this.constructor === Window_Message && actor) {\\\\n    $gameMessage.setFaceImage(\\\\n        actor.faceName(),\\\\n        actor.faceIndex()\\\\n    );\\\\n}\\\\nreturn '';\\\"\"}","{\"Match:str\":\"PartyFace\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const index = parseInt(arguments[1]) - 1;\\\\nconst actor = $gameParty.members()[index];\\\\nif (this.constructor === Window_Message && actor) {\\\\n    $gameMessage.setFaceImage(\\\\n        actor.faceName(),\\\\n        actor.faceIndex()\\\\n    );\\\\n}\\\\nreturn '';\\\"\"}","{\"Match:str\":\"Class\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataClasses;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = true;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"ClassName\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataClasses;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = false;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"Skill\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataSkills;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = true;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"SkillName\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataSkills;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = false;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"Item\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataItems;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = true;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"ItemName\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataItems;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = false;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"ItemQuantity\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataItems;\\\\nconst id = parseInt(arguments[1]);\\\\nreturn $gameParty.numItems(database[id]);\\\"\"}","{\"Match:str\":\"Weapon\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataWeapons;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = true;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"WeaponName\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataWeapons;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = false;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"WeaponQuantity\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataWeapons;\\\\nconst id = parseInt(arguments[1]);\\\\nreturn $gameParty.numItems(database[id]);\\\"\"}","{\"Match:str\":\"LastGainObj\",\"Type:str\":\"\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const icon = true;\\\\nreturn this.lastGainedObjectName(icon);\\\"\"}","{\"Match:str\":\"LastGainObjName\",\"Type:str\":\"\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const icon = false;\\\\nreturn this.lastGainedObjectName(icon);\\\"\"}","{\"Match:str\":\"LastGainObjQuantity\",\"Type:str\":\"\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"return this.lastGainedObjectQuantity();\\\"\"}","{\"Match:str\":\"Armor\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataArmors;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = true;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"ArmorName\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataArmors;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = false;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"ArmorQuantity\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataArmors;\\\\nconst id = parseInt(arguments[1]);\\\\nreturn $gameParty.numItems(database[id]);\\\"\"}","{\"Match:str\":\"State\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataStates;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = true;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"StateName\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataStates;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = false;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"Enemy\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataEnemies;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = true;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"EnemyName\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataEnemies;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = false;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"Troop\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataTroops;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = true;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"TroopName\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataTroops;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = false;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"TroopMember\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"if (!$gameParty.inBattle()) return \\\\\\\"\\\\\\\";\\\\nconst index = (parseInt(arguments[1]) - 1) || 0;\\\\nconst member = $gameTroop.members()[index];\\\\nconst database = $dataEnemies;\\\\nconst id = member ? member.enemyId() : 0;\\\\nconst icon = true;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"TroopMemberName\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"if (!$gameParty.inBattle()) return \\\\\\\"\\\\\\\";\\\\nconst index = (parseInt(arguments[1]) - 1) || 0;\\\\nconst member = $gameTroop.members()[index];\\\\nconst database = $dataEnemies;\\\\nconst id = member ? member.enemyId() : 0;\\\\nconst icon = false;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}"]
+ * @default ["{\"Match:str\":\"ActorFace\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const actorId = parseInt(arguments[1]);\\\\nconst actor = $gameActors.actor(actorId);\\\\nif (this.constructor === Window_Message && actor) {\\\\n    $gameMessage.setFaceImage(\\\\n        actor.faceName(),\\\\n        actor.faceIndex()\\\\n    );\\\\n}\\\\nreturn '';\\\"\"}","{\"Match:str\":\"PartyFace\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const index = parseInt(arguments[1]) - 1;\\\\nconst actor = $gameParty.members()[index];\\\\nif (this.constructor === Window_Message && actor) {\\\\n    $gameMessage.setFaceImage(\\\\n        actor.faceName(),\\\\n        actor.faceIndex()\\\\n    );\\\\n}\\\\nreturn '';\\\"\"}","{\"Match:str\":\"Class\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataClasses;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = true;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"ClassIcon\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataClasses;\\\\nconst id = parseInt(arguments[1]);\\\\nconst obj = database[id];\\\\nconst icon = obj ? (obj.iconIndex || 0) : 0;\\\\nreturn icon ? '\\\\\\\\x1bI[%1]'.format(icon) : '';\\\"\"}","{\"Match:str\":\"ClassName\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataClasses;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = false;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"Skill\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataSkills;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = true;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"SkillIcon\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataSkills;\\\\nconst id = parseInt(arguments[1]);\\\\nconst obj = database[id];\\\\nconst icon = obj ? (obj.iconIndex || 0) : 0;\\\\nreturn icon ? '\\\\\\\\x1bI[%1]'.format(icon) : '';\\\"\"}","{\"Match:str\":\"SkillName\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataSkills;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = false;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"Item\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataItems;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = true;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"ItemIcon\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataItems;\\\\nconst id = parseInt(arguments[1]);\\\\nconst obj = database[id];\\\\nconst icon = obj ? (obj.iconIndex || 0) : 0;\\\\nreturn icon ? '\\\\\\\\x1bI[%1]'.format(icon) : '';\\\"\"}","{\"Match:str\":\"ItemName\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataItems;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = false;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"ItemQuantity\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataItems;\\\\nconst id = parseInt(arguments[1]);\\\\nreturn $gameParty.numItems(database[id]);\\\"\"}","{\"Match:str\":\"Weapon\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataWeapons;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = true;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"WeaponIcon\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataWeapons;\\\\nconst id = parseInt(arguments[1]);\\\\nconst obj = database[id];\\\\nconst icon = obj ? (obj.iconIndex || 0) : 0;\\\\nreturn icon ? '\\\\\\\\x1bI[%1]'.format(icon) : '';\\\"\"}","{\"Match:str\":\"WeaponName\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataWeapons;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = false;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"WeaponQuantity\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataWeapons;\\\\nconst id = parseInt(arguments[1]);\\\\nreturn $gameParty.numItems(database[id]);\\\"\"}","{\"Match:str\":\"Armor\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataArmors;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = true;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"ArmorIcon\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataArmors;\\\\nconst id = parseInt(arguments[1]);\\\\nconst obj = database[id];\\\\nconst icon = obj ? (obj.iconIndex || 0) : 0;\\\\nreturn icon ? '\\\\\\\\x1bI[%1]'.format(icon) : '';\\\"\"}","{\"Match:str\":\"ArmorName\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataArmors;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = false;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"ArmorQuantity\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataArmors;\\\\nconst id = parseInt(arguments[1]);\\\\nreturn $gameParty.numItems(database[id]);\\\"\"}","{\"Match:str\":\"State\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataStates;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = true;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"StateIcon\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataStates;\\\\nconst id = parseInt(arguments[1]);\\\\nconst obj = database[id];\\\\nconst icon = obj ? (obj.iconIndex || 0) : 0;\\\\nreturn icon ? '\\\\\\\\x1bI[%1]'.format(icon) : '';\\\"\"}","{\"Match:str\":\"StateName\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataStates;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = false;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"LastGainObj\",\"Type:str\":\"\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const icon = true;\\\\nreturn this.lastGainedObjectName(icon);\\\"\"}","{\"Match:str\":\"LastGainObjIcon\",\"Type:str\":\"\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"return this.lastGainedObjectIcon();\\\"\"}","{\"Match:str\":\"LastGainObjName\",\"Type:str\":\"\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const icon = false;\\\\nreturn this.lastGainedObjectName(icon);\\\"\"}","{\"Match:str\":\"LastGainObjQuantity\",\"Type:str\":\"\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"return this.lastGainedObjectQuantity();\\\"\"}","{\"Match:str\":\"Enemy\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataEnemies;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = true;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"EnemyName\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataEnemies;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = false;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"Troop\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataTroops;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = true;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"TroopName\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"const database = $dataTroops;\\\\nconst id = parseInt(arguments[1]);\\\\nconst icon = false;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"TroopMember\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"if (!$gameParty.inBattle()) return \\\\\\\"\\\\\\\";\\\\nconst index = (parseInt(arguments[1]) - 1) || 0;\\\\nconst member = $gameTroop.members()[index];\\\\nconst database = $dataEnemies;\\\\nconst id = member ? member.enemyId() : 0;\\\\nconst icon = true;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}","{\"Match:str\":\"TroopMemberName\",\"Type:str\":\"\\\\[(\\\\d+)\\\\]\",\"TextStr:str\":\"Undefined\",\"TextJS:func\":\"\\\"if (!$gameParty.inBattle()) return \\\\\\\"\\\\\\\";\\\\nconst index = (parseInt(arguments[1]) - 1) || 0;\\\\nconst member = $gameTroop.members()[index];\\\\nconst database = $dataEnemies;\\\\nconst id = member ? member.enemyId() : 0;\\\\nconst icon = false;\\\\nreturn this.databaseObjectName(database, id, icon);\\\"\"}"]
  *
  * @param TextMacros:arraystruct
- * @text Text Macros
+ * @text Text Code Macros
  * @type struct<TextMacro>[]
  * @desc Macros that are used to quickly write batches of text.
+ * Format style: [MacroName]
  * @default ["{\"Match:str\":\"Example Macro\",\"TextStr:str\":\"This is the text that will be displayed when you type [Example Macro].\",\"TextJS:func\":\"\\\"return 'Text';\\\"\"}","{\"Match:str\":\"Leader\",\"TextStr:str\":\"\\\\P[1]\",\"TextJS:func\":\"\\\"return 'Text';\\\"\"}"]
+ *
+ * @param Localization:struct
+ * @text Text Language Settings
+ * @type struct<Localization>
+ * @desc Text Language settings for this plugin.
+ * @default {"Main":"","Enable:eval":"false","CsvFilename:str":"Languages.csv","Options":"","AddOption:eval":"true","AdjustRect:eval":"true","Name:str":"Text Language","Localized":"","DefaultLocale:str":"English","Languages:arraystr":"[\"Bengali\",\"Chinese(Simplified)\",\"Chinese(Traditional)\",\"Czech\",\"Danish\",\"Dutch\",\"English\",\"Finnish\",\"French\",\"German\",\"Greek\",\"Hindi\",\"Hungarian\",\"Indonesian\",\"Italian\",\"Japanese\",\"Korean\",\"Norwegian\",\"Polish\",\"Portuguese\",\"Romanian\",\"Russian\",\"Slovak\",\"Spanish\",\"Swedish\",\"Tamil\",\"Thai\",\"Turkish\"]","LangNames":"","Bengali:str":"বাংলা","Chinese(Simplified):str":"简体中文","Chinese(Traditional):str":"繁體中文","Czech:str":"Čeština","Danish:str":"Dansk","Dutch:str":"Nederlands","English:str":"English","Finnish:str":"Suomi","French:str":"Français","German:str":"Deutsch","Greek:str":"Ελληνικά","Hindi:str":"हिन्दी","Hungarian:str":"Magyar","Indonesian:str":"Bahasa Indo","Italian:str":"Italiano","Japanese:str":"日本語","Korean:str":"한국어","Norwegian:str":"Norsk","Polish:str":"Polski","Portuguese:str":"Português","Romanian:str":"Română","Russian:str":"Русский","Slovak:str":"Slovenčina","Spanish:str":"Español","Swedish:str":"Svenska","Tamil:str":"தமிழ்","Thai:str":"ไทย","Turkish:str":"Türkçe"}
+ *
+ * @param LanguageFonts:struct
+ * @text Language Fonts
+ * @parent Localization:struct
+ * @type struct<LanguageFonts>
+ * @desc Different default fonts used for different languages.
+ * Players can override this with Options Core.
+ * @default {"Bengali:str":"rmmz-mainfont","Chinese(Simplified):str":"rmmz-mainfont","Chinese(Traditional):str":"rmmz-mainfont","Czech:str":"rmmz-mainfont","Danish:str":"rmmz-mainfont","Dutch:str":"rmmz-mainfont","English:str":"rmmz-mainfont","Finnish:str":"rmmz-mainfont","French:str":"rmmz-mainfont","German:str":"rmmz-mainfont","Greek:str":"rmmz-mainfont","Hindi:str":"rmmz-mainfont","Hungarian:str":"rmmz-mainfont","Indonesian:str":"rmmz-mainfont","Italian:str":"rmmz-mainfont","Japanese:str":"rmmz-mainfont","Korean:str":"rmmz-mainfont","Norwegian:str":"rmmz-mainfont","Polish:str":"rmmz-mainfont","Portuguese:str":"rmmz-mainfont","Romanian:str":"rmmz-mainfont","Russian:str":"rmmz-mainfont","Slovak:str":"rmmz-mainfont","Spanish:str":"rmmz-mainfont","Swedish:str":"rmmz-mainfont","Tamil:str":"rmmz-mainfont","Thai:str":"rmmz-mainfont","Turkish:str":"rmmz-mainfont"}
+ *
+ * @param LanguageImages:struct
+ * @text Language Images
+ * @parent Localization:struct
+ * @type struct<LanguageImages>
+ * @desc Allows different images to be used when different
+ * languages are used. See help for more information.
+ * @default {"ConvertDefault:eval":"false","Languages":"","Bengali:str":"[XX]","Chinese(Simplified):str":"[XX]","Chinese(Traditional):str":"[XX]","Czech:str":"[XX]","Danish:str":"[XX]","Dutch:str":"[XX]","English:str":"[XX]","Finnish:str":"[XX]","French:str":"[XX]","German:str":"[XX]","Greek:str":"[XX]","Hindi:str":"[XX]","Hungarian:str":"[XX]","Indonesian:str":"[XX]","Italian:str":"[XX]","Japanese:str":"[XX]","Korean:str":"[XX]","Norwegian:str":"[XX]","Polish:str":"[XX]","Portuguese:str":"[XX]","Romanian:str":"[XX]","Russian:str":"[XX]","Slovak:str":"[XX]","Spanish:str":"[XX]","Swedish:str":"[XX]","Tamil:str":"[XX]","Thai:str":"[XX]","Turkish:str":"[XX]"}
  *
  * @param TextSpeed:struct
  * @text Text Speed Option Settings
@@ -1648,6 +2854,22 @@ VisuMZ.MessageCore.version = 1.39;
  * @desc Changes the default outline width to this many pixels thick.
  * @default 3
  *
+ * @param EachMessageStart:json
+ * @text Each Message Start
+ * @parent MessageWindow
+ * @type note
+ * @desc This is text that is added at the start of each message.
+ * You may use text codes.
+ * @default ""
+ *
+ * @param EachMessageEnd:json
+ * @text Each Message End
+ * @parent MessageWindow
+ * @type note
+ * @desc This is text that is added at the end of each message.
+ * You may use text codes.
+ * @default ""
+ *
  * @param NameBoxWindow
  * @text Name Box Window
  *
@@ -1682,6 +2904,15 @@ VisuMZ.MessageCore.version = 1.39;
  * @desc What is the default line height for Show Choices?
  * @default 36
  *
+ * @param ChoiceWindowMinWidth:num
+ * @text Minimum Choice Width
+ * @parent ChoiceListWindow
+ * @type number
+ * @min 0
+ * @desc What is the minimum choice width for each choice?
+ * 96 is the default width.
+ * @default 96
+ *
  * @param ChoiceWindowMaxRows:num
  * @text Max Rows
  * @parent ChoiceListWindow
@@ -1711,7 +2942,7 @@ VisuMZ.MessageCore.version = 1.39;
  * @option Right
  * @value right
  * @desc Default alignment for Show Choice window.
- * @default default
+ * @default rmmz-mainfont
  *
  * @param DefaultTextCodes
  * @text Default Text Codes
@@ -2061,6 +3292,25 @@ VisuMZ.MessageCore.version = 1.39;
  *
  */
 /* ----------------------------------------------------------------------------
+ * Custom Font Settings
+ * ----------------------------------------------------------------------------
+ */
+/*~struct~CustomFont:
+ *
+ * @param FontFamily:str
+ * @text Font Family
+ * @desc This will be what's used by RPG Maker MZ and plugins to
+ * reference this specific font. NO filename extensions!
+ * @default Unnamed
+ *
+ * @param Filename:str
+ * @text Filename
+ * @desc What is the filename of the font you would like to use?
+ * Located inside the project's "fonts" folder.
+ * @default Unnamed.ttf
+ *
+ */
+/* ----------------------------------------------------------------------------
  * Text Code Actions
  * ----------------------------------------------------------------------------
  */
@@ -2154,6 +3404,712 @@ VisuMZ.MessageCore.version = 1.39;
  * @type note
  * @desc JavaScript code used to determine the text that will appear if this macro appears.
  * @default "return 'Text';"
+ *
+ */
+/* ----------------------------------------------------------------------------
+ * Localization Settings
+ * ----------------------------------------------------------------------------
+ */
+/*~struct~Localization:
+ *
+ * @param Main
+ * @text Main Settings
+ *
+ * @param Enable:eval
+ * @text Enable Switching?
+ * @parent Main
+ * @type boolean
+ * @on Enable
+ * @off Don't
+ * @desc Enable language switching settings for this plugin?
+ * @default false
+ *
+ * @param LangFiletype:str
+ * @text File Type
+ * @parent Main
+ * @type select
+ * @option CSV (Legacy)
+ * @value csv
+ * @option TSV (Recommended)
+ * @value tsv
+ * @desc Which file type do you wish to use?
+ * @default tsv
+ *
+ * @param CsvFilename:str
+ * @text CSV Filename
+ * @parent Main
+ * @desc What is the filename of the CSV file to read from?
+ * Located within the project's /data/ folder.
+ * @default Languages.csv
+ *
+ * @param TsvFilename:str
+ * @text TSV Filename
+ * @parent Main
+ * @desc What is the filename of the TSV file to read from?
+ * Located within the project's /data/ folder.
+ * @default Languages.tsv
+ *
+ * @param Options
+ * @text Options
+ *
+ * @param AddOption:eval
+ * @text Add Option?
+ * @parent Options
+ * @type boolean
+ * @on Add
+ * @off Don't Add
+ * @desc Add the 'Language' option to the Options menu?
+ * @default true
+ *
+ * @param AdjustRect:eval
+ * @text Adjust Window Height
+ * @parent Options
+ * @type boolean
+ * @on Adjust
+ * @off Don't
+ * @desc Automatically adjust the options window height?
+ * @default true
+ *
+ * @param Name:str
+ * @text Option Name
+ * @parent Options
+ * @desc Command name of the option.
+ * @default Text Language
+ *
+ * @param Localized
+ * @text Languages
+ *
+ * @param DefaultLocale:str
+ * @text Default Language
+ * @parent Localized
+ * @type select
+ * @option Bengali
+ * @option Chinese(Simplified)
+ * @option Chinese(Traditional)
+ * @option Czech
+ * @option Danish
+ * @option Dutch
+ * @option English
+ * @option Finnish
+ * @option French
+ * @option German
+ * @option Greek
+ * @option Hindi
+ * @option Hungarian
+ * @option Indonesian
+ * @option Italian
+ * @option Japanese
+ * @option Korean
+ * @option Norwegian
+ * @option Polish
+ * @option Portuguese
+ * @option Romanian
+ * @option Russian
+ * @option Slovak
+ * @option Spanish
+ * @option Swedish
+ * @option Tamil
+ * @option Thai
+ * @option Turkish
+ * @desc What is the default language used for this game?
+ * @default English
+ *
+ * @param Languages:arraystr
+ * @text Supported Languages
+ * @parent Localized
+ * @type select[]
+ * @option Bengali
+ * @option Chinese(Simplified)
+ * @option Chinese(Traditional)
+ * @option Czech
+ * @option Danish
+ * @option Dutch
+ * @option English
+ * @option Finnish
+ * @option French
+ * @option German
+ * @option Greek
+ * @option Hindi
+ * @option Hungarian
+ * @option Indonesian
+ * @option Italian
+ * @option Japanese
+ * @option Korean
+ * @option Norwegian
+ * @option Polish
+ * @option Portuguese
+ * @option Romanian
+ * @option Russian
+ * @option Slovak
+ * @option Spanish
+ * @option Swedish
+ * @option Tamil
+ * @option Thai
+ * @option Turkish
+ * @desc What are all the supported languages supported by this
+ * game's script? Remove any that aren't translated.
+ * @default ["Bengali","Chinese(Simplified)","Chinese(Traditional)","Czech","Danish","Dutch","English","Finnish","French","German","Greek","Hindi","Hungarian","Indonesian","Italian","Japanese","Korean","Norwegian","Polish","Portuguese","Romanian","Russian","Slovak","Spanish","Swedish","Tamil","Thai","Turkish"]
+ *
+ * @param LangNames
+ * @text Language Names
+ *
+ * @param Bengali:str
+ * @text Bengali
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default বাংলা
+ * 
+ * @param Chinese(Simplified):str
+ * @text Chinese (Simplified)
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default 简体中文
+ * 
+ * @param Chinese(Traditional):str
+ * @text Chinese (Traditional)
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default 繁體中文
+ * 
+ * @param Czech:str
+ * @text Czech
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default Čeština
+ * 
+ * @param Danish:str
+ * @text Danish
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default Dansk
+ * 
+ * @param Dutch:str
+ * @text Dutch
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default Nederlands
+ * 
+ * @param English:str
+ * @text English
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default English
+ * 
+ * @param Finnish:str
+ * @text Finnish
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default Suomi
+ * 
+ * @param French:str
+ * @text French
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default Français
+ * 
+ * @param German:str
+ * @text German
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default Deutsch
+ * 
+ * @param Greek:str
+ * @text Greek
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default Ελληνικά
+ * 
+ * @param Hindi:str
+ * @text Hindi
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default हिन्दी
+ * 
+ * @param Hungarian:str
+ * @text Hungarian
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default Magyar
+ * 
+ * @param Indonesian:str
+ * @text Indonesian
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default Bahasa Indo
+ * 
+ * @param Italian:str
+ * @text Italian
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default Italiano
+ * 
+ * @param Japanese:str
+ * @text Japanese
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default 日本語
+ * 
+ * @param Korean:str
+ * @text Korean
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default 한국어
+ * 
+ * @param Norwegian:str
+ * @text Norwegian
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default Norsk
+ * 
+ * @param Polish:str
+ * @text Polish
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default Polski
+ * 
+ * @param Portuguese:str
+ * @text Portuguese
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default Português
+ * 
+ * @param Romanian:str
+ * @text Romanian
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default Română
+ * 
+ * @param Russian:str
+ * @text Russian
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default Русский
+ * 
+ * @param Slovak:str
+ * @text Slovak
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default Slovenčina
+ * 
+ * @param Spanish:str
+ * @text Spanish
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default Español
+ * 
+ * @param Swedish:str
+ * @text Swedish
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default Svenska
+ * 
+ * @param Tamil:str
+ * @text Tamil
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default தமிழ்
+ * 
+ * @param Thai:str
+ * @text Thai
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default ไทย
+ * 
+ * @param Turkish:str
+ * @text Turkish
+ * @parent LangNames
+ * @desc How does this language appear in the in-game options?
+ * @default Türkçe
+ *
+ */
+/* ----------------------------------------------------------------------------
+ * Language Fonts Settings
+ * ----------------------------------------------------------------------------
+ */
+/*~struct~LanguageFonts:
+ *
+ * @param Bengali:str
+ * @text Bengali
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Chinese(Simplified):str
+ * @text Chinese (Simplified)
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Chinese(Traditional):str
+ * @text Chinese (Traditional)
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Czech:str
+ * @text Czech
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Danish:str
+ * @text Danish
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Dutch:str
+ * @text Dutch
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param English:str
+ * @text English
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Finnish:str
+ * @text Finnish
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param French:str
+ * @text French
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param German:str
+ * @text German
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Greek:str
+ * @text Greek
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Hindi:str
+ * @text Hindi
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Hungarian:str
+ * @text Hungarian
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Indonesian:str
+ * @text Indonesian
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Italian:str
+ * @text Italian
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Japanese:str
+ * @text Japanese
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Korean:str
+ * @text Korean
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Norwegian:str
+ * @text Norwegian
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Polish:str
+ * @text Polish
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Portuguese:str
+ * @text Portuguese
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Romanian:str
+ * @text Romanian
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Russian:str
+ * @text Russian
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Slovak:str
+ * @text Slovak
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Spanish:str
+ * @text Spanish
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Swedish:str
+ * @text Swedish
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Tamil:str
+ * @text Tamil
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Thai:str
+ * @text Thai
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ * 
+ * @param Turkish:str
+ * @text Turkish
+ * @desc What font face is used for this language?
+ * Make sure it is registered under Custom Font Manager.
+ * @default rmmz-mainfont
+ *
+ */
+/* ----------------------------------------------------------------------------
+ * Language Images Settings
+ * ----------------------------------------------------------------------------
+ */
+/*~struct~LanguageImages:
+ *
+ * @param ConvertDefault:eval
+ * @text Convert Default?
+ * @type boolean
+ * @on Convert
+ * @off Don't
+ * @desc ON: Default language uses converted marker.
+ * OFF: Default languages uses [XX] as marker.
+ * @default false
+ *
+ * @param Languages
+ * @text Languages
+ *
+ * @param Bengali:str
+ * @text Bengali
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Chinese(Simplified):str
+ * @text Chinese (Simplified)
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Chinese(Traditional):str
+ * @text Chinese (Traditional)
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Czech:str
+ * @text Czech
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Danish:str
+ * @text Danish
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Dutch:str
+ * @text Dutch
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param English:str
+ * @text English
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Finnish:str
+ * @text Finnish
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param French:str
+ * @text French
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param German:str
+ * @text German
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Greek:str
+ * @text Greek
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Hindi:str
+ * @text Hindi
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Hungarian:str
+ * @text Hungarian
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Indonesian:str
+ * @text Indonesian
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Italian:str
+ * @text Italian
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Japanese:str
+ * @text Japanese
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Korean:str
+ * @text Korean
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Norwegian:str
+ * @text Norwegian
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Polish:str
+ * @text Polish
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Portuguese:str
+ * @text Portuguese
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Romanian:str
+ * @text Romanian
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Russian:str
+ * @text Russian
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Slovak:str
+ * @text Slovak
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Spanish:str
+ * @text Spanish
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Swedish:str
+ * @text Swedish
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Tamil:str
+ * @text Tamil
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Thai:str
+ * @text Thai
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
+ * 
+ * @param Turkish:str
+ * @text Turkish
+ * @parent Languages
+ * @desc This text will replace [XX] with in image folder names
+ * and filenames when this language is selected.
+ * @default [XX]
  *
  */
 /* ----------------------------------------------------------------------------
@@ -2256,4 +4212,4030 @@ VisuMZ.MessageCore.version = 1.39;
  */
 //=============================================================================
 
-const _0x2d27b8=_0x4787;(function(_0x285fee,_0xb7710e){const _0x5cf7cc=_0x4787,_0xc9620=_0x285fee();while(!![]){try{const _0x348440=parseInt(_0x5cf7cc(0x2ec))/0x1*(parseInt(_0x5cf7cc(0xc3))/0x2)+parseInt(_0x5cf7cc(0x308))/0x3*(-parseInt(_0x5cf7cc(0x243))/0x4)+parseInt(_0x5cf7cc(0x33a))/0x5+parseInt(_0x5cf7cc(0x1c8))/0x6+parseInt(_0x5cf7cc(0xa0))/0x7+-parseInt(_0x5cf7cc(0x2d8))/0x8*(parseInt(_0x5cf7cc(0x183))/0x9)+-parseInt(_0x5cf7cc(0x119))/0xa*(parseInt(_0x5cf7cc(0x31e))/0xb);if(_0x348440===_0xb7710e)break;else _0xc9620['push'](_0xc9620['shift']());}catch(_0x9e9367){_0xc9620['push'](_0xc9620['shift']());}}}(_0x38f1,0x25e48));var label=_0x2d27b8(0xe8),tier=tier||0x0,dependencies=[],pluginData=$plugins['filter'](function(_0x5f0478){const _0x3b11a0=_0x2d27b8;return _0x5f0478[_0x3b11a0(0x15d)]&&_0x5f0478['description'][_0x3b11a0(0x19f)]('['+label+']');})[0x0];VisuMZ[label]['Settings']=VisuMZ[label]['Settings']||{},VisuMZ[_0x2d27b8(0x7f)]=function(_0x2d348b,_0x5d55fa){const _0x131a11=_0x2d27b8;for(const _0x5cc97a in _0x5d55fa){if(_0x5cc97a['match'](/(.*):(.*)/i)){if(_0x131a11(0x1db)!==_0x131a11(0x1db))this[_0x131a11(0x208)](_0x39b453);else{const _0x1e180a=String(RegExp['$1']),_0x5c6e4f=String(RegExp['$2'])['toUpperCase']()[_0x131a11(0x18b)]();let _0x20185f,_0x248542,_0x4f9ed0;switch(_0x5c6e4f){case'NUM':_0x20185f=_0x5d55fa[_0x5cc97a]!==''?Number(_0x5d55fa[_0x5cc97a]):0x0;break;case _0x131a11(0x169):_0x248542=_0x5d55fa[_0x5cc97a]!==''?JSON['parse'](_0x5d55fa[_0x5cc97a]):[],_0x20185f=_0x248542[_0x131a11(0x154)](_0x16bbbd=>Number(_0x16bbbd));break;case'EVAL':_0x20185f=_0x5d55fa[_0x5cc97a]!==''?eval(_0x5d55fa[_0x5cc97a]):null;break;case _0x131a11(0x181):_0x248542=_0x5d55fa[_0x5cc97a]!==''?JSON[_0x131a11(0x127)](_0x5d55fa[_0x5cc97a]):[],_0x20185f=_0x248542['map'](_0x11b1ce=>eval(_0x11b1ce));break;case _0x131a11(0x1e8):_0x20185f=_0x5d55fa[_0x5cc97a]!==''?JSON[_0x131a11(0x127)](_0x5d55fa[_0x5cc97a]):'';break;case _0x131a11(0xdc):_0x248542=_0x5d55fa[_0x5cc97a]!==''?JSON[_0x131a11(0x127)](_0x5d55fa[_0x5cc97a]):[],_0x20185f=_0x248542[_0x131a11(0x154)](_0x2da380=>JSON[_0x131a11(0x127)](_0x2da380));break;case _0x131a11(0xf9):_0x20185f=_0x5d55fa[_0x5cc97a]!==''?new Function(JSON['parse'](_0x5d55fa[_0x5cc97a])):new Function(_0x131a11(0x258));break;case _0x131a11(0x23f):_0x248542=_0x5d55fa[_0x5cc97a]!==''?JSON['parse'](_0x5d55fa[_0x5cc97a]):[],_0x20185f=_0x248542[_0x131a11(0x154)](_0x333544=>new Function(JSON[_0x131a11(0x127)](_0x333544)));break;case _0x131a11(0x189):_0x20185f=_0x5d55fa[_0x5cc97a]!==''?String(_0x5d55fa[_0x5cc97a]):'';break;case _0x131a11(0x28a):_0x248542=_0x5d55fa[_0x5cc97a]!==''?JSON[_0x131a11(0x127)](_0x5d55fa[_0x5cc97a]):[],_0x20185f=_0x248542[_0x131a11(0x154)](_0x43ec1c=>String(_0x43ec1c));break;case _0x131a11(0xc2):_0x4f9ed0=_0x5d55fa[_0x5cc97a]!==''?JSON[_0x131a11(0x127)](_0x5d55fa[_0x5cc97a]):{},_0x2d348b[_0x1e180a]={},VisuMZ[_0x131a11(0x7f)](_0x2d348b[_0x1e180a],_0x4f9ed0);continue;case _0x131a11(0x306):_0x248542=_0x5d55fa[_0x5cc97a]!==''?JSON[_0x131a11(0x127)](_0x5d55fa[_0x5cc97a]):[],_0x20185f=_0x248542['map'](_0x48bbc4=>VisuMZ['ConvertParams']({},JSON[_0x131a11(0x127)](_0x48bbc4)));break;default:continue;}_0x2d348b[_0x1e180a]=_0x20185f;}}}return _0x2d348b;},(_0x5547b3=>{const _0x41e950=_0x2d27b8,_0x348811=_0x5547b3[_0x41e950(0x222)];for(const _0x3f9882 of dependencies){if(!Imported[_0x3f9882]){if(_0x41e950(0x7c)===_0x41e950(0x239)){_0x468232['MessageCore'][_0x41e950(0x291)]=[];for(let _0x215e74=0x1;_0x215e74<=0x1f;_0x215e74++){const _0x1fb3a0=_0x41e950(0x67)[_0x41e950(0x165)](_0x215e74),_0xf5e8ad=_0x4f2ffc['MessageCore'][_0x41e950(0x1d3)][_0x41e950(0x18c)][_0x1fb3a0];_0xf5e8ad[_0x41e950(0xb4)]((_0x55eb02,_0x4b8d6f)=>{const _0x3aa134=_0x41e950;if(!_0x55eb02||!_0x4b8d6f)return-0x1;return _0x4b8d6f[_0x3aa134(0x315)]-_0x55eb02['length'];}),this[_0x41e950(0xa2)](_0xf5e8ad,_0x215e74);}}else{alert(_0x41e950(0x339)[_0x41e950(0x165)](_0x348811,_0x3f9882)),SceneManager[_0x41e950(0x2d9)]();break;}}}const _0x3fe922=_0x5547b3[_0x41e950(0x121)];if(_0x3fe922[_0x41e950(0x1c7)](/\[Version[ ](.*?)\]/i)){const _0x934d5a=Number(RegExp['$1']);_0x934d5a!==VisuMZ[label][_0x41e950(0x2ba)]&&(alert('%1\x27s\x20version\x20does\x20not\x20match\x20plugin\x27s.\x20Please\x20update\x20it\x20in\x20the\x20Plugin\x20Manager.'['format'](_0x348811,_0x934d5a)),SceneManager[_0x41e950(0x2d9)]());}if(_0x3fe922[_0x41e950(0x1c7)](/\[Tier[ ](\d+)\]/i)){if(_0x41e950(0x2bf)!=='GjfeN')this[_0x41e950(0x29b)](_0x14bff9['isMessageWindowWordWrap']());else{const _0x11205b=Number(RegExp['$1']);if(_0x11205b<tier){if('gvTFS'!==_0x41e950(0x305)){if(this[_0x41e950(0x225)]===_0x232bc8)this[_0x41e950(0x16c)]();this['_messageOffsetX']=_0x59cb58,this[_0x41e950(0x2ff)]=_0x7fca17;}else alert(_0x41e950(0x16e)[_0x41e950(0x165)](_0x348811,_0x11205b,tier)),SceneManager[_0x41e950(0x2d9)]();}else tier=Math[_0x41e950(0x9b)](_0x11205b,tier);}}VisuMZ[_0x41e950(0x7f)](VisuMZ[label][_0x41e950(0x1d3)],_0x5547b3['parameters']);})(pluginData),PluginManager[_0x2d27b8(0x1e3)](pluginData[_0x2d27b8(0x222)],_0x2d27b8(0xfa),_0x1ada89=>{const _0x2a7f84=_0x2d27b8;VisuMZ[_0x2a7f84(0x7f)](_0x1ada89,_0x1ada89);const _0x5ac2b1=_0x1ada89[_0x2a7f84(0x1da)]||$gameSystem[_0x2a7f84(0x2ab)]()||0x1,_0xf0049a=_0x1ada89[_0x2a7f84(0x26a)]||$gameSystem[_0x2a7f84(0x2ed)]()||0x1,_0x5132fa=_0x1ada89[_0x2a7f84(0x2a3)]||$gameSystem['getChoiceListMaxColumns']()||0x1,_0x4264b1=_0x1ada89[_0x2a7f84(0x2e0)][_0x2a7f84(0x294)]()||_0x2a7f84(0x20f);$gameSystem[_0x2a7f84(0x142)](_0x5ac2b1),$gameSystem[_0x2a7f84(0x17b)](_0xf0049a),$gameSystem[_0x2a7f84(0x2eb)](_0x5132fa),$gameSystem[_0x2a7f84(0x178)](_0x4264b1);}),PluginManager[_0x2d27b8(0x1e3)](pluginData['name'],'MessageWindowProperties',_0x3665f6=>{const _0xc7a98b=_0x2d27b8;VisuMZ[_0xc7a98b(0x7f)](_0x3665f6,_0x3665f6);const _0x438838=_0x3665f6[_0xc7a98b(0x1d5)]||$gameSystem[_0xc7a98b(0x99)]()||0x1,_0x5ca7bb=_0x3665f6[_0xc7a98b(0xe3)]||$gameSystem[_0xc7a98b(0x2ef)]()||0x1;$gameTemp[_0xc7a98b(0x29f)]=!![];const _0xe9d764=_0x3665f6[_0xc7a98b(0xc9)][_0xc7a98b(0x294)]();$gameSystem[_0xc7a98b(0x2e1)](_0x438838),$gameSystem[_0xc7a98b(0x13d)](_0x5ca7bb);[_0xc7a98b(0x6e),_0xc7a98b(0x24a)][_0xc7a98b(0x19f)](_0xe9d764)&&$gameSystem[_0xc7a98b(0xa9)](eval(_0xe9d764));const _0xee296c=SceneManager[_0xc7a98b(0x1b4)][_0xc7a98b(0x10d)];if(_0xee296c){if(_0xc7a98b(0x2aa)!==_0xc7a98b(0x2aa)){var _0x1780a6=/^\<(.*?)\>/[_0xc7a98b(0x88)](_0x1e0379[_0xc7a98b(0x105)][_0xc7a98b(0xc0)](_0x2289e5[_0xc7a98b(0x196)]));return _0x1780a6?(_0x113e67[_0xc7a98b(0x196)]+=_0x1780a6[0x0][_0xc7a98b(0x315)],_0x456583(_0x1780a6[0x0][_0xc7a98b(0xc0)](0x1,_0x1780a6[0x0][_0xc7a98b(0x315)]-0x1))):'';}else _0xee296c['resetWordWrap'](),_0xee296c[_0xc7a98b(0x75)](),_0xee296c[_0xc7a98b(0x332)]();}}),PluginManager[_0x2d27b8(0x1e3)](pluginData[_0x2d27b8(0x222)],_0x2d27b8(0x27b),_0x3e0f72=>{const _0x5f3103=_0x2d27b8;VisuMZ[_0x5f3103(0x7f)](_0x3e0f72,_0x3e0f72),$gameSystem[_0x5f3103(0x307)](_0x3e0f72[_0x5f3103(0xdf)],_0x3e0f72[_0x5f3103(0x24f)]);const _0x33d37b=SceneManager[_0x5f3103(0x1b4)]['_messageWindow'];_0x33d37b&&(_0x33d37b[_0x5f3103(0x20e)](),_0x33d37b[_0x5f3103(0x75)](),_0x33d37b[_0x5f3103(0x332)]());}),PluginManager[_0x2d27b8(0x1e3)](pluginData[_0x2d27b8(0x222)],_0x2d27b8(0x295),_0xfdbe28=>{const _0x20ad55=_0x2d27b8;VisuMZ[_0x20ad55(0x7f)](_0xfdbe28,_0xfdbe28);const _0xec2a55=_0xfdbe28['PictureIDs']||[],_0x1d0cfd=_0xfdbe28[_0x20ad55(0x270)]||0x0,_0x38d01a=['upperleft','up','upperright',_0x20ad55(0x1e4),_0x20ad55(0x268),_0x20ad55(0x113),_0x20ad55(0x8e),'down',_0x20ad55(0x6c)];for(const _0x42187a of _0xec2a55){$gameScreen[_0x20ad55(0xe5)](_0x42187a,_0x1d0cfd);for(const _0x17941d of _0x38d01a){if(_0xfdbe28[_0x17941d]===undefined)continue;$gameScreen[_0x20ad55(0x10c)](_0x42187a,_0xfdbe28[_0x17941d],_0x17941d);}}}),PluginManager[_0x2d27b8(0x1e3)](pluginData[_0x2d27b8(0x222)],_0x2d27b8(0x7a),_0x28de12=>{const _0x3f38b3=_0x2d27b8;VisuMZ['ConvertParams'](_0x28de12,_0x28de12);const _0xac99ef=_0x28de12[_0x3f38b3(0xcf)]||[];for(const _0x5d0907 of _0xac99ef){$gameScreen[_0x3f38b3(0x1e5)](_0x5d0907),$gameScreen['erasePictureTextBuffer'](_0x5d0907);}}),PluginManager[_0x2d27b8(0x1e3)](pluginData[_0x2d27b8(0x222)],_0x2d27b8(0x13e),_0x27fc69=>{const _0x2c98cf=_0x2d27b8;$gameScreen[_0x2c98cf(0x1e0)]();}),VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0xc7)]=Scene_Boot[_0x2d27b8(0x244)]['onDatabaseLoaded'],Scene_Boot[_0x2d27b8(0x244)][_0x2d27b8(0x30d)]=function(){const _0x4f0b82=_0x2d27b8;VisuMZ[_0x4f0b82(0xe8)]['Scene_Boot_onDatabaseLoaded'][_0x4f0b82(0x1ca)](this),this[_0x4f0b82(0x101)](),this['process_VisuMZ_MessageCore_TextCodes_Replace'](),this[_0x4f0b82(0x28c)](),this[_0x4f0b82(0x1ba)]();},VisuMZ['MessageCore'][_0x2d27b8(0x23c)]=function(_0x289d40){const _0x3211a5=_0x2d27b8,_0x4458e0=VisuMZ[_0x3211a5(0xe8)][_0x3211a5(0x1d3)][_0x289d40];_0x4458e0['sort']((_0x413823,_0x5efce3)=>{const _0x554f21=_0x3211a5;if(!_0x413823||!_0x5efce3)return-0x1;return _0x5efce3[_0x554f21(0x2f5)]['length']-_0x413823[_0x554f21(0x2f5)]['length'];});},Scene_Boot[_0x2d27b8(0x244)][_0x2d27b8(0x101)]=function(){const _0xc5fb4f=_0x2d27b8;VisuMZ[_0xc5fb4f(0xe8)][_0xc5fb4f(0x23c)](_0xc5fb4f(0x1e6));for(const _0x16fe4a of VisuMZ[_0xc5fb4f(0xe8)][_0xc5fb4f(0x1d3)]['TextCodeActions']){if(_0xc5fb4f(0x255)!==_0xc5fb4f(0x255)){const _0x698cfc=_0x503f24['$1'][_0xc5fb4f(0xc8)](',')[_0xc5fb4f(0x154)](_0x3950b9=>_0x27aa2c(_0x3950b9)||0x0);for(const _0x3ce273 of _0x698cfc){if(!_0x2ff976['value'](_0x3ce273))return!![];}return![];}else{_0x16fe4a[_0xc5fb4f(0x2f5)]=_0x16fe4a[_0xc5fb4f(0x2f5)][_0xc5fb4f(0xd4)](),_0x16fe4a['textCodeCheck']=new RegExp('\x1b'+_0x16fe4a[_0xc5fb4f(0x2f5)],'gi'),_0x16fe4a['textCodeResult']='\x1b'+_0x16fe4a[_0xc5fb4f(0x2f5)];if(_0x16fe4a[_0xc5fb4f(0xff)]==='')_0x16fe4a[_0xc5fb4f(0x325)]+=_0xc5fb4f(0x104);}}},Scene_Boot[_0x2d27b8(0x244)][_0x2d27b8(0x15b)]=function(){const _0x4502f8=_0x2d27b8;VisuMZ[_0x4502f8(0xe8)][_0x4502f8(0x23c)]('TextCodeReplace');for(const _0x35753e of VisuMZ[_0x4502f8(0xe8)][_0x4502f8(0x1d3)][_0x4502f8(0x164)]){_0x35753e[_0x4502f8(0x1c4)]=new RegExp('\x1b'+_0x35753e[_0x4502f8(0x2f5)]+_0x35753e[_0x4502f8(0xff)],'gi');if(_0x35753e['TextStr']!==''&&_0x35753e['TextStr']!=='Undefined'){if(_0x4502f8(0x22b)===_0x4502f8(0x2fb)){this[_0x4502f8(0x2cf)](_0x3ca70d);if(this['isColorLocked']())return;_0x37509c[_0x4502f8(0x147)]&&(this['_textColorStack']=this[_0x4502f8(0x11e)]||[],this[_0x4502f8(0x172)][_0x4502f8(0x2df)]=this['_textColorStack'][_0x4502f8(0x33f)]()||_0x5ba017['normalColor']());}else _0x35753e[_0x4502f8(0x325)]=new Function('return\x20\x27'+_0x35753e[_0x4502f8(0x174)]['replace'](/\\/g,'\x1b')+'\x27');}else _0x35753e['textCodeResult']=_0x35753e['TextJS'];}},Scene_Boot[_0x2d27b8(0x244)]['process_VisuMZ_MessageCore_TextMacros']=function(){const _0x34d40e=_0x2d27b8;for(const _0x5c2715 of VisuMZ['MessageCore']['Settings'][_0x34d40e(0x32c)]){_0x5c2715[_0x34d40e(0x1c4)]=new RegExp('\x5c['+_0x5c2715[_0x34d40e(0x2f5)]+'\x5c]','gi');if(_0x5c2715[_0x34d40e(0x174)]!==''&&_0x5c2715[_0x34d40e(0x174)]!==_0x34d40e(0xaa)){let _0x679492=_0x5c2715[_0x34d40e(0x174)];_0x679492=_0x679492[_0x34d40e(0x19d)](/\\/g,'\x1b'),_0x679492=_0x679492[_0x34d40e(0x19d)]('\x27','\x5c\x27'),_0x679492=_0x679492['replace']('\x22','\x5c\x22'),_0x5c2715[_0x34d40e(0x325)]=new Function(_0x34d40e(0x125)+_0x679492+'\x27');}else _0x5c2715[_0x34d40e(0x325)]=_0x5c2715[_0x34d40e(0x191)];}},Scene_Boot[_0x2d27b8(0x244)][_0x2d27b8(0x1ba)]=function(){const _0x23cdb2=_0x2d27b8,_0x2d47ad=VisuMZ[_0x23cdb2(0xe8)][_0x23cdb2(0x1d3)][_0x23cdb2(0x18c)];!VisuMZ[_0x23cdb2(0x1a6)]&&(VisuMZ[_0x23cdb2(0xe8)]['AddAutoColor']($dataClasses,_0x2d47ad[_0x23cdb2(0x290)]),VisuMZ[_0x23cdb2(0xe8)][_0x23cdb2(0xb5)]($dataSkills,_0x2d47ad['Skills']),VisuMZ[_0x23cdb2(0xe8)][_0x23cdb2(0xb5)]($dataItems,_0x2d47ad['Items']),VisuMZ['MessageCore'][_0x23cdb2(0xb5)]($dataWeapons,_0x2d47ad['Weapons']),VisuMZ[_0x23cdb2(0xe8)][_0x23cdb2(0xb5)]($dataArmors,_0x2d47ad[_0x23cdb2(0x1f3)]),VisuMZ[_0x23cdb2(0xe8)][_0x23cdb2(0xb5)]($dataEnemies,_0x2d47ad[_0x23cdb2(0x78)]),VisuMZ[_0x23cdb2(0xe8)][_0x23cdb2(0xb5)]($dataStates,_0x2d47ad[_0x23cdb2(0x247)])),VisuMZ['MessageCore']['CreateAutoColorRegExpLists']();},VisuMZ[_0x2d27b8(0xe8)]['AutoColorBypassList']=['V','N','P','C','I','PX','PY','G','{','}','<','>','FS','\x5c','$','.','|','!','<','>','^',_0x2d27b8(0x115),_0x2d27b8(0x25e),_0x2d27b8(0x131),'</I>',_0x2d27b8(0xed),_0x2d27b8(0x303),_0x2d27b8(0x22c),'</CENTER>','<RIGHT>',_0x2d27b8(0x1f5),_0x2d27b8(0x1d0),_0x2d27b8(0x210),_0x2d27b8(0x18d),_0x2d27b8(0x1a2),_0x2d27b8(0x19e),_0x2d27b8(0x212),_0x2d27b8(0x8d),_0x2d27b8(0x227),_0x2d27b8(0x2c4),_0x2d27b8(0x1fd),_0x2d27b8(0x1b5),_0x2d27b8(0x234),_0x2d27b8(0x1cf),_0x2d27b8(0x275),_0x2d27b8(0x328),_0x2d27b8(0x1e1),_0x2d27b8(0x316),_0x2d27b8(0x1eb),'ALL','ANY'],VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0xb5)]=function(_0xa4e412,_0x16a810){const _0x32a319=_0x2d27b8;if(_0x16a810<=0x0)return;const _0x4e9f2b=_0xa4e412;for(const _0x2ed24e of _0x4e9f2b){if(!_0x2ed24e)continue;VisuMZ[_0x32a319(0xe8)][_0x32a319(0x259)](_0x2ed24e,_0x16a810);}},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x2b4)]=function(){const _0x566a49=_0x2d27b8;VisuMZ[_0x566a49(0xe8)][_0x566a49(0x291)]=[];for(let _0x226faf=0x1;_0x226faf<=0x1f;_0x226faf++){if('UDoXR'===_0x566a49(0x2bb)){if(_0x2d585f[_0x566a49(0x1aa)](_0x557427))return!![];}else{const _0x54b283=_0x566a49(0x67)[_0x566a49(0x165)](_0x226faf),_0x8bbe75=VisuMZ[_0x566a49(0xe8)][_0x566a49(0x1d3)][_0x566a49(0x18c)][_0x54b283];_0x8bbe75['sort']((_0x4484c1,_0x2e37c5)=>{const _0x367118=_0x566a49;if(!_0x4484c1||!_0x2e37c5)return-0x1;return _0x2e37c5[_0x367118(0x315)]-_0x4484c1[_0x367118(0x315)];}),this[_0x566a49(0xa2)](_0x8bbe75,_0x226faf);}}},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0xa2)]=function(_0x59972a,_0x57bac2){const _0x41dfaf=_0x2d27b8;for(const _0x7d6b5f of _0x59972a){if(_0x7d6b5f[_0x41dfaf(0x315)]<=0x0)continue;if(/^\d+$/[_0x41dfaf(0x129)](_0x7d6b5f))continue;let _0x173150=VisuMZ[_0x41dfaf(0xe8)][_0x41dfaf(0x92)](_0x7d6b5f);if(_0x7d6b5f['match'](/[\u3000-\u303F]|[\u3040-\u309F]|[\u30A0-\u30FF]|[\uFF00-\uFFEF]|[\u4E00-\u9FAF]|[\u2605-\u2606]|[\u2190-\u2195]|\u203B/g))var _0x4a0b6d=new RegExp(_0x173150,'i');else var _0x4a0b6d=new RegExp('\x5cb'+_0x173150+'\x5cb','g');VisuMZ[_0x41dfaf(0xe8)]['AutoColorRegExp'][_0x41dfaf(0x249)]([_0x4a0b6d,_0x41dfaf(0x1b6)['format'](_0x57bac2,_0x7d6b5f)]);}},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x92)]=function(_0x4eec24){const _0xbcfcd0=_0x2d27b8;return _0x4eec24=_0x4eec24[_0xbcfcd0(0x19d)](/(\W)/gi,(_0x279e8f,_0x567508)=>'\x5c%1'[_0xbcfcd0(0x165)](_0x567508)),_0x4eec24;},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x2f7)]=VisuMZ[_0x2d27b8(0x2f7)],VisuMZ['ParseClassNotetags']=function(_0x4c0d9c){const _0x481c79=_0x2d27b8;VisuMZ[_0x481c79(0xe8)][_0x481c79(0x2f7)][_0x481c79(0x1ca)](this,_0x4c0d9c);const _0x42ac96=VisuMZ[_0x481c79(0xe8)][_0x481c79(0x1d3)]['AutoColor'];VisuMZ[_0x481c79(0xe8)][_0x481c79(0x259)](_0x4c0d9c,_0x42ac96[_0x481c79(0x290)]);},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x71)]=VisuMZ[_0x2d27b8(0x71)],VisuMZ['ParseSkillNotetags']=function(_0x43f56c){const _0x3b3221=_0x2d27b8;VisuMZ['MessageCore'][_0x3b3221(0x71)]['call'](this,_0x43f56c);const _0x644f76=VisuMZ['MessageCore'][_0x3b3221(0x1d3)][_0x3b3221(0x18c)];VisuMZ[_0x3b3221(0xe8)]['CreateAutoColorFor'](_0x43f56c,_0x644f76[_0x3b3221(0x79)]);},0x7,VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x33b)]=VisuMZ['ParseItemNotetags'],VisuMZ[_0x2d27b8(0x33b)]=function(_0x1fbf1d){const _0xaa3f8a=_0x2d27b8;VisuMZ['MessageCore'][_0xaa3f8a(0x33b)][_0xaa3f8a(0x1ca)](this,_0x1fbf1d);const _0x5f5d21=VisuMZ[_0xaa3f8a(0xe8)][_0xaa3f8a(0x1d3)]['AutoColor'];VisuMZ[_0xaa3f8a(0xe8)][_0xaa3f8a(0x259)](_0x1fbf1d,_0x5f5d21['Items']);},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x6d)]=VisuMZ[_0x2d27b8(0x6d)],VisuMZ['ParseWeaponNotetags']=function(_0xda4d99){const _0x58f130=_0x2d27b8;VisuMZ[_0x58f130(0xe8)][_0x58f130(0x6d)][_0x58f130(0x1ca)](this,_0xda4d99);const _0x478ed7=VisuMZ[_0x58f130(0xe8)][_0x58f130(0x1d3)][_0x58f130(0x18c)];VisuMZ[_0x58f130(0xe8)][_0x58f130(0x259)](_0xda4d99,_0x478ed7[_0x58f130(0x2c0)]);},VisuMZ[_0x2d27b8(0xe8)]['ParseArmorNotetags']=VisuMZ['ParseArmorNotetags'],VisuMZ[_0x2d27b8(0x2bc)]=function(_0x4a3ea4){const _0x5defc5=_0x2d27b8;VisuMZ[_0x5defc5(0xe8)][_0x5defc5(0x2bc)][_0x5defc5(0x1ca)](this,_0x4a3ea4);const _0xe66d55=VisuMZ['MessageCore'][_0x5defc5(0x1d3)][_0x5defc5(0x18c)];VisuMZ[_0x5defc5(0xe8)][_0x5defc5(0x259)](_0x4a3ea4,_0xe66d55[_0x5defc5(0x1f3)]);},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x138)]=VisuMZ[_0x2d27b8(0x138)],VisuMZ[_0x2d27b8(0x138)]=function(_0x3549bf){const _0x3d7004=_0x2d27b8;VisuMZ[_0x3d7004(0xe8)][_0x3d7004(0x138)][_0x3d7004(0x1ca)](this,_0x3549bf);const _0x1df60c=VisuMZ[_0x3d7004(0xe8)][_0x3d7004(0x1d3)][_0x3d7004(0x18c)];VisuMZ[_0x3d7004(0xe8)][_0x3d7004(0x259)](_0x3549bf,_0x1df60c[_0x3d7004(0x78)]);},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x84)]=VisuMZ[_0x2d27b8(0x84)],VisuMZ[_0x2d27b8(0x84)]=function(_0x4b005f){const _0x3fac7b=_0x2d27b8;VisuMZ[_0x3fac7b(0xe8)][_0x3fac7b(0x84)]['call'](this,_0x4b005f);const _0x26eee7=VisuMZ[_0x3fac7b(0xe8)]['Settings'][_0x3fac7b(0x18c)];VisuMZ[_0x3fac7b(0xe8)][_0x3fac7b(0x259)](_0x4b005f,_0x26eee7['States']);},VisuMZ['MessageCore'][_0x2d27b8(0x259)]=function(_0x24b447,_0x4adb61){const _0x1c4832=_0x2d27b8;if(_0x4adb61<=0x0)return;const _0x408c79=VisuMZ[_0x1c4832(0xe8)]['Settings'][_0x1c4832(0x18c)][_0x1c4832(0x250)+_0x4adb61];let _0x4b184a=_0x24b447['name'][_0x1c4832(0x18b)]();if(/^\d+$/[_0x1c4832(0x129)](_0x4b184a))return;if(VisuMZ[_0x1c4832(0xe8)]['AutoColorBypassList']['includes'](_0x4b184a[_0x1c4832(0xd4)]()))return;_0x4b184a=_0x4b184a[_0x1c4832(0x19d)](/\\I\[(\d+)\]/gi,''),_0x4b184a=_0x4b184a[_0x1c4832(0x19d)](/\x1bI\[(\d+)\]/gi,'');if(_0x4b184a[_0x1c4832(0x315)]<=0x0)return;if(_0x4b184a['match'](/-----/i))return;_0x408c79[_0x1c4832(0x249)](_0x4b184a);},SceneManager[_0x2d27b8(0x272)]=function(){const _0x1d5ee9=_0x2d27b8;return this[_0x1d5ee9(0x1b4)]&&this[_0x1d5ee9(0x1b4)][_0x1d5ee9(0x289)]===Scene_Battle;},SceneManager[_0x2d27b8(0xd2)]=function(){const _0x57f4ec=_0x2d27b8;return this[_0x57f4ec(0x1b4)]&&this[_0x57f4ec(0x1b4)][_0x57f4ec(0x289)]===Scene_Map;},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x16b)]=TextManager['message'],TextManager[_0x2d27b8(0x1b0)]=function(_0x320481){const _0x3d8230=_0x2d27b8,_0x28bbcf=[_0x3d8230(0x85),_0x3d8230(0xcc),_0x3d8230(0x185),'surprise',_0x3d8230(0x195),_0x3d8230(0x323),_0x3d8230(0x202),_0x3d8230(0x2f8),'obtainGold',_0x3d8230(0x160)];let _0x1e8521=VisuMZ[_0x3d8230(0xe8)]['TextManager_message'][_0x3d8230(0x1ca)](this,_0x320481);return _0x28bbcf[_0x3d8230(0x19f)](_0x320481)&&(_0x1e8521=_0x3d8230(0x212)+_0x1e8521),_0x1e8521;},ConfigManager[_0x2d27b8(0xe4)]=VisuMZ[_0x2d27b8(0xe8)]['Settings']['TextSpeed'][_0x2d27b8(0xd7)],VisuMZ[_0x2d27b8(0xe8)]['ConfigManager_makeData']=ConfigManager['makeData'],ConfigManager['makeData']=function(){const _0x59b299=_0x2d27b8,_0x40608c=VisuMZ[_0x59b299(0xe8)]['ConfigManager_makeData'][_0x59b299(0x1ca)](this);return _0x40608c[_0x59b299(0xe4)]=this[_0x59b299(0xe4)],_0x40608c;},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x10b)]=ConfigManager[_0x2d27b8(0x2d0)],ConfigManager['applyData']=function(_0x46ef56){const _0x4fd3e5=_0x2d27b8;VisuMZ['MessageCore'][_0x4fd3e5(0x10b)][_0x4fd3e5(0x1ca)](this,_0x46ef56);if('textSpeed'in _0x46ef56){if(_0x4fd3e5(0x26d)===_0x4fd3e5(0x2e6)){const _0x4aca71=this[_0x4fd3e5(0x120)](_0x3f4710)[_0x4fd3e5(0xc8)](',');if(!_0x9b4a66['drawing'])return;const _0x11141e=_0x4aca71[0x0][_0x4fd3e5(0x18b)](),_0x2c22f4=_0x4aca71[0x1]||0x0,_0x429be8=_0x4aca71[0x2]||0x0,_0xed6c8e=_0x3ac847[_0x4fd3e5(0x26b)](_0x11141e),_0x12e2f5=this[_0x4fd3e5(0x172)][_0x4fd3e5(0x135)];_0xed6c8e[_0x4fd3e5(0x87)](this['drawBackPicture'][_0x4fd3e5(0x111)](this,_0xed6c8e,_0x750956['x'],_0x1f2596['y'],_0x2c22f4,_0x429be8,_0x12e2f5));}else this[_0x4fd3e5(0xe4)]=Number(_0x46ef56[_0x4fd3e5(0xe4)])['clamp'](0x1,0xb);}else this[_0x4fd3e5(0xe4)]=VisuMZ[_0x4fd3e5(0xe8)][_0x4fd3e5(0x1d3)][_0x4fd3e5(0x2e9)]['Default'];},TextManager[_0x2d27b8(0x74)]=VisuMZ['MessageCore'][_0x2d27b8(0x1d3)][_0x2d27b8(0x2e9)][_0x2d27b8(0x166)],TextManager['instantTextSpeed']=VisuMZ[_0x2d27b8(0xe8)]['Settings']['TextSpeed'][_0x2d27b8(0x297)],VisuMZ[_0x2d27b8(0xe8)]['Game_System_initialize']=Game_System[_0x2d27b8(0x244)]['initialize'],Game_System[_0x2d27b8(0x244)][_0x2d27b8(0x91)]=function(){const _0x4914a6=_0x2d27b8;VisuMZ['MessageCore'][_0x4914a6(0x33e)][_0x4914a6(0x1ca)](this),this[_0x4914a6(0x16c)]();},Game_System[_0x2d27b8(0x244)][_0x2d27b8(0x16c)]=function(){const _0x5d7681=_0x2d27b8,_0x357b6d=VisuMZ[_0x5d7681(0xe8)]['Settings'][_0x5d7681(0x192)],_0x136c56=VisuMZ[_0x5d7681(0xe8)]['Settings'][_0x5d7681(0xc9)];this[_0x5d7681(0x225)]={'messageRows':_0x357b6d[_0x5d7681(0x2b7)],'messageWidth':_0x357b6d[_0x5d7681(0x2e2)],'messageWordWrap':_0x136c56['MessageWindow'],'helpWordWrap':_0x136c56[_0x5d7681(0x1ce)],'choiceLineHeight':_0x357b6d[_0x5d7681(0x336)],'choiceRows':_0x357b6d['ChoiceWindowMaxRows'],'choiceCols':_0x357b6d[_0x5d7681(0x83)],'choiceTextAlign':_0x357b6d[_0x5d7681(0x20a)]},this['_messageOffsetX']===undefined&&(this[_0x5d7681(0xb1)]=_0x357b6d[_0x5d7681(0x2e8)],this['_messageOffsetY']=_0x357b6d[_0x5d7681(0x241)]);},Game_System[_0x2d27b8(0x244)][_0x2d27b8(0x99)]=function(){const _0xafb60e=_0x2d27b8;if(this[_0xafb60e(0x225)]===undefined)this['initMessageCore']();if(this['_MessageCoreSettings'][_0xafb60e(0x29a)]===undefined)this['initMessageCore']();return this[_0xafb60e(0x225)][_0xafb60e(0x29a)];},Game_System[_0x2d27b8(0x244)][_0x2d27b8(0x2e1)]=function(_0x2a1b20){const _0x54ef94=_0x2d27b8;if(this[_0x54ef94(0x225)]===undefined)this[_0x54ef94(0x16c)]();if(this[_0x54ef94(0x225)][_0x54ef94(0x29a)]===undefined)this[_0x54ef94(0x16c)]();this[_0x54ef94(0x225)]['messageRows']=_0x2a1b20||0x1;},Game_System[_0x2d27b8(0x244)]['getMessageWindowWidth']=function(){const _0x5514f2=_0x2d27b8;if(this[_0x5514f2(0x225)]===undefined)this[_0x5514f2(0x16c)]();if(this[_0x5514f2(0x225)][_0x5514f2(0x286)]===undefined)this[_0x5514f2(0x16c)]();return this[_0x5514f2(0x225)][_0x5514f2(0x286)];},Game_System['prototype'][_0x2d27b8(0x13d)]=function(_0x14354d){const _0xf581ff=_0x2d27b8;if(this[_0xf581ff(0x225)]===undefined)this[_0xf581ff(0x16c)]();if(this['_MessageCoreSettings'][_0xf581ff(0x286)]===undefined)this['initMessageCore']();_0x14354d=Math[_0xf581ff(0x1c6)](_0x14354d);if(_0x14354d%0x2!==0x0)_0x14354d+=0x1;this[_0xf581ff(0x225)][_0xf581ff(0x286)]=_0x14354d||0x2;},Game_System[_0x2d27b8(0x244)]['isMessageWindowWordWrap']=function(){const _0x235e28=_0x2d27b8;if(this[_0x235e28(0x225)]===undefined)this['initMessageCore']();if(this[_0x235e28(0x225)][_0x235e28(0x9d)]===undefined)this[_0x235e28(0x16c)]();return this['_MessageCoreSettings'][_0x235e28(0x9d)];},Game_System[_0x2d27b8(0x244)][_0x2d27b8(0xa9)]=function(_0x118739){const _0x48427e=_0x2d27b8;if(this[_0x48427e(0x225)]===undefined)this[_0x48427e(0x16c)]();if(this[_0x48427e(0x225)][_0x48427e(0x9d)]===undefined)this[_0x48427e(0x16c)]();this[_0x48427e(0x225)][_0x48427e(0x9d)]=_0x118739;},Game_System['prototype'][_0x2d27b8(0x216)]=function(){const _0x41d722=_0x2d27b8;if(this['_messageOffsetX']===undefined){const _0x3d9a2a=VisuMZ[_0x41d722(0xe8)]['Settings'][_0x41d722(0x192)];this[_0x41d722(0xb1)]=_0x3d9a2a['MsgWindowOffsetX'],this['_messageOffsetY']=_0x3d9a2a['MsgWindowOffsetY'];}return{'x':this[_0x41d722(0xb1)]||0x0,'y':this['_messageOffsetY']||0x0};},Game_System[_0x2d27b8(0x244)][_0x2d27b8(0x307)]=function(_0xf05d29,_0x2f753){const _0x57d647=_0x2d27b8;if(this[_0x57d647(0x225)]===undefined)this[_0x57d647(0x16c)]();this['_messageOffsetX']=_0xf05d29,this[_0x57d647(0x2ff)]=_0x2f753;},Game_System[_0x2d27b8(0x244)][_0x2d27b8(0x2da)]=function(){const _0x4ce01a=_0x2d27b8;if(this[_0x4ce01a(0x225)]===undefined)this[_0x4ce01a(0x16c)]();if(this['_MessageCoreSettings'][_0x4ce01a(0x10a)]===undefined)this[_0x4ce01a(0x16c)]();return this[_0x4ce01a(0x225)]['helpWordWrap'];},Game_System[_0x2d27b8(0x244)]['setHelpWindowWordWrap']=function(_0x1b4b40){const _0x46e3bb=_0x2d27b8;if(this[_0x46e3bb(0x225)]===undefined)this[_0x46e3bb(0x16c)]();if(this['_MessageCoreSettings'][_0x46e3bb(0x10a)]===undefined)this[_0x46e3bb(0x16c)]();this[_0x46e3bb(0x225)]['helpWordWrap']=_0x1b4b40;},Game_System['prototype'][_0x2d27b8(0x2ab)]=function(){const _0x58796a=_0x2d27b8;if(this[_0x58796a(0x225)]===undefined)this[_0x58796a(0x16c)]();if(this['_MessageCoreSettings']['choiceLineHeight']===undefined)this['initMessageCore']();return this[_0x58796a(0x225)][_0x58796a(0x97)];},Game_System['prototype']['setChoiceListLineHeight']=function(_0x38efa3){const _0x2520e9=_0x2d27b8;if(this[_0x2520e9(0x225)]===undefined)this[_0x2520e9(0x16c)]();if(this[_0x2520e9(0x225)][_0x2520e9(0x97)]===undefined)this['initMessageCore']();this[_0x2520e9(0x225)][_0x2520e9(0x97)]=_0x38efa3||0x1;},Game_System[_0x2d27b8(0x244)][_0x2d27b8(0x2ed)]=function(){const _0x7ca01e=_0x2d27b8;if(this[_0x7ca01e(0x225)]===undefined)this[_0x7ca01e(0x16c)]();if(this[_0x7ca01e(0x225)]['choiceRows']===undefined)this[_0x7ca01e(0x16c)]();return this[_0x7ca01e(0x225)][_0x7ca01e(0x8a)];},Game_System[_0x2d27b8(0x244)]['setChoiceListMaxRows']=function(_0xee552c){const _0x3c809b=_0x2d27b8;if(this[_0x3c809b(0x225)]===undefined)this['initMessageCore']();if(this['_MessageCoreSettings']['choiceRows']===undefined)this[_0x3c809b(0x16c)]();this[_0x3c809b(0x225)]['choiceRows']=_0xee552c||0x1;},Game_System['prototype'][_0x2d27b8(0x15c)]=function(){const _0x34a7cc=_0x2d27b8;if(this[_0x34a7cc(0x225)]===undefined)this['initMessageCore']();if(this[_0x34a7cc(0x225)]['choiceCols']===undefined)this['initMessageCore']();return this[_0x34a7cc(0x225)][_0x34a7cc(0xa4)];},Game_System['prototype']['setChoiceListMaxColumns']=function(_0x2b5dc4){const _0xb042d=_0x2d27b8;if(this[_0xb042d(0x225)]===undefined)this['initMessageCore']();if(this['_MessageCoreSettings']['choiceCols']===undefined)this[_0xb042d(0x16c)]();this[_0xb042d(0x225)][_0xb042d(0xa4)]=_0x2b5dc4||0x1;},Game_System['prototype'][_0x2d27b8(0x230)]=function(){const _0x4d570f=_0x2d27b8;if(this['_MessageCoreSettings']===undefined)this[_0x4d570f(0x16c)]();if(this['_MessageCoreSettings'][_0x4d570f(0xbd)]===undefined)this['initMessageCore']();return this['_MessageCoreSettings']['choiceTextAlign'];},Game_System[_0x2d27b8(0x244)][_0x2d27b8(0x178)]=function(_0x3f91df){const _0x3caaed=_0x2d27b8;if(this[_0x3caaed(0x225)]===undefined)this[_0x3caaed(0x16c)]();if(this[_0x3caaed(0x225)][_0x3caaed(0xbd)]===undefined)this[_0x3caaed(0x16c)]();this[_0x3caaed(0x225)][_0x3caaed(0xbd)]=_0x3f91df['toLowerCase']();},VisuMZ['MessageCore'][_0x2d27b8(0xec)]=Game_Screen[_0x2d27b8(0x244)][_0x2d27b8(0xe1)],Game_Screen['prototype'][_0x2d27b8(0xe1)]=function(){const _0x1f6def=_0x2d27b8;VisuMZ['MessageCore'][_0x1f6def(0xec)]['call'](this),this['clearAllPictureTexts']();},Game_Screen[_0x2d27b8(0x244)][_0x2d27b8(0x95)]=function(){const _0x5f19b5=_0x2d27b8;this[_0x5f19b5(0x11d)]=[],this['_pictureTextBuffer']=[],this[_0x5f19b5(0x106)]=[];},Game_Screen[_0x2d27b8(0x244)][_0x2d27b8(0x2d1)]=function(_0x2d4c20){const _0x15ee22=_0x2d27b8;if(this[_0x15ee22(0x11d)]===undefined)this[_0x15ee22(0x95)]();const _0x50518f=this[_0x15ee22(0x144)](_0x2d4c20);return this['_pictureText'][_0x50518f]=this[_0x15ee22(0x11d)][_0x50518f]||{},this[_0x15ee22(0x11d)][_0x50518f];},Game_Screen[_0x2d27b8(0x244)]['getPictureText']=function(_0x451264,_0x115298){return _0x115298=_0x115298['toLowerCase']()['trim'](),this['getPictureTextData'](_0x451264)[_0x115298]||'';},Game_Screen[_0x2d27b8(0x244)][_0x2d27b8(0x10c)]=function(_0x23d38a,_0x39aa87,_0x43f388){const _0x29dd00=_0x2d27b8;_0x43f388=_0x43f388[_0x29dd00(0x294)]()['trim'](),this[_0x29dd00(0x2d1)](_0x23d38a)[_0x43f388]=_0x39aa87||'',this[_0x29dd00(0x314)](_0x23d38a,!![]);},Game_Screen[_0x2d27b8(0x244)][_0x2d27b8(0x1e5)]=function(_0x437b56){const _0x1a141b=_0x2d27b8;if(this['_pictureText']===undefined)this['clearAllPictureTexts']();const _0xd99bda=this['realPictureId'](_0x437b56);this[_0x1a141b(0x11d)][_0xd99bda]=null,this[_0x1a141b(0x314)](_0x437b56,!![]);},Game_Screen[_0x2d27b8(0x244)][_0x2d27b8(0x187)]=function(_0x1a092e){const _0x4f818a=_0x2d27b8;if(this['_pictureText']===undefined)this[_0x4f818a(0x95)]();const _0x3b50be=this[_0x4f818a(0x144)](_0x1a092e);return this['_pictureTextBuffer'][_0x3b50be]||0x0;},Game_Screen['prototype'][_0x2d27b8(0xe5)]=function(_0x1ae7a3,_0x38a3ad){const _0x3a7af3=_0x2d27b8;if(this[_0x3a7af3(0x11d)]===undefined)this[_0x3a7af3(0x95)]();const _0x3aaea4=this[_0x3a7af3(0x144)](_0x1ae7a3);this['_pictureTextBuffer'][_0x3aaea4]=Math[_0x3a7af3(0x9b)](0x0,_0x38a3ad);},Game_Screen[_0x2d27b8(0x244)]['erasePictureTextBuffer']=function(_0x57ebec){const _0x37b9f3=_0x2d27b8;if(this[_0x37b9f3(0x11d)]===undefined)this[_0x37b9f3(0x95)]();const _0x40237d=this[_0x37b9f3(0x144)](_0x57ebec);this[_0x37b9f3(0x2fd)][_0x40237d]=undefined;},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x13c)]=Game_Screen[_0x2d27b8(0x244)][_0x2d27b8(0x1e2)],Game_Screen[_0x2d27b8(0x244)][_0x2d27b8(0x1e2)]=function(_0x5773f8){const _0x44d3f2=_0x2d27b8;VisuMZ[_0x44d3f2(0xe8)][_0x44d3f2(0x13c)][_0x44d3f2(0x1ca)](this,_0x5773f8),this[_0x44d3f2(0x1e5)](_0x5773f8),this[_0x44d3f2(0x30f)](_0x5773f8),this[_0x44d3f2(0x314)](_0x5773f8,!![]);},Game_Screen[_0x2d27b8(0x244)]['requestPictureTextRefreshAll']=function(){const _0xe3e6c3=_0x2d27b8;for(const _0x485ecf of this[_0xe3e6c3(0x14e)]){if(_0x485ecf){if('yVloD'==='YbgTc')_0x23f196=_0x5b5baf||_0x423e83[_0xe3e6c3(0x2c7)],_0x336092=_0xd35844||_0x25c44e[_0xe3e6c3(0x2dc)],this[_0xe3e6c3(0x279)][_0xe3e6c3(0x135)]=_0x5d7824,this[_0xe3e6c3(0x279)][_0xe3e6c3(0x211)](_0x200270,0x0,0x0,_0x4c958e[_0xe3e6c3(0x2c7)],_0x4306cb[_0xe3e6c3(0x2dc)],_0x5def98,_0x269b53,_0x5e2352,_0x234c40),this[_0xe3e6c3(0x279)]['paintOpacity']=0xff;else{let _0x51f911=this[_0xe3e6c3(0x14e)][_0xe3e6c3(0x269)](_0x485ecf);this[_0xe3e6c3(0x314)](_0x51f911);}}}},Game_Screen[_0x2d27b8(0x244)][_0x2d27b8(0x314)]=function(_0x43f482,_0x37391a){const _0x43d57e=_0x2d27b8;this[_0x43d57e(0x106)]=this[_0x43d57e(0x106)]||[],(this[_0x43d57e(0x2f3)](_0x43f482)||_0x37391a)&&this[_0x43d57e(0x106)][_0x43d57e(0x249)](_0x43f482);},Game_Screen[_0x2d27b8(0x244)]['needsPictureTextRefresh']=function(_0x54689d){const _0x365694=_0x2d27b8;return this[_0x365694(0x106)]=this[_0x365694(0x106)]||[],this[_0x365694(0x106)][_0x365694(0x19f)](_0x54689d);},Game_Screen[_0x2d27b8(0x244)][_0x2d27b8(0x263)]=function(_0x7faaae){const _0x41e7fc=_0x2d27b8;this['_pictureTextRefresh']=this[_0x41e7fc(0x106)]||[],this[_0x41e7fc(0x106)][_0x41e7fc(0x14b)](_0x7faaae);},Game_Screen['prototype'][_0x2d27b8(0x2f3)]=function(_0x5b058b){const _0x47b418=_0x2d27b8,_0x2c6a3b=[_0x47b418(0xe9),'up',_0x47b418(0xe7),_0x47b418(0x1e4),_0x47b418(0x268),'right',_0x47b418(0x8e),_0x47b418(0xca),_0x47b418(0x6c)];return _0x2c6a3b[_0x47b418(0x260)](_0x233eb3=>this[_0x47b418(0xce)](_0x5b058b,_0x233eb3)!=='');},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x203)]=Game_Party[_0x2d27b8(0x244)][_0x2d27b8(0x91)],Game_Party[_0x2d27b8(0x244)][_0x2d27b8(0x91)]=function(){const _0x38b618=_0x2d27b8;VisuMZ[_0x38b618(0xe8)][_0x38b618(0x203)][_0x38b618(0x1ca)](this),this['initMessageCore']();},Game_Party[_0x2d27b8(0x244)][_0x2d27b8(0x16c)]=function(){this['_lastGainedItemData']={'type':0x0,'id':0x0,'quantity':0x0};},Game_Party[_0x2d27b8(0x244)][_0x2d27b8(0x143)]=function(){const _0x30ba4e=_0x2d27b8;if(this[_0x30ba4e(0x31c)]===undefined)this[_0x30ba4e(0x16c)]();return this[_0x30ba4e(0x31c)];},Game_Party[_0x2d27b8(0x244)][_0x2d27b8(0x248)]=function(_0x190fe8,_0x2e5ded){const _0x441332=_0x2d27b8;if(this[_0x441332(0x31c)]===undefined)this[_0x441332(0x16c)]();if(!_0x190fe8)return;if(DataManager[_0x441332(0x319)](_0x190fe8))this[_0x441332(0x31c)]['type']=0x0;else{if(DataManager[_0x441332(0x214)](_0x190fe8))this[_0x441332(0x31c)][_0x441332(0x2d3)]=0x1;else DataManager[_0x441332(0x2b1)](_0x190fe8)&&('NLgge'!==_0x441332(0x2ea)?this[_0x441332(0x31c)]['type']=0x2:this[_0x441332(0x31c)]={'type':0x0,'id':0x0,'quantity':0x0});}this[_0x441332(0x31c)]['id']=_0x190fe8['id'],this['_lastGainedItemData'][_0x441332(0x140)]=_0x2e5ded;},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x282)]=Game_Party[_0x2d27b8(0x244)]['gainItem'],Game_Party['prototype'][_0x2d27b8(0x1be)]=function(_0x236797,_0x3a355d,_0x116e95){const _0x28bfa7=_0x2d27b8;VisuMZ[_0x28bfa7(0xe8)]['Game_Party_gainItem'][_0x28bfa7(0x1ca)](this,_0x236797,_0x3a355d,_0x116e95),_0x3a355d>0x0&&this['setLastGainedItemData'](_0x236797,_0x3a355d);},VisuMZ[_0x2d27b8(0xe8)]['Game_Map_initialize']=Game_Map[_0x2d27b8(0x244)]['initialize'],Game_Map[_0x2d27b8(0x244)][_0x2d27b8(0x91)]=function(){const _0x8a9ed5=_0x2d27b8;VisuMZ[_0x8a9ed5(0xe8)][_0x8a9ed5(0x320)]['call'](this),this[_0x8a9ed5(0x246)]=[];},VisuMZ['MessageCore'][_0x2d27b8(0x1f9)]=Game_Map[_0x2d27b8(0x244)][_0x2d27b8(0x27d)],Game_Map[_0x2d27b8(0x244)][_0x2d27b8(0x27d)]=function(){const _0x431cb6=_0x2d27b8;VisuMZ[_0x431cb6(0xe8)][_0x431cb6(0x1f9)][_0x431cb6(0x1ca)](this),this[_0x431cb6(0x246)]=[];},VisuMZ['MessageCore'][_0x2d27b8(0x13f)]=Game_Map[_0x2d27b8(0x244)][_0x2d27b8(0x2fc)],Game_Map[_0x2d27b8(0x244)][_0x2d27b8(0x2fc)]=function(){const _0x3d2d6f=_0x2d27b8;VisuMZ[_0x3d2d6f(0xe8)][_0x3d2d6f(0x13f)][_0x3d2d6f(0x1ca)](this),this['updateMessageCommonEvents']();},Game_Map['prototype'][_0x2d27b8(0x21b)]=function(_0x1f904a){const _0xc74e69=_0x2d27b8;if(!$dataCommonEvents[_0x1f904a])return;this['_messageCommonEvents']=this['_messageCommonEvents']||[];const _0x24efc9=this[_0xc74e69(0x1df)]['_eventId'],_0x18f27a=new Game_MessageCommonEvent(_0x1f904a,_0x24efc9);this[_0xc74e69(0x246)]['push'](_0x18f27a);},Game_Map[_0x2d27b8(0x244)][_0x2d27b8(0x130)]=function(){const _0x1787bb=_0x2d27b8;this[_0x1787bb(0x246)]=this[_0x1787bb(0x246)]||[];for(const _0xcc6739 of this[_0x1787bb(0x246)]){if(!_0xcc6739[_0x1787bb(0x1df)]){if('cfjEe'!==_0x1787bb(0x12e))this['_messageCommonEvents']['remove'](_0xcc6739);else return this['_scene']&&this[_0x1787bb(0x1b4)]['constructor']===_0x542056;}else _0xcc6739[_0x1787bb(0x8f)]();}},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x103)]=Game_Map[_0x2d27b8(0x244)][_0x2d27b8(0x82)],Game_Map['prototype']['refresh']=function(){const _0x2dcddb=_0x2d27b8;VisuMZ[_0x2dcddb(0xe8)][_0x2dcddb(0x103)][_0x2dcddb(0x1ca)](this),$gameScreen[_0x2dcddb(0x1e0)]();},Game_Interpreter[_0x2d27b8(0x244)][_0x2d27b8(0x1fb)]=function(_0x3d36a1){const _0x3a9ad2=_0x2d27b8;if($gameMessage['isBusy']())return![];return this['prepareShowTextCommand'](_0x3d36a1),this[_0x3a9ad2(0xd6)](_0x3d36a1),this[_0x3a9ad2(0x333)](_0x3d36a1),this[_0x3a9ad2(0x262)]('message'),!![];},Game_Interpreter[_0x2d27b8(0x244)][_0x2d27b8(0x1ec)]=function(_0x36ca3e){const _0x10098e=_0x2d27b8;$gameMessage[_0x10098e(0x1fa)](_0x36ca3e[0x0],_0x36ca3e[0x1]),$gameMessage[_0x10098e(0x134)](_0x36ca3e[0x2]),$gameMessage[_0x10098e(0x2f4)](_0x36ca3e[0x3]),$gameMessage['setSpeakerName'](_0x36ca3e[0x4]);},Game_Interpreter[_0x2d27b8(0x244)][_0x2d27b8(0xd6)]=function(_0x1b6770){const _0x300268=_0x2d27b8;while(this[_0x300268(0x89)]()){this[_0x300268(0x150)]++;if(this[_0x300268(0x17c)]()['code']===0x191){let _0x364fa4=this[_0x300268(0x17c)]()[_0x300268(0x90)][0x0];_0x364fa4=VisuMZ['MessageCore'][_0x300268(0x1ff)](_0x364fa4),$gameMessage['add'](_0x364fa4);}if(this['isBreakShowTextCommands']())break;}},Game_Interpreter[_0x2d27b8(0x244)]['isContinuePrepareShowTextCommands']=function(){const _0x3cde3d=_0x2d27b8;if(this['nextEventCode']()===0x65&&$gameSystem['getMessageWindowRows']()>0x4){if(_0x3cde3d(0x231)==='bWlPs')return!![];else this[_0x3cde3d(0x106)]=this[_0x3cde3d(0x106)]||[],this['_pictureTextRefresh'][_0x3cde3d(0x14b)](_0x529809);}else return this[_0x3cde3d(0x117)]()===0x191;},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x1ff)]=function(_0xf02115){const _0x5cc848=_0x2d27b8;return _0xf02115=_0xf02115[_0x5cc848(0x19d)](/<(?:NEXT PAGE|NEXTPAGE)>/gi,''),_0xf02115;},Game_Interpreter['prototype'][_0x2d27b8(0x285)]=function(){const _0x52f498=_0x2d27b8;if(this[_0x52f498(0x17c)]()&&this[_0x52f498(0x17c)]()['parameters'][0x0]['match'](/<(?:NEXT PAGE|NEXTPAGE)>/gi)){if(_0x52f498(0xbe)===_0x52f498(0x274)){const _0x5bb405=this['_messageWindow'],_0x378347=_0x5bb405?_0x5bb405['y']:0x0,_0x302935=_0x5bb405?_0x5bb405[_0x52f498(0x2dc)]:0x0,_0x124846=_0xdd454d[_0x52f498(0x198)]/0x2;return _0x378347<_0x124846&&_0x378347+_0x302935>_0x124846?0x4:_0x5d70ea[_0x52f498(0x2ed)]();}else return!![];}return $gameMessage[_0x52f498(0x1d1)][_0x52f498(0x315)]>=$gameSystem[_0x52f498(0x99)]()&&this[_0x52f498(0x117)]()!==0x191;},Game_Interpreter[_0x2d27b8(0x244)][_0x2d27b8(0x333)]=function(_0x1c0f2c){const _0x5d4773=_0x2d27b8;switch(this[_0x5d4773(0x117)]()){case 0x66:this[_0x5d4773(0x150)]++,this['setupChoices'](this[_0x5d4773(0x17c)]()['parameters']);break;case 0x67:this['_index']++,this[_0x5d4773(0x2ee)](this[_0x5d4773(0x17c)]()['parameters']);break;case 0x68:this[_0x5d4773(0x150)]++,this[_0x5d4773(0x2e5)](this[_0x5d4773(0x17c)]()[_0x5d4773(0x90)]);break;}},VisuMZ[_0x2d27b8(0xe8)]['Game_Interpreter_setupChoices']=Game_Interpreter[_0x2d27b8(0x244)][_0x2d27b8(0x179)],Game_Interpreter[_0x2d27b8(0x244)][_0x2d27b8(0x179)]=function(_0x1cfede){const _0x357686=_0x2d27b8;_0x1cfede=this['addContinuousShowChoices'](),VisuMZ['MessageCore'][_0x357686(0xda)]['call'](this,_0x1cfede);},Game_Interpreter[_0x2d27b8(0x244)]['addContinuousShowChoices']=function(){const _0x5e2c71=_0x2d27b8,_0x2009e1=this[_0x5e2c71(0x150)],_0x256ec0=[];let _0x30335a=0x0;this['_index']++;while(this['_index']<this['_list'][_0x5e2c71(0x315)]){if(this[_0x5e2c71(0x17c)]()['indent']===this[_0x5e2c71(0xee)]){if(this[_0x5e2c71(0x17c)]()[_0x5e2c71(0x182)]===0x194&&this[_0x5e2c71(0x117)]()!==0x66)break;else{if(this[_0x5e2c71(0x17c)]()[_0x5e2c71(0x182)]===0x66)this[_0x5e2c71(0x197)](_0x30335a,this[_0x5e2c71(0x17c)](),_0x2009e1),this['_index']-=0x2;else{if(this[_0x5e2c71(0x17c)]()['code']===0x192){if('TkndD'!==_0x5e2c71(0xd1)){const _0x29a5f2=_0x5e2c71(0x69);_0x909af6=_0x29a5f2[_0x5e2c71(0x165)](_0x4c8f2f[_0x5e2c71(0x280)],_0x3c1fe8[_0x5e2c71(0x222)]);}else this[_0x5e2c71(0x17c)]()['parameters'][0x0]=_0x30335a,_0x30335a++;}}}}this[_0x5e2c71(0x150)]++;}return this['_index']=_0x2009e1,this[_0x5e2c71(0x17c)]()[_0x5e2c71(0x90)];},Game_Interpreter[_0x2d27b8(0x244)][_0x2d27b8(0x197)]=function(_0x1cabf4,_0xde6390,_0x5c6094){const _0x19afb3=_0x2d27b8;this[_0x19afb3(0xcb)](_0x1cabf4,_0xde6390,_0x5c6094),this[_0x19afb3(0xf1)](_0x1cabf4,_0xde6390,_0x5c6094),this['addExtraShowChoices'](_0xde6390,_0x5c6094);},Game_Interpreter[_0x2d27b8(0x244)]['adjustShowChoiceDefault']=function(_0x22aa19,_0x4b915a,_0x72de1b){const _0x3b88cd=_0x2d27b8;if(_0x4b915a[_0x3b88cd(0x90)][0x2]<0x0)return;const _0x543719=_0x4b915a[_0x3b88cd(0x90)][0x2]+_0x22aa19;this[_0x3b88cd(0x110)][_0x72de1b]['parameters'][0x2]=_0x543719;},Game_Interpreter['prototype'][_0x2d27b8(0xf1)]=function(_0x43c5ab,_0x59ea13,_0x2374fc){const _0x3e61a0=_0x2d27b8;if(_0x59ea13[_0x3e61a0(0x90)][0x1]>=0x0){if('eQxNA'===_0x3e61a0(0x10f))return this[_0x3e61a0(0x10d)]?this[_0x3e61a0(0x9c)]():_0x1ccdd3[_0x3e61a0(0xe8)][_0x3e61a0(0x337)][_0x3e61a0(0x1ca)](this);else{var _0x1a1ddf=_0x59ea13['parameters'][0x1]+_0x43c5ab;this[_0x3e61a0(0x110)][_0x2374fc][_0x3e61a0(0x90)][0x1]=_0x1a1ddf;}}else _0x59ea13[_0x3e61a0(0x90)][0x1]===-0x2&&(this[_0x3e61a0(0x110)][_0x2374fc]['parameters'][0x1]=_0x59ea13[_0x3e61a0(0x90)][0x1]);},Game_Interpreter[_0x2d27b8(0x244)][_0x2d27b8(0x28e)]=function(_0xc4428b,_0x12c0c9){const _0x2e85d3=_0x2d27b8;for(const _0x29cf9a of _0xc4428b[_0x2e85d3(0x90)][0x0]){this[_0x2e85d3(0x110)][_0x12c0c9]['parameters'][0x0]['push'](_0x29cf9a);}this['_list'][_0x2e85d3(0x22e)](this['_index']-0x1,0x2);};function _0x4787(_0x4cd7ce,_0x53aa1a){const _0x38f11b=_0x38f1();return _0x4787=function(_0x478720,_0x805dc7){_0x478720=_0x478720-0x67;let _0x363272=_0x38f11b[_0x478720];return _0x363272;},_0x4787(_0x4cd7ce,_0x53aa1a);}function Game_MessageCommonEvent(){const _0x5bd0df=_0x2d27b8;this[_0x5bd0df(0x91)](...arguments);}Game_MessageCommonEvent[_0x2d27b8(0x244)][_0x2d27b8(0x91)]=function(_0x112046,_0x2d106e){const _0x498595=_0x2d27b8;this[_0x498595(0x2cb)]=_0x112046,this[_0x498595(0xa3)]=_0x2d106e||0x0,this[_0x498595(0x82)]();},Game_MessageCommonEvent['prototype'][_0x2d27b8(0x16f)]=function(){const _0x3316d9=_0x2d27b8;return $dataCommonEvents[this[_0x3316d9(0x2cb)]];},Game_MessageCommonEvent[_0x2d27b8(0x244)][_0x2d27b8(0x112)]=function(){const _0x4168fa=_0x2d27b8;return this[_0x4168fa(0x16f)]()[_0x4168fa(0x112)];},Game_MessageCommonEvent[_0x2d27b8(0x244)][_0x2d27b8(0x82)]=function(){const _0x1ce795=_0x2d27b8;this[_0x1ce795(0x1df)]=new Game_Interpreter(),this[_0x1ce795(0x1df)]['setup'](this[_0x1ce795(0x112)](),this['_eventId']);},Game_MessageCommonEvent[_0x2d27b8(0x244)][_0x2d27b8(0x8f)]=function(){const _0x16c4c5=_0x2d27b8;this[_0x16c4c5(0x1df)]&&(this[_0x16c4c5(0x1df)][_0x16c4c5(0x1bb)]()?_0x16c4c5(0x17d)!=='LtQVC'?this[_0x16c4c5(0x1df)][_0x16c4c5(0x8f)]():(_0x1aeeac[_0x16c4c5(0xe8)][_0x16c4c5(0x10b)][_0x16c4c5(0x1ca)](this,_0x280c1a),_0x16c4c5(0xe4)in _0x77fd26?this[_0x16c4c5(0xe4)]=_0x5d32da(_0x262b3f[_0x16c4c5(0xe4)])[_0x16c4c5(0x18f)](0x1,0xb):this['textSpeed']=_0x7b7dfb['MessageCore'][_0x16c4c5(0x1d3)][_0x16c4c5(0x2e9)][_0x16c4c5(0xd7)]):this[_0x16c4c5(0x114)]());},Game_MessageCommonEvent[_0x2d27b8(0x244)][_0x2d27b8(0x114)]=function(){const _0x574276=_0x2d27b8;this[_0x574276(0x1df)]=null;},Scene_Message[_0x2d27b8(0x244)][_0x2d27b8(0x311)]=function(){const _0x4cae9b=_0x2d27b8,_0x2510a2=Math[_0x4cae9b(0x312)](Graphics['width'],$gameSystem[_0x4cae9b(0x2ef)]()),_0x1500a7=$gameSystem[_0x4cae9b(0x99)](),_0x33a0f9=this[_0x4cae9b(0x340)](_0x1500a7,![]),_0x1a1659=(Graphics[_0x4cae9b(0x1f2)]-_0x2510a2)/0x2,_0x3714fc=0x0;return new Rectangle(_0x1a1659,_0x3714fc,_0x2510a2,_0x33a0f9);},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x1a8)]=Scene_Options[_0x2d27b8(0x244)][_0x2d27b8(0x6f)],Scene_Options['prototype']['maxCommands']=function(){const _0x4326c7=_0x2d27b8;let _0x27c836=VisuMZ['MessageCore'][_0x4326c7(0x1a8)][_0x4326c7(0x1ca)](this);const _0x14bd9e=VisuMZ[_0x4326c7(0xe8)][_0x4326c7(0x1d3)];if(_0x14bd9e[_0x4326c7(0x2e9)][_0x4326c7(0xc4)]&&_0x14bd9e[_0x4326c7(0x2e9)][_0x4326c7(0xdb)])_0x27c836++;return _0x27c836;},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0xef)]=Sprite_Picture[_0x2d27b8(0x244)][_0x2d27b8(0x1dd)],Sprite_Picture[_0x2d27b8(0x244)][_0x2d27b8(0x1dd)]=function(){const _0x3e29e3=_0x2d27b8;VisuMZ['MessageCore'][_0x3e29e3(0xef)][_0x3e29e3(0x1ca)](this),this['createPictureText']();},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0xbb)]=Sprite_Picture[_0x2d27b8(0x244)]['update'],Sprite_Picture[_0x2d27b8(0x244)][_0x2d27b8(0x8f)]=function(){const _0x1799c7=_0x2d27b8;VisuMZ[_0x1799c7(0xe8)][_0x1799c7(0xbb)][_0x1799c7(0x1ca)](this),this[_0x1799c7(0x6b)]();},Sprite_Picture['prototype']['updatePictureText']=function(){const _0x1c4aec=_0x2d27b8;if(!this[_0x1c4aec(0x1a5)])return;this[_0x1c4aec(0x298)](),this[_0x1c4aec(0x1d8)](),this[_0x1c4aec(0x19b)](),this[_0x1c4aec(0x15e)]();},Sprite_Picture[_0x2d27b8(0x244)]['createPictureText']=function(){const _0x298ba1=_0x2d27b8;if(this[_0x298ba1(0x221)])return;if(this['_pictureTextSprite'])return;const _0x16885f=new Rectangle(0x0,0x0,0x0,0x0);this[_0x298ba1(0x221)]=new Window_Base(_0x16885f),this['_pictureTextWindow'][_0x298ba1(0x170)]=0x0,this[_0x298ba1(0x21c)]=new Sprite(),this[_0x298ba1(0x2a5)](this[_0x298ba1(0x21c)],0x0),this[_0x298ba1(0x157)]=0x0,this[_0x298ba1(0x175)]=0x0,this[_0x298ba1(0x23a)]={};},Sprite_Picture[_0x2d27b8(0x244)]['resizePictureText']=function(){const _0x3a3ddc=_0x2d27b8;if(!this[_0x3a3ddc(0x221)])return;if(this['_pictureTextWidth']===this[_0x3a3ddc(0x2c7)]&&this['_pictureTextHeight']===this[_0x3a3ddc(0x2dc)])return;this['_pictureTextWidth']=this[_0x3a3ddc(0x2c7)],this[_0x3a3ddc(0x175)]=this['height'],this['_pictureTextCache']={},this[_0x3a3ddc(0x221)][_0x3a3ddc(0x284)](0x0,0x0,this[_0x3a3ddc(0x2c7)],this[_0x3a3ddc(0x2dc)]);},Sprite_Picture[_0x2d27b8(0x244)]['anchorPictureText']=function(){const _0xad54c7=_0x2d27b8;if(!this['_pictureTextSprite'])return;this['_pictureTextSprite'][_0xad54c7(0x176)]['x']=this[_0xad54c7(0x176)]['x'],this[_0xad54c7(0x21c)][_0xad54c7(0x176)]['y']=this[_0xad54c7(0x176)]['y'];},Sprite_Picture[_0x2d27b8(0x244)]['drawPictureText']=function(){const _0x2b9f45=_0x2d27b8;if(!this['_pictureTextWindow'])return;if(!this[_0x2b9f45(0x1ad)]())return;const _0x38a3e5=[_0x2b9f45(0xe9),'up',_0x2b9f45(0xe7),_0x2b9f45(0x1e4),'center',_0x2b9f45(0x113),_0x2b9f45(0x8e),_0x2b9f45(0xca),_0x2b9f45(0x6c)];this[_0x2b9f45(0x221)][_0x2b9f45(0x332)]();for(const _0x1f279e of _0x38a3e5){if(_0x2b9f45(0x108)!==_0x2b9f45(0x1fe))this[_0x2b9f45(0x1f1)](_0x1f279e);else{const _0xe358e6=_0x129229['$1'][_0x2b9f45(0xc8)](',')['map'](_0x15dea1=>_0x280259(_0x15dea1)||0x0);for(const _0x537d35 of _0xe358e6){if(_0x2d7afe[_0x2b9f45(0x1aa)](_0x537d35))return!![];}return![];}}},Sprite_Picture['prototype'][_0x2d27b8(0x1ad)]=function(){const _0x135e6f=_0x2d27b8;if($gameScreen['needsPictureTextRefresh'](this[_0x135e6f(0x2ad)]))return!![];const _0xd7f97e=[_0x135e6f(0xe9),'up',_0x135e6f(0xe7),'left',_0x135e6f(0x268),_0x135e6f(0x113),_0x135e6f(0x8e),_0x135e6f(0xca),_0x135e6f(0x6c)];for(const _0x16b03e of _0xd7f97e){const _0x4079eb=$gameScreen[_0x135e6f(0xce)](this[_0x135e6f(0x2ad)],_0x16b03e);if(this[_0x135e6f(0x23a)][_0x16b03e]===_0x4079eb)continue;return!![];}return![];},Sprite_Picture[_0x2d27b8(0x244)][_0x2d27b8(0x1f1)]=function(_0x41ee89){const _0x184b7a=_0x2d27b8;$gameScreen['clearPictureTextRefresh'](this['_pictureId']);const _0x165d40=$gameScreen[_0x184b7a(0xce)](this[_0x184b7a(0x2ad)],_0x41ee89);this[_0x184b7a(0x23a)][_0x41ee89]=_0x165d40;const _0x5b783e=this[_0x184b7a(0x221)][_0x184b7a(0x277)](_0x165d40);let _0x491033=$gameScreen[_0x184b7a(0x187)](this['_pictureId']),_0x45f564=_0x491033,_0x284433=_0x491033;if(['up',_0x184b7a(0x268),_0x184b7a(0xca)][_0x184b7a(0x19f)](_0x41ee89))_0x184b7a(0x25b)!==_0x184b7a(0x252)?_0x45f564=Math[_0x184b7a(0x205)]((this[_0x184b7a(0x2c7)]-_0x5b783e[_0x184b7a(0x2c7)])/0x2):(this[_0x184b7a(0x1a3)](),this[_0x184b7a(0x148)](),this[_0x184b7a(0x10d)]&&(this['updatePlacement'](),this[_0x184b7a(0x1a9)]()),this['createContents'](),this[_0x184b7a(0x1ae)](),this[_0x184b7a(0x330)](),_0x4307e7[_0x184b7a(0x244)][_0x184b7a(0x82)][_0x184b7a(0x1ca)](this));else[_0x184b7a(0xe7),_0x184b7a(0x113),'lowerright'][_0x184b7a(0x19f)](_0x41ee89)&&(_0x184b7a(0x73)!==_0x184b7a(0x304)?_0x45f564=Math[_0x184b7a(0x205)](this['width']-_0x5b783e[_0x184b7a(0x2c7)]-_0x491033):(_0x339e1e['MessageCore']['Window_NameBox_updatePlacement'][_0x184b7a(0x1ca)](this),this['updateRelativePosition'](),this['updateOffsetPosition'](),this[_0x184b7a(0x24e)](),this[_0x184b7a(0x219)]()));if(['left','center',_0x184b7a(0x113)][_0x184b7a(0x19f)](_0x41ee89))_0x284433=Math[_0x184b7a(0x205)]((this[_0x184b7a(0x2dc)]-_0x5b783e[_0x184b7a(0x2dc)])/0x2);else{if([_0x184b7a(0x8e),_0x184b7a(0xca),_0x184b7a(0x6c)][_0x184b7a(0x19f)](_0x41ee89)){if('VaUAY'==='SZLVi'){const _0x1e791e=_0x24c811['$1'][_0x184b7a(0xc8)](',')[_0x184b7a(0x154)](_0x3a369e=>_0x2a266e(_0x3a369e)||0x0);for(const _0x3813da of _0x1e791e){if(!_0x4ee630[_0x184b7a(0x1aa)](_0x3813da))return![];}return!![];}else _0x284433=Math['floor'](this[_0x184b7a(0x2dc)]-_0x5b783e[_0x184b7a(0x2dc)]-_0x491033);}}this[_0x184b7a(0x221)][_0x184b7a(0x1b1)](_0x165d40,_0x45f564,_0x284433);},Sprite_Picture[_0x2d27b8(0x244)][_0x2d27b8(0x15e)]=function(){const _0x55b794=_0x2d27b8;if(!this['_pictureTextWindow'])return;if(!this[_0x55b794(0x21c)])return;this[_0x55b794(0x21c)][_0x55b794(0x26c)]=this[_0x55b794(0x221)][_0x55b794(0x172)];},VisuMZ[_0x2d27b8(0xe8)]['Window_Base_initialize']=Window_Base[_0x2d27b8(0x244)]['initialize'],Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x91)]=function(_0x19cd40){const _0x4199d3=_0x2d27b8;this[_0x4199d3(0x16c)](_0x19cd40),VisuMZ[_0x4199d3(0xe8)][_0x4199d3(0x287)][_0x4199d3(0x1ca)](this,_0x19cd40);},Window_Base[_0x2d27b8(0x244)]['initMessageCore']=function(_0x11ab19){const _0x263e2d=_0x2d27b8;this[_0x263e2d(0xa5)](),this['resetWordWrap'](),this['registerResetRect'](_0x11ab19);},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0xa5)]=function(){const _0x1a675f=_0x2d27b8;this['setTextAlignment'](_0x1a675f(0x20f));},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x327)]=function(_0x17f79d){const _0x35dae5=_0x2d27b8;this[_0x35dae5(0x1d7)]=_0x17f79d;},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x242)]=function(){const _0x256529=_0x2d27b8;return this[_0x256529(0x1d7)];},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x215)]=Window_Base['prototype']['textSizeEx'],Window_Base['prototype'][_0x2d27b8(0x277)]=function(_0x34f218){const _0x497675=_0x2d27b8;return this[_0x497675(0x20e)](),VisuMZ['MessageCore'][_0x497675(0x215)][_0x497675(0x1ca)](this,_0x34f218);},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x29d)]=function(_0x5cc425){const _0x190ea4=_0x2d27b8;return VisuMZ[_0x190ea4(0xe8)][_0x190ea4(0x215)][_0x190ea4(0x1ca)](this,_0x5cc425);},VisuMZ['MessageCore'][_0x2d27b8(0x310)]=Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x1bc)],Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x1bc)]=function(_0x28b742){const _0x29cb83=_0x2d27b8;VisuMZ[_0x29cb83(0xe8)][_0x29cb83(0x310)][_0x29cb83(0x1ca)](this,_0x28b742);if(_0x28b742['drawing'])this['setTextAlignment'](_0x29cb83(0x20f));},Window_Base[_0x2d27b8(0x244)]['resetWordWrap']=function(){this['setWordWrap'](![]);},Window_Base['prototype']['isWordWrapEnabled']=function(){return this['_wordWrap'];},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x29b)]=function(_0x38aaf2){const _0x4fe0ec=_0x2d27b8;return this[_0x4fe0ec(0x1bd)]=_0x38aaf2,'';},Window_Base[_0x2d27b8(0x244)]['registerResetRect']=function(_0x37268e){const _0xb45a61=_0x2d27b8;this[_0xb45a61(0x2dd)]=JsonEx[_0xb45a61(0x8c)](_0x37268e);},Window_Base['prototype'][_0x2d27b8(0x1f8)]=function(){const _0x49822f=_0x2d27b8;this['contents']['fontFace']=$gameSystem['mainFontFace'](),this[_0x49822f(0x172)][_0x49822f(0x22d)]=$gameSystem[_0x49822f(0x24c)](),this[_0x49822f(0x172)][_0x49822f(0xa8)]=![],this[_0x49822f(0x172)]['fontItalic']=![],this['resetTextColor']();},Window_Base[_0x2d27b8(0x244)]['resetTextColor']=function(){const _0x27b812=_0x2d27b8;this[_0x27b812(0xcd)](ColorManager[_0x27b812(0x184)]()),this['changeOutlineColor'](ColorManager['outlineColor']());const _0x16eecc=VisuMZ['MessageCore'][_0x27b812(0x1d3)][_0x27b812(0x192)];_0x16eecc[_0x27b812(0x229)]===undefined&&(_0x16eecc[_0x27b812(0x229)]=0x3),this[_0x27b812(0x172)][_0x27b812(0xa6)]=_0x16eecc[_0x27b812(0x229)],this['setColorLock'](![]);},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0xfc)]=function(_0x3e389e){const _0x56b3d9=_0x2d27b8;this[_0x56b3d9(0x13b)]=_0x3e389e;},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x2b0)]=function(){const _0x19eea1=_0x2d27b8;return this[_0x19eea1(0x13b)];},Window_Base['prototype'][_0x2d27b8(0xfb)]=function(){return![];},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x324)]=function(){const _0x36fbb5=_0x2d27b8,_0x548e0c=['fontFace',_0x36fbb5(0x22d),_0x36fbb5(0xa8),_0x36fbb5(0x238),_0x36fbb5(0x2df),_0x36fbb5(0x32f),_0x36fbb5(0xa6),_0x36fbb5(0x135)];let _0x206ba0={};for(const _0x305c4b of _0x548e0c){_0x206ba0[_0x305c4b]=this['contents'][_0x305c4b];}return _0x206ba0;},Window_Base['prototype'][_0x2d27b8(0x302)]=function(_0x77035f){const _0x5891c3=_0x2d27b8;for(const _0x279d36 in _0x77035f){_0x5891c3(0x1a0)==='ApIsU'?this['textSpeed']=_0x515cf4(_0x3eeced[_0x5891c3(0xe4)])['clamp'](0x1,0xb):this[_0x5891c3(0x172)][_0x279d36]=_0x77035f[_0x279d36];}},VisuMZ['MessageCore'][_0x2d27b8(0x1ac)]=Window_Base[_0x2d27b8(0x244)]['update'],Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x8f)]=function(){const _0x3c06b7=_0x2d27b8;VisuMZ[_0x3c06b7(0xe8)][_0x3c06b7(0x1ac)][_0x3c06b7(0x1ca)](this),this[_0x3c06b7(0x171)]();},Window_Base[_0x2d27b8(0x244)]['canMove']=function(){return![];},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x171)]=function(){const _0x456f77=_0x2d27b8;this[_0x456f77(0x2c1)]>0x0&&(this[_0x456f77(0x80)]()&&(this['x']=this[_0x456f77(0x15f)](this['x'],this[_0x456f77(0xfd)]),this['y']=this[_0x456f77(0x15f)](this['y'],this[_0x456f77(0xb8)]),this[_0x456f77(0x2c7)]=this[_0x456f77(0x15f)](this[_0x456f77(0x2c7)],this[_0x456f77(0x177)]),this['height']=this[_0x456f77(0x15f)](this[_0x456f77(0x2dc)],this[_0x456f77(0x338)]),this[_0x456f77(0x24e)]()),this[_0x456f77(0x2c1)]--);},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x24e)]=function(_0xb85717,_0x490fd5){const _0x2bbe77=_0x2d27b8;!_0xb85717&&(this[_0x2bbe77(0x2c7)]=Math['min'](this[_0x2bbe77(0x2c7)],Graphics[_0x2bbe77(0x2c7)]),this[_0x2bbe77(0x2dc)]=Math[_0x2bbe77(0x312)](this[_0x2bbe77(0x2dc)],Graphics[_0x2bbe77(0x2dc)]));if(!_0x490fd5){if(_0x2bbe77(0x256)!==_0x2bbe77(0x155)){const _0x220ed3=-(Math[_0x2bbe77(0x205)](Graphics['width']-Graphics[_0x2bbe77(0x1f2)])/0x2),_0x15929b=_0x220ed3+Graphics['width']-this['width'],_0x1e4b48=-(Math[_0x2bbe77(0x205)](Graphics['height']-Graphics['boxHeight'])/0x2),_0x35c3e5=_0x1e4b48+Graphics[_0x2bbe77(0x2dc)]-this[_0x2bbe77(0x2dc)];this['x']=this['x'][_0x2bbe77(0x18f)](_0x220ed3,_0x15929b),this['y']=this['y'][_0x2bbe77(0x18f)](_0x1e4b48,_0x35c3e5);}else{if(!_0x12ba3a[_0x2bbe77(0x1aa)](_0x5af444))return!![];}}},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x15f)]=function(_0x5b101c,_0x56c091){const _0x35d2e7=_0x2d27b8,_0x54b757=this['_moveDuration'],_0xe42dcf=this['_wholeMoveDuration'],_0x31f6aa=this['calcMoveEasing']((_0xe42dcf-_0x54b757)/_0xe42dcf),_0x6877e2=this[_0x35d2e7(0x2d2)]((_0xe42dcf-_0x54b757+0x1)/_0xe42dcf),_0x2c2b0c=(_0x5b101c-_0x56c091*_0x31f6aa)/(0x1-_0x31f6aa);return _0x2c2b0c+(_0x56c091-_0x2c2b0c)*_0x6877e2;},Window_Base['prototype']['calcMoveEasing']=function(_0x29e5de){const _0x4a14ee=_0x2d27b8,_0x317205=0x2;switch(this['_moveEasingType']){case 0x0:return _0x29e5de;case 0x1:return this[_0x4a14ee(0x2e3)](_0x29e5de,_0x317205);case 0x2:return this[_0x4a14ee(0x1e7)](_0x29e5de,_0x317205);case 0x3:return this[_0x4a14ee(0xfe)](_0x29e5de,_0x317205);default:if(Imported[_0x4a14ee(0xe0)])return VisuMZ[_0x4a14ee(0x15f)](_0x29e5de,this['_moveEasingType']);else{if(_0x4a14ee(0x77)!==_0x4a14ee(0x77)){const _0x27ee39=_0x3c22a3['$1'][_0x4a14ee(0xc8)](',')[_0x4a14ee(0x154)](_0x284b71=>_0x3fb0d0(_0x284b71)||0x0);for(const _0xe11623 of _0x27ee39){if(_0x194d3e[_0x4a14ee(0x1aa)](_0xe11623))return![];}return!![];}else return _0x29e5de;}}},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x1ea)]=function(_0x9181c3,_0x2a379c,_0x1e2ea7,_0x196a81,_0x1dde1a,_0x3dd1e6){const _0x53ea57=_0x2d27b8;this[_0x53ea57(0xfd)]=_0x9181c3,this[_0x53ea57(0xb8)]=_0x2a379c,this[_0x53ea57(0x177)]=_0x1e2ea7||this[_0x53ea57(0x2c7)],this['_moveTargetHeight']=_0x196a81||this[_0x53ea57(0x2dc)],this[_0x53ea57(0x2c1)]=_0x1dde1a||0x1;if(this['_moveDuration']<=0x0)this['_moveDuration']=0x1;this['_wholeMoveDuration']=this['_moveDuration'],this[_0x53ea57(0xb9)]=_0x3dd1e6||0x0;if(_0x1dde1a<=0x0)this[_0x53ea57(0x171)]();},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x1cb)]=function(_0x23cab3,_0x25054b,_0x21d4e5,_0x57f9c0,_0x1a0275,_0x1ee799){const _0x10ee7e=_0x2d27b8;this['_moveTargetX']=this['x']+_0x23cab3,this[_0x10ee7e(0xb8)]=this['y']+_0x25054b,this[_0x10ee7e(0x177)]=this[_0x10ee7e(0x2c7)]+(_0x21d4e5||0x0),this[_0x10ee7e(0x338)]=this[_0x10ee7e(0x2dc)]+(_0x57f9c0||0x0),this[_0x10ee7e(0x2c1)]=_0x1a0275||0x1;if(this[_0x10ee7e(0x2c1)]<=0x0)this[_0x10ee7e(0x2c1)]=0x1;this[_0x10ee7e(0x233)]=this[_0x10ee7e(0x2c1)],this[_0x10ee7e(0xb9)]=_0x1ee799||0x0;if(_0x1a0275<=0x0)this['updateMove']();},Window_Base['prototype']['resetRect']=function(_0x5ce9c9,_0x2d2467){const _0x56a549=_0x2d27b8;this[_0x56a549(0x1ea)](this[_0x56a549(0x2dd)]['x'],this[_0x56a549(0x2dd)]['y'],this[_0x56a549(0x2dd)]['width'],this[_0x56a549(0x2dd)][_0x56a549(0x2dc)],_0x5ce9c9,_0x2d2467);},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x209)]=Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0xcd)],Window_Base['prototype'][_0x2d27b8(0xcd)]=function(_0x247a7a){const _0x323d38=_0x2d27b8;if(this[_0x323d38(0x2b0)]())return;_0x247a7a=_0x247a7a[_0x323d38(0x19d)](/\,/g,''),this[_0x323d38(0x11e)]=this[_0x323d38(0x11e)]||[],this[_0x323d38(0x11e)]['unshift'](this[_0x323d38(0x172)][_0x323d38(0x2df)]),VisuMZ[_0x323d38(0xe8)]['Window_Base_changeTextColor'][_0x323d38(0x1ca)](this,_0x247a7a);},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x2e4)]=function(_0x35df34){const _0x41d841=_0x2d27b8;this['obtainEscapeParam'](_0x35df34);if(this[_0x41d841(0x2b0)]())return;_0x35df34['drawing']&&(this[_0x41d841(0x11e)]=this['_textColorStack']||[],this[_0x41d841(0x172)][_0x41d841(0x2df)]=this[_0x41d841(0x11e)][_0x41d841(0x33f)]()||ColorManager[_0x41d841(0x184)]());},Window_Base[_0x2d27b8(0x244)]['convertEscapeCharacters']=function(_0xd9b826){const _0x497749=_0x2d27b8;return _0xd9b826=this[_0x497749(0x93)](_0xd9b826),_0xd9b826=this['convertBackslashCharacters'](_0xd9b826),_0xd9b826=this[_0x497749(0x193)](_0xd9b826),_0xd9b826=this[_0x497749(0x21a)](_0xd9b826),_0xd9b826=this[_0x497749(0x273)](_0xd9b826),_0xd9b826=this[_0x497749(0xdd)](_0xd9b826),_0xd9b826=this[_0x497749(0x153)](_0xd9b826),_0xd9b826=this['convertTextAlignmentEscapeCharacters'](_0xd9b826),_0xd9b826=this[_0x497749(0xa1)](_0xd9b826),_0xd9b826=this[_0x497749(0x253)](_0xd9b826),_0xd9b826=this[_0x497749(0x32b)](_0xd9b826),_0xd9b826=this[_0x497749(0x26f)](_0xd9b826),_0xd9b826=this[_0x497749(0x23b)](_0xd9b826),_0xd9b826=this[_0x497749(0x10e)](_0xd9b826),_0xd9b826=this[_0x497749(0x193)](_0xd9b826),_0xd9b826=this[_0x497749(0x213)](_0xd9b826),_0xd9b826=this['prepareWordWrapEscapeCharacters'](_0xd9b826),_0xd9b826;},Window_Base[_0x2d27b8(0x244)]['convertTextMacros']=function(_0x2c0335){const _0x4ca560=_0x2d27b8;this[_0x4ca560(0x28d)]=![];for(const _0x31211a of VisuMZ['MessageCore']['Settings']['TextMacros']){if(_0x2c0335['match'](_0x31211a[_0x4ca560(0x1c4)])){if(_0x4ca560(0x30a)!==_0x4ca560(0x30a)){if(this[_0x4ca560(0x11d)]===_0x30b139)this[_0x4ca560(0x95)]();const _0x57b9b3=this[_0x4ca560(0x144)](_0xc66cd);this[_0x4ca560(0x11d)][_0x57b9b3]=null,this['requestPictureTextRefresh'](_0x90df40,!![]);}else this['_textMacroFound']=!![],_0x2c0335=_0x2c0335[_0x4ca560(0x19d)](_0x31211a[_0x4ca560(0x1c4)],_0x31211a[_0x4ca560(0x325)][_0x4ca560(0x111)](this));}}return _0x2c0335;},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x326)]=function(_0xb68be2){const _0x152985=_0x2d27b8;return _0xb68be2=_0xb68be2[_0x152985(0x19d)](/\\/g,'\x1b'),_0xb68be2=_0xb68be2[_0x152985(0x19d)](/\x1b\x1b/g,'\x5c'),_0xb68be2;},Window_Base['prototype'][_0x2d27b8(0x193)]=function(_0x356b63){const _0xd96632=_0x2d27b8;for(;;){if(_0x356b63[_0xd96632(0x1c7)](/\\V\[(\d+)\]/gi)){if('LSwqs'===_0xd96632(0xeb))_0x356b63=_0x356b63[_0xd96632(0x19d)](/\\V\[(\d+)\]/gi,(_0x103b9d,_0x598c09)=>this[_0xd96632(0x326)](String($gameVariables[_0xd96632(0x1aa)](parseInt(_0x598c09)))));else return 0x0;}else{if(_0x356b63[_0xd96632(0x1c7)](/\x1bV\[(\d+)\]/gi)){if(_0xd96632(0x2f2)==='ohFHG')_0x356b63=_0x356b63[_0xd96632(0x19d)](/\x1bV\[(\d+)\]/gi,(_0x50b026,_0x8ad9b2)=>this[_0xd96632(0x326)](String($gameVariables['value'](parseInt(_0x8ad9b2)))));else return this[_0xd96632(0x1d7)];}else break;}}return _0x356b63;},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x21a)]=function(_0x1b2578){const _0x4e71f9=_0x2d27b8;return Imported[_0x4e71f9(0xe0)]&&(_0x1b2578=_0x1b2578[_0x4e71f9(0x19d)](/<Up (?:KEY|BUTTON)>/gi,this['convertButtonAssistText']('up')),_0x1b2578=_0x1b2578[_0x4e71f9(0x19d)](/<Left (?:KEY|BUTTON)>/gi,this['convertButtonAssistText']('left')),_0x1b2578=_0x1b2578[_0x4e71f9(0x19d)](/<Right (?:KEY|BUTTON)>/gi,this['convertButtonAssistText'](_0x4e71f9(0x113))),_0x1b2578=_0x1b2578[_0x4e71f9(0x19d)](/<Down (?:KEY|BUTTON)>/gi,this[_0x4e71f9(0x25f)](_0x4e71f9(0xca))),_0x1b2578=_0x1b2578[_0x4e71f9(0x19d)](/<Ok (?:KEY|BUTTON)>/gi,this[_0x4e71f9(0x25f)]('ok')),_0x1b2578=_0x1b2578[_0x4e71f9(0x19d)](/<Cancel (?:KEY|BUTTON)>/gi,this[_0x4e71f9(0x25f)](_0x4e71f9(0x240))),_0x1b2578=_0x1b2578[_0x4e71f9(0x19d)](/<Menu (?:KEY|BUTTON)>/gi,this[_0x4e71f9(0x25f)]('menu')),_0x1b2578=_0x1b2578[_0x4e71f9(0x19d)](/<Shift (?:KEY|BUTTON)>/gi,this[_0x4e71f9(0x25f)](_0x4e71f9(0x33f))),_0x1b2578=_0x1b2578[_0x4e71f9(0x19d)](/<(?:PAGEUP|PAGE UP) (?:KEY|BUTTON)>/gi,this[_0x4e71f9(0x25f)]('pageup')),_0x1b2578=_0x1b2578[_0x4e71f9(0x19d)](/<(?:PAGEDOWN|PAGEDN|PAGE DOWN) (?:KEY|BUTTON)>/gi,this['convertButtonAssistText'](_0x4e71f9(0xab)))),_0x1b2578;},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x25f)]=function(_0x5dc36a){const _0x5f2dd8=_0x2d27b8;let _0x5ead79=TextManager[_0x5f2dd8(0x2b8)](_0x5dc36a)||'';return _0x5ead79=this[_0x5f2dd8(0x326)](_0x5ead79),_0x5ead79=this[_0x5f2dd8(0x193)](_0x5ead79),_0x5ead79[_0x5f2dd8(0x18b)]();},Window_Base['prototype']['preConvertEscapeCharacters']=function(_0x22ffad){const _0x45da38=_0x2d27b8;return this[_0x45da38(0x23e)](),_0x22ffad;},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x10e)]=function(_0x261a68){return _0x261a68;},Window_Base['prototype']['convertShowChoiceEscapeCodes']=function(_0x4e6686){const _0x1e7060=_0x2d27b8;return _0x4e6686=_0x4e6686[_0x1e7060(0x19d)](/<(?:SHOW|HIDE|DISABLE|ENABLE)>/gi,''),_0x4e6686=_0x4e6686[_0x1e7060(0x19d)](/<(?:SHOW|HIDE|DISABLE|ENABLE)[ ](?:SWITCH|SWITCHES):[ ](.*?)>/gi,''),_0x4e6686=_0x4e6686[_0x1e7060(0x19d)](/<(?:SHOW|HIDE|DISABLE|ENABLE)[ ](?:ALL|ANY)[ ](?:SWITCH|SWITCHES):[ ](.*?)>/gi,''),_0x4e6686=_0x4e6686['replace'](/<CHOICE WIDTH:[ ](\d+)>/gi,''),_0x4e6686=_0x4e6686['replace'](/<CHOICE INDENT:[ ](\d+)>/gi,''),_0x4e6686;},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x153)]=function(_0x1239cf){const _0x1251c2=_0x2d27b8;return _0x1239cf=_0x1239cf[_0x1251c2(0x19d)](/<B>/gi,_0x1251c2(0x1d4)),_0x1239cf=_0x1239cf[_0x1251c2(0x19d)](/<\/B>/gi,_0x1251c2(0x334)),_0x1239cf=_0x1239cf['replace'](/<I>/gi,_0x1251c2(0x1f0)),_0x1239cf=_0x1239cf['replace'](/<\/I>/gi,_0x1251c2(0x264)),_0x1239cf;},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x31d)]=function(_0xde4bc1){const _0x377f45=_0x2d27b8;return _0xde4bc1=_0xde4bc1[_0x377f45(0x19d)](/<LEFT>/gi,_0x377f45(0x137)),_0xde4bc1=_0xde4bc1['replace'](/<\/LEFT>/gi,_0x377f45(0x2b5)),_0xde4bc1=_0xde4bc1[_0x377f45(0x19d)](/<CENTER>/gi,_0x377f45(0xb7)),_0xde4bc1=_0xde4bc1[_0x377f45(0x19d)](/<\/CENTER>/gi,_0x377f45(0x2b5)),_0xde4bc1=_0xde4bc1['replace'](/<RIGHT>/gi,_0x377f45(0x98)),_0xde4bc1=_0xde4bc1[_0x377f45(0x19d)](/<\/RIGHT>/gi,_0x377f45(0x2b5)),_0xde4bc1;},Window_Base['prototype']['convertLockColorsEscapeCharacters']=function(_0x3c16e3){const _0xbcff9c=_0x2d27b8;return _0x3c16e3=_0x3c16e3['replace'](/<COLORLOCK>/gi,_0xbcff9c(0x12f)),_0x3c16e3=_0x3c16e3[_0xbcff9c(0x19d)](/<\/COLORLOCK>/gi,'\x1bCOLORLOCK[0]'),_0x3c16e3=_0x3c16e3['replace'](/\(\(\(/gi,_0xbcff9c(0x12f)),_0x3c16e3=_0x3c16e3[_0xbcff9c(0x19d)](/\)\)\)/gi,_0xbcff9c(0x2f6)),_0x3c16e3;},Window_Base['prototype'][_0x2d27b8(0x253)]=function(_0x51df72){const _0x44ec3c=_0x2d27b8;return _0x51df72=_0x51df72[_0x44ec3c(0x19d)](/\x1bN\[(\d+)\]/gi,(_0x408340,_0x223d37)=>this[_0x44ec3c(0x158)](parseInt(_0x223d37))),_0x51df72=_0x51df72['replace'](/\x1bP\[(\d+)\]/gi,(_0x5e980f,_0x45de1b)=>this['partyMemberName'](parseInt(_0x45de1b))),_0x51df72=_0x51df72[_0x44ec3c(0x19d)](/\x1bG/gi,TextManager['currencyUnit']),_0x51df72;},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x32b)]=function(_0x3e0c6e){const _0x150d61=_0x2d27b8;return _0x3e0c6e=_0x3e0c6e[_0x150d61(0x19d)](/\<(?:BATTLE|CURRENT BATTLE) TARGET\>/gi,this[_0x150d61(0x1e9)]()),_0x3e0c6e=_0x3e0c6e[_0x150d61(0x19d)](/\<(?:BATTLE|CURRENT BATTLE) (?:USER|SUBJECT)\>/gi,this[_0x150d61(0x2d7)]()),_0x3e0c6e=_0x3e0c6e[_0x150d61(0x19d)](/\<(?:BATTLE|CURRENT BATTLE) (?:ITEM|SKILL|ACTION)\>/gi,this[_0x150d61(0x149)](!![])),_0x3e0c6e=_0x3e0c6e['replace'](/\<(?:BATTLE|CURRENT BATTLE) (?:ITEM|SKILL|ACTION) NAME\>/gi,this[_0x150d61(0x149)](![])),_0x3e0c6e;},Window_Base['prototype']['battleTargetName']=function(){const _0x30e5e7=_0x2d27b8;if(!SceneManager[_0x30e5e7(0x272)]())return'';if(BattleManager[_0x30e5e7(0x265)])return BattleManager[_0x30e5e7(0x265)]['name']();if(BattleManager[_0x30e5e7(0x14f)][0x0])return BattleManager['_targets'][0x0][_0x30e5e7(0x222)]();return'';},Window_Base['prototype'][_0x2d27b8(0x2d7)]=function(){const _0x3f4b8a=_0x2d27b8;if(!SceneManager[_0x3f4b8a(0x272)]())return'';let _0x4c635e=null;_0x4c635e=BattleManager[_0x3f4b8a(0x29c)];if(!_0x4c635e&&BattleManager['isInputting']()){if(_0x3f4b8a(0x123)!==_0x3f4b8a(0x123)){_0x24a067=_0x21fd45[_0x3f4b8a(0x19d)](_0x1cc544[_0x3f4b8a(0x2f0)],''),_0x231492=_0x316dd7[_0x3f4b8a(0x19d)](_0x3aabbf[_0x3f4b8a(0x2e7)],''),this[_0x3f4b8a(0x254)]=!![],this[_0x3f4b8a(0xe2)]=!![],this[_0x3f4b8a(0x29b)](![]);const _0x26cc57=this[_0x3f4b8a(0x29d)](_0x33accb);if(_0x274e67){let _0x1a6542=_0x26cc57[_0x3f4b8a(0x2c7)]+_0x594428[_0x3f4b8a(0x201)]()*0x2+0x6;const _0x1d22b4=_0x4075dd[_0x3f4b8a(0x30b)]()!=='',_0x276a8f=_0x2d73c7[_0x3f4b8a(0xf5)],_0xbc821f=0x14;_0x1a6542+=_0x1d22b4?_0x276a8f+_0xbc821f:0x4;if(_0x1a6542%0x2!==0x0)_0x1a6542+=0x1;_0x411efb[_0x3f4b8a(0x13d)](_0x1a6542);}if(_0x1f8617){let _0x40006f=_0x4c4043[_0x3f4b8a(0x1c6)](_0x26cc57['height']/this[_0x3f4b8a(0xbc)]());_0x34ac79[_0x3f4b8a(0x2e1)](_0x40006f);}this[_0x3f4b8a(0xf6)](),this[_0x3f4b8a(0x146)](),this[_0x3f4b8a(0x254)]=![],this['_messagePositionReset']=!![];}else _0x4c635e=BattleManager['actor']();}return _0x4c635e?_0x4c635e[_0x3f4b8a(0x222)]():'';},Window_Base['prototype']['battleActionName']=function(_0x5d0b22){const _0x5bc7ac=_0x2d27b8;if(!SceneManager[_0x5bc7ac(0x272)]())return'';let _0xe2e38=BattleManager['_action']||null;!_0xe2e38&&BattleManager[_0x5bc7ac(0x1ab)]()&&(_0xe2e38=BattleManager[_0x5bc7ac(0x329)]());if(_0xe2e38&&_0xe2e38[_0x5bc7ac(0x102)]()){let _0x30b8ea='';if(_0x5d0b22)_0x30b8ea+=_0x5bc7ac(0x1a4)[_0x5bc7ac(0x165)](_0xe2e38[_0x5bc7ac(0x102)]()[_0x5bc7ac(0x280)]);return _0x30b8ea+=_0xe2e38[_0x5bc7ac(0x102)]()['name'],_0x30b8ea;}return'';},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x26f)]=function(_0x2f2106){const _0x3a2190=_0x2d27b8;for(const _0x3d9c46 of VisuMZ[_0x3a2190(0xe8)][_0x3a2190(0x1d3)][_0x3a2190(0x1e6)]){if('zuflr'!=='xgJKd')_0x2f2106[_0x3a2190(0x1c7)](_0x3d9c46[_0x3a2190(0x1c4)])&&(_0x2f2106=_0x2f2106[_0x3a2190(0x19d)](_0x3d9c46['textCodeCheck'],_0x3d9c46[_0x3a2190(0x325)]),_0x2f2106=this[_0x3a2190(0x193)](_0x2f2106));else{const _0x56c97c=_0x284769[_0x3a2190(0x2c7)]||this[_0x3a2190(0x109)],_0x5e63fd=this[_0x3a2190(0x150)]!==_0x39ec70?this['itemHeight']():this[_0x3a2190(0x32a)],_0x134256=_0x56c97c/_0x1ec31a[_0x3a2190(0x2c7)],_0xbf1ab=_0x5e63fd/_0x2dbafd[_0x3a2190(0x2dc)],_0x5dca26=_0x32929b[_0x3a2190(0x312)](_0x134256,_0xbf1ab,0x1),_0x57dc37=this['_index']!==_0xffdf51?(this[_0x3a2190(0x2be)](0x0)[_0x3a2190(0x2dc)]-this[_0x3a2190(0xbc)]())/0x2:0x0,_0x7a3874=_0x43c98b['width']*_0x5dca26,_0x5e3b1c=_0x2a9f20[_0x3a2190(0x2dc)]*_0x5dca26,_0x4f1228=_0x2c784e[_0x3a2190(0x205)]((_0x56c97c-_0x7a3874)/0x2)+_0x471a86['startX'],_0xc00f64=_0x4bb52f['floor']((_0x5e63fd-_0x5e3b1c)/0x2)+_0xa04768[_0x3a2190(0x2de)]-_0x57dc37*0x2;this['contentsBack'][_0x3a2190(0x135)]=_0xb39b69,this[_0x3a2190(0x279)][_0x3a2190(0x211)](_0x5ad010,0x0,0x0,_0x210bf7['width'],_0x14494e['height'],_0x4f1228,_0xc00f64,_0x7a3874,_0x5e3b1c),this[_0x3a2190(0x279)][_0x3a2190(0x135)]=0xff;}}return _0x2f2106;},Window_Base[_0x2d27b8(0x244)]['convertMessageCoreEscapeReplacements']=function(_0x3377f0){const _0x30f8b3=_0x2d27b8;for(const _0x542d56 of VisuMZ[_0x30f8b3(0xe8)]['Settings'][_0x30f8b3(0x164)]){_0x3377f0[_0x30f8b3(0x1c7)](_0x542d56[_0x30f8b3(0x1c4)])&&(_0x3377f0=_0x3377f0[_0x30f8b3(0x19d)](_0x542d56[_0x30f8b3(0x1c4)],_0x542d56[_0x30f8b3(0x325)][_0x30f8b3(0x111)](this)),_0x3377f0=this[_0x30f8b3(0x193)](_0x3377f0));}return _0x3377f0;},Window_Base[_0x2d27b8(0x244)]['actorName']=function(_0x4e37c5){const _0x11b730=_0x2d27b8,_0x4b26cb=_0x4e37c5>=0x1?$gameActors[_0x11b730(0x8b)](_0x4e37c5):null,_0x2662db=_0x4b26cb?_0x4b26cb[_0x11b730(0x222)]():'',_0x48f61c=Number(VisuMZ[_0x11b730(0xe8)][_0x11b730(0x1d3)]['AutoColor'][_0x11b730(0x180)]);return this[_0x11b730(0xfb)]()&&_0x48f61c!==0x0?'\x1bC[%1]%2\x1bPREVCOLOR[0]'[_0x11b730(0x165)](_0x48f61c,_0x2662db):_0x2662db;},Window_Base[_0x2d27b8(0x244)]['partyMemberName']=function(_0x3610c1){const _0x34f285=_0x2d27b8,_0xe8747b=_0x3610c1>=0x1?$gameParty['members']()[_0x3610c1-0x1]:null,_0x50ac1a=_0xe8747b?_0xe8747b[_0x34f285(0x222)]():'',_0x3bfab8=Number(VisuMZ[_0x34f285(0xe8)][_0x34f285(0x1d3)][_0x34f285(0x18c)][_0x34f285(0x180)]);return this[_0x34f285(0xfb)]()&&_0x3bfab8!==0x0?_0x34f285(0x1b6)['format'](_0x3bfab8,_0x50ac1a):_0x50ac1a;},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x213)]=function(_0x28fe48){const _0x1847e4=_0x2d27b8;return this[_0x1847e4(0xfb)]()&&(_0x28fe48=this[_0x1847e4(0x25a)](_0x28fe48),_0x28fe48=this['processActorNameAutoColorChanges'](_0x28fe48)),_0x28fe48;},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x25a)]=function(_0x334fd1){const _0x5c2709=_0x2d27b8;for(autoColor of VisuMZ[_0x5c2709(0xe8)][_0x5c2709(0x291)]){_0x334fd1=_0x334fd1[_0x5c2709(0x19d)](autoColor[0x0],autoColor[0x1]);}return _0x334fd1;},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x22f)]=function(){const _0x568758=_0x2d27b8;this[_0x568758(0x206)]=[];},Window_Base['prototype']['registerActorNameAutoColorChanges']=function(){const _0x10152a=_0x2d27b8;this['clearActorNameAutoColor']();const _0x321ab2=VisuMZ[_0x10152a(0xe8)][_0x10152a(0x1d3)]['AutoColor'],_0x1d96bb=_0x321ab2[_0x10152a(0x180)];if(_0x1d96bb<=0x0)return;for(const _0x3eef19 of $gameActors[_0x10152a(0x118)]){if(!_0x3eef19)continue;const _0x44eea9=_0x3eef19[_0x10152a(0x222)]();if(_0x44eea9[_0x10152a(0x18b)]()[_0x10152a(0x315)]<=0x0)continue;if(/^\d+$/[_0x10152a(0x129)](_0x44eea9))continue;if(_0x44eea9[_0x10152a(0x1c7)](/-----/i))continue;let _0x31a366=VisuMZ[_0x10152a(0xe8)][_0x10152a(0x92)](_0x44eea9);const _0x5e892f=new RegExp('\x5cb'+_0x31a366+'\x5cb','g'),_0x345958='\x1bC[%1]%2\x1bPREVCOLOR[0]'['format'](_0x1d96bb,_0x44eea9);this[_0x10152a(0x206)][_0x10152a(0x249)]([_0x5e892f,_0x345958]);}},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x2f9)]=function(_0x3d3eaa){const _0x11dc77=_0x2d27b8;this[_0x11dc77(0x206)]===undefined&&(_0x11dc77(0x1af)===_0x11dc77(0x2a9)?_0x375da1[_0x11dc77(0x105)]=_0x4151f9[_0x11dc77(0x105)][_0x11dc77(0xc0)](0x0,_0x53a187[_0x11dc77(0x196)])+'\x0a'+_0x2797c2[_0x11dc77(0x105)][_0x11dc77(0x126)](_0x2a07a4[_0x11dc77(0x196)]):this['registerActorNameAutoColorChanges']());for(autoColor of this[_0x11dc77(0x206)]){_0x11dc77(0x2fa)!==_0x11dc77(0x2fa)?(this[_0x11dc77(0x82)](),this[_0x11dc77(0x1a7)](),this[_0x11dc77(0x1fc)](),this['activate']()):_0x3d3eaa=_0x3d3eaa[_0x11dc77(0x19d)](autoColor[0x0],autoColor[0x1]);}return _0x3d3eaa;},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0xde)]=function(_0x1703cb,_0x113633,_0x44f5fc){const _0x223e8b=_0x2d27b8;if(!_0x1703cb)return'';const _0x56e254=_0x1703cb[_0x113633];let _0x168ebe='';if(_0x56e254&&_0x44f5fc&&_0x56e254['iconIndex']){if(_0x223e8b(0x200)!==_0x223e8b(0xaf)){const _0x436474=_0x223e8b(0x69);_0x168ebe=_0x436474[_0x223e8b(0x165)](_0x56e254[_0x223e8b(0x280)],_0x56e254['name']);}else _0x2aa7a4='</WORDWRAP>'+_0x1422f1;}else _0x56e254?_0x168ebe=_0x56e254[_0x223e8b(0x222)]:_0x223e8b(0x161)!=='ROLaX'?(this[_0x223e8b(0x2d6)](_0x240417),this[_0x223e8b(0x1cc)](_0x12bebd),this[_0x223e8b(0x75)]()):_0x168ebe='';if(this[_0x223e8b(0xfb)]()){if(_0x223e8b(0x122)!=='GJkdl')_0x168ebe=this[_0x223e8b(0x1ed)](_0x168ebe,_0x1703cb);else return this['_colorLock'];}return _0x168ebe;},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x7d)]=function(_0x4573a1){const _0x5efb57=_0x2d27b8,_0x4d40ff=$gameParty[_0x5efb57(0x143)]();if(_0x4d40ff['id']<0x0)return'';let _0x34604a=null;if(_0x4d40ff[_0x5efb57(0x2d3)]===0x0)_0x34604a=$dataItems[_0x4d40ff['id']];if(_0x4d40ff['type']===0x1)_0x34604a=$dataWeapons[_0x4d40ff['id']];if(_0x4d40ff['type']===0x2)_0x34604a=$dataArmors[_0x4d40ff['id']];if(!_0x34604a)return'';return _0x4573a1?_0x5efb57(0x69)[_0x5efb57(0x165)](_0x34604a['iconIndex'],_0x34604a['name']):_0x34604a['name'];},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x251)]=function(){const _0x491db6=_0x2d27b8,_0x4c3b7b=$gameParty[_0x491db6(0x143)]();if(_0x4c3b7b['id']<=0x0)return'';return _0x4c3b7b['quantity'];},Window_Base[_0x2d27b8(0x244)]['applyDatabaseAutoColor']=function(_0x18eb82,_0x1bc014){const _0x4cd303=_0x2d27b8,_0x4fce3b=VisuMZ[_0x4cd303(0xe8)]['Settings'][_0x4cd303(0x18c)];let _0x3917b1=0x0;if(_0x1bc014===$dataActors)_0x3917b1=_0x4fce3b[_0x4cd303(0x180)];if(_0x1bc014===$dataClasses)_0x3917b1=_0x4fce3b['Classes'];if(_0x1bc014===$dataSkills)_0x3917b1=_0x4fce3b['Skills'];if(_0x1bc014===$dataItems)_0x3917b1=_0x4fce3b[_0x4cd303(0x33d)];if(_0x1bc014===$dataWeapons)_0x3917b1=_0x4fce3b['Weapons'];if(_0x1bc014===$dataArmors)_0x3917b1=_0x4fce3b[_0x4cd303(0x1f3)];if(_0x1bc014===$dataEnemies)_0x3917b1=_0x4fce3b['Enemies'];if(_0x1bc014===$dataStates)_0x3917b1=_0x4fce3b[_0x4cd303(0x247)];return _0x3917b1>0x0&&(_0x18eb82=_0x4cd303(0x1b6)[_0x4cd303(0x165)](_0x3917b1,_0x18eb82)),_0x18eb82;},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0xc5)]=function(_0x31ee9f){const _0x4a7fbc=_0x2d27b8;_0x31ee9f=_0x31ee9f[_0x4a7fbc(0x19d)](/<(?:WORDWRAP|WORD WRAP)>/gi,(_0x1c7550,_0xd73060)=>this['setWordWrap'](!![])),_0x31ee9f=_0x31ee9f['replace'](/<(?:NOWORDWRAP|NO WORD WRAP)>/gi,(_0x34cb70,_0x2dea9c)=>this[_0x4a7fbc(0x29b)](![])),_0x31ee9f=_0x31ee9f[_0x4a7fbc(0x19d)](/<\/(?:WORDWRAP|WORD WRAP)>/gi,(_0x389860,_0x5e3733)=>this[_0x4a7fbc(0x29b)](![]));if(_0x31ee9f['match'](Window_Message[_0x4a7fbc(0x2f0)]))this['setWordWrap'](![]);else _0x31ee9f[_0x4a7fbc(0x1c7)](Window_Message[_0x4a7fbc(0x2e7)])&&this[_0x4a7fbc(0x29b)](![]);if(!this['isWordWrapEnabled']())return _0x31ee9f;if(_0x31ee9f['length']<=0x0)return _0x31ee9f;return VisuMZ['MessageCore'][_0x4a7fbc(0x1d3)][_0x4a7fbc(0xc9)]['LineBreakSpace']?_0x4a7fbc(0x245)!=='zQxWb'?_0xfdfc8a=_0x5c997d['inputtingAction']():(_0x31ee9f=_0x31ee9f[_0x4a7fbc(0x19d)](/[\n\r]+/g,'\x20'),_0x31ee9f=_0x31ee9f[_0x4a7fbc(0x19d)](/<(?:BR|LINEBREAK)>/gi,'\x20\x0a')):_0x4a7fbc(0x30c)!=='ZpJaW'?(_0x31ee9f=_0x31ee9f[_0x4a7fbc(0x19d)](/[\n\r]+/g,''),_0x31ee9f=_0x31ee9f[_0x4a7fbc(0x19d)](/<(?:BR|LINEBREAK)>/gi,'\x0a')):_0x54d465[_0x4a7fbc(0xe8)][_0x4a7fbc(0x224)]['call'](this,_0x489f5a,_0x6922e2),_0x31ee9f=this['addWrapBreakAfterPunctuation'](_0x31ee9f),_0x31ee9f=_0x31ee9f[_0x4a7fbc(0xc8)]('\x20')[_0x4a7fbc(0xae)](_0x4a7fbc(0x1d6)),_0x31ee9f=_0x31ee9f[_0x4a7fbc(0x19d)](/<(?:BR|LINEBREAK)>/gi,'\x0a'),_0x31ee9f=_0x31ee9f[_0x4a7fbc(0x19d)](/<LINE\x1bWrapBreak[0]BREAK>/gi,'\x0a'),_0x31ee9f;},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0xb0)]=function(_0x3173c3){return _0x3173c3;},VisuMZ['MessageCore'][_0x2d27b8(0x1b9)]=Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x132)],Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x132)]=function(_0x5cd331){const _0x307d72=_0x2d27b8;VisuMZ[_0x307d72(0xe8)][_0x307d72(0x1b9)][_0x307d72(0x1ca)](this,_0x5cd331),this[_0x307d72(0x194)](_0x5cd331);},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0xc1)]=Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x9e)],Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x9e)]=function(_0x2e4875,_0x1e29e5){const _0x4b4bba=_0x2d27b8;VisuMZ[_0x4b4bba(0xe8)]['Window_Base_processControlCharacter'][_0x4b4bba(0x1ca)](this,_0x2e4875,_0x1e29e5),_0x1e29e5==='\x1bWrapBreak[0]'&&this[_0x4b4bba(0x2c3)](_0x2e4875);},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x120)]=function(_0x17fe8f){const _0x313ffc=_0x2d27b8;var _0x4e0ab2=/^\<(.*?)\>/[_0x313ffc(0x88)](_0x17fe8f[_0x313ffc(0x105)][_0x313ffc(0xc0)](_0x17fe8f[_0x313ffc(0x196)]));return _0x4e0ab2?(_0x17fe8f[_0x313ffc(0x196)]+=_0x4e0ab2[0x0][_0x313ffc(0x315)],String(_0x4e0ab2[0x0][_0x313ffc(0xc0)](0x1,_0x4e0ab2[0x0][_0x313ffc(0x315)]-0x1))):'';},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x18a)]=Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x15a)],Window_Base[_0x2d27b8(0x244)]['processEscapeCharacter']=function(_0x3733cb,_0x5864b2){const _0x3a2bb8=_0x2d27b8;switch(_0x3733cb){case'C':if(_0x5864b2[_0x3a2bb8(0x147)]){if(_0x3a2bb8(0x86)===_0x3a2bb8(0x12b)){if(this[_0x3a2bb8(0x225)]===_0x3323dc)this['initMessageCore']();if(this[_0x3a2bb8(0x225)][_0x3a2bb8(0x29a)]===_0x3d401c)this[_0x3a2bb8(0x16c)]();this[_0x3a2bb8(0x225)][_0x3a2bb8(0x29a)]=_0x3ddb21||0x1;}else VisuMZ[_0x3a2bb8(0xe8)][_0x3a2bb8(0x18a)][_0x3a2bb8(0x1ca)](this,_0x3733cb,_0x5864b2);}else{if('xrOye'!==_0x3a2bb8(0x11b)){let _0x3b206a=_0x1bac67[_0x3a2bb8(0x2c7)]+_0x5c2a8d['windowPadding']()*0x2+0x6;const _0x212800=_0x35af2d['faceName']()!=='',_0x28bd13=_0x801a9d[_0x3a2bb8(0xf5)],_0x6763be=0x14;_0x3b206a+=_0x212800?_0x28bd13+_0x6763be:0x4;if(_0x3b206a%0x2!==0x0)_0x3b206a+=0x1;_0xece64c[_0x3a2bb8(0x13d)](_0x3b206a);}else this[_0x3a2bb8(0x2cf)](_0x5864b2);}break;case'I':case'{':case'}':VisuMZ[_0x3a2bb8(0xe8)][_0x3a2bb8(0x18a)][_0x3a2bb8(0x1ca)](this,_0x3733cb,_0x5864b2);break;case'FS':this[_0x3a2bb8(0x2b2)](_0x5864b2);break;case'PX':this['processPxTextCode'](_0x5864b2);break;case'PY':this[_0x3a2bb8(0x19c)](_0x5864b2);break;case'BOLD':this[_0x3a2bb8(0x1f7)](this[_0x3a2bb8(0x2cf)](_0x5864b2));break;case'CENTERPICTURE':this[_0x3a2bb8(0xc6)](_0x5864b2);break;case'COLORLOCK':this['processColorLock'](_0x5864b2);break;case _0x3a2bb8(0x1b5):this[_0x3a2bb8(0x163)](_0x5864b2);break;case _0x3a2bb8(0x313):this[_0x3a2bb8(0x7b)](this[_0x3a2bb8(0x2cf)](_0x5864b2));break;case _0x3a2bb8(0x2c4):this['processDrawPicture'](_0x5864b2);break;case _0x3a2bb8(0x1b7):this[_0x3a2bb8(0x2e4)](_0x5864b2);break;case _0x3a2bb8(0x6a):this[_0x3a2bb8(0xf3)](_0x5864b2);break;case _0x3a2bb8(0x234):this[_0x3a2bb8(0x283)](_0x5864b2);break;case'WRAPBREAK':this[_0x3a2bb8(0x2c3)](_0x5864b2);break;default:this[_0x3a2bb8(0x32d)](_0x3733cb,_0x5864b2);}},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x32d)]=function(_0x15d665,_0x4f7b54){const _0x27f51c=_0x2d27b8;for(const _0x3084be of VisuMZ[_0x27f51c(0xe8)]['Settings'][_0x27f51c(0x1e6)]){if(_0x3084be['Match']===_0x15d665){if(_0x3084be[_0x27f51c(0xff)]==='')this['obtainEscapeParam'](_0x4f7b54);_0x3084be['ActionJS'][_0x27f51c(0x1ca)](this,_0x4f7b54);if(this[_0x27f51c(0x289)]===Window_Message){if(_0x27f51c(0x335)!=='CMjBX')_0x3e5d1b['x']=-_0x190f94[_0x27f51c(0x2c7)]-_0x502f0e;else{const _0xcfd1d4=_0x3084be[_0x27f51c(0x32e)]||0x0;if(_0xcfd1d4>0x0)this[_0x27f51c(0x27f)](_0xcfd1d4);}}}}},Window_Base['prototype']['makeFontBigger']=function(){const _0x37aa6f=_0x2d27b8;this[_0x37aa6f(0x172)][_0x37aa6f(0x22d)]+=VisuMZ[_0x37aa6f(0xe8)][_0x37aa6f(0x1d3)][_0x37aa6f(0x192)][_0x37aa6f(0x1bf)],this[_0x37aa6f(0x172)]['fontSize']=Math[_0x37aa6f(0x312)](this[_0x37aa6f(0x172)]['fontSize'],VisuMZ[_0x37aa6f(0xe8)]['Settings'][_0x37aa6f(0x192)][_0x37aa6f(0x9f)]);},Window_Base['prototype'][_0x2d27b8(0x2d4)]=function(){const _0x57c189=_0x2d27b8;this[_0x57c189(0x172)]['fontSize']-=VisuMZ['MessageCore']['Settings'][_0x57c189(0x192)]['FontChangeValue'],this[_0x57c189(0x172)][_0x57c189(0x22d)]=Math[_0x57c189(0x9b)](this[_0x57c189(0x172)]['fontSize'],VisuMZ[_0x57c189(0xe8)][_0x57c189(0x1d3)][_0x57c189(0x192)][_0x57c189(0x301)]);},Window_Base[_0x2d27b8(0x244)]['processFsTextCode']=function(_0x21180b){const _0x18e946=_0x2d27b8,_0x262421=this['obtainEscapeParam'](_0x21180b);this[_0x18e946(0x172)][_0x18e946(0x22d)]=_0x262421['clamp'](VisuMZ[_0x18e946(0xe8)]['Settings']['General'][_0x18e946(0x301)],VisuMZ[_0x18e946(0xe8)][_0x18e946(0x1d3)]['General'][_0x18e946(0x9f)]);},Window_Base['prototype'][_0x2d27b8(0x1b2)]=function(_0x1f1ed2){const _0x7ec5d2=_0x2d27b8;let _0x210be6=this['contents'][_0x7ec5d2(0x22d)];const _0x517df8=/\x1b({|}|FS)(\[(\d+)])?/gi;for(;;){const _0x355e7e=_0x517df8[_0x7ec5d2(0x88)](_0x1f1ed2);if(!_0x355e7e)break;const _0x59cb96=String(_0x355e7e[0x1])[_0x7ec5d2(0xd4)]();if(_0x59cb96==='{'){if(_0x7ec5d2(0x1f6)===_0x7ec5d2(0x1f6))this[_0x7ec5d2(0x1cd)]();else{if(this[_0x7ec5d2(0x225)]===_0x1b4b20)this[_0x7ec5d2(0x16c)]();if(this[_0x7ec5d2(0x225)]['messageWordWrap']===_0x1390ed)this['initMessageCore']();return this[_0x7ec5d2(0x225)][_0x7ec5d2(0x9d)];}}else{if(_0x59cb96==='}')this[_0x7ec5d2(0x2d4)]();else _0x59cb96==='FS'&&(_0x7ec5d2(0x96)!==_0x7ec5d2(0x321)?this[_0x7ec5d2(0x172)][_0x7ec5d2(0x22d)]=parseInt(_0x355e7e[0x3])[_0x7ec5d2(0x18f)](VisuMZ[_0x7ec5d2(0xe8)][_0x7ec5d2(0x1d3)][_0x7ec5d2(0x192)][_0x7ec5d2(0x301)],VisuMZ[_0x7ec5d2(0xe8)][_0x7ec5d2(0x1d3)][_0x7ec5d2(0x192)][_0x7ec5d2(0x9f)]):this['y']=_0x11bdba['y']+_0x44675c[_0x7ec5d2(0x2dc)]);}this[_0x7ec5d2(0x172)]['fontSize']>_0x210be6&&(_0x210be6=this[_0x7ec5d2(0x172)][_0x7ec5d2(0x22d)]);}return _0x210be6;},Window_Base['prototype'][_0x2d27b8(0x331)]=function(_0x32d58c){const _0x19602b=_0x2d27b8;_0x32d58c['x']=this[_0x19602b(0x2cf)](_0x32d58c),VisuMZ[_0x19602b(0xe8)]['Settings'][_0x19602b(0x192)][_0x19602b(0x2a8)]&&(_0x32d58c['x']+=_0x32d58c[_0x19602b(0x31f)]);},Window_Base[_0x2d27b8(0x244)]['processPyTextCode']=function(_0x5c480e){const _0x23544d=_0x2d27b8;_0x5c480e['y']=this[_0x23544d(0x2cf)](_0x5c480e),VisuMZ[_0x23544d(0xe8)][_0x23544d(0x1d3)][_0x23544d(0x192)][_0x23544d(0x2a8)]&&(_0x5c480e['y']+=_0x5c480e[_0x23544d(0x2de)]);},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x1f7)]=function(_0x53e80e){const _0x1aa10f=_0x2d27b8;this['contents'][_0x1aa10f(0xa8)]=!!_0x53e80e;},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x7b)]=function(_0x5927ef){const _0x3f67b2=_0x2d27b8;this['contents'][_0x3f67b2(0x238)]=!!_0x5927ef;},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0xf3)]=function(_0x422e65){const _0x12a269=_0x2d27b8,_0x3ea27d=this['obtainEscapeParam'](_0x422e65);if(!_0x422e65[_0x12a269(0x147)])return;switch(_0x3ea27d){case 0x0:this['setTextAlignment']('default');return;case 0x1:this[_0x12a269(0x327)]('left');break;case 0x2:this[_0x12a269(0x327)](_0x12a269(0x268));break;case 0x3:this[_0x12a269(0x327)](_0x12a269(0x113));break;}this['processTextAlignmentX'](_0x422e65);},Window_Base['prototype']['processTextAlignmentX']=function(_0x5ae680){const _0x9453fc=_0x2d27b8;if(!_0x5ae680['drawing'])return;if(_0x5ae680[_0x9453fc(0x30e)])return;if(this['getTextAlignment']()===_0x9453fc(0x20f))return;let _0x4822c7=_0x5ae680[_0x9453fc(0x105)][_0x9453fc(0x269)]('\x1bTEXTALIGNMENT',_0x5ae680[_0x9453fc(0x196)]+0x1),_0x25d003=_0x5ae680[_0x9453fc(0x105)][_0x9453fc(0x269)]('\x0a',_0x5ae680['index']+0x1);if(_0x4822c7<0x0)_0x4822c7=_0x5ae680[_0x9453fc(0x105)][_0x9453fc(0x315)]+0x1;if(_0x25d003>0x0)_0x4822c7=Math[_0x9453fc(0x312)](_0x4822c7,_0x25d003);const _0x11b144=_0x5ae680['text'][_0x9453fc(0x2a2)](_0x5ae680[_0x9453fc(0x196)],_0x4822c7),_0x3489f7=this[_0x9453fc(0x2a4)](_0x11b144)[_0x9453fc(0x2c7)],_0x342db7=_0x5ae680[_0x9453fc(0x2c7)]||this[_0x9453fc(0x109)]-0x8,_0x30f322=this[_0x9453fc(0x289)]===Window_Message&&$gameMessage[_0x9453fc(0x30b)]()!=='';switch(this[_0x9453fc(0x242)]()){case _0x9453fc(0x1e4):_0x5ae680['x']=_0x5ae680[_0x9453fc(0x31f)];break;case'center':_0x5ae680['x']=_0x5ae680['startX'],_0x5ae680['x']+=Math[_0x9453fc(0x205)]((_0x342db7-_0x3489f7)/0x2);_0x30f322&&(_0x5ae680['x']-=_0x5ae680[_0x9453fc(0x31f)]/0x2);break;case _0x9453fc(0x113):_0x5ae680['x']=_0x342db7-_0x3489f7+_0x5ae680[_0x9453fc(0x31f)];_0x30f322&&(_0x9453fc(0x21e)!==_0x9453fc(0x235)?_0x5ae680['x']-=_0x5ae680[_0x9453fc(0x31f)]:(this['currentCommand']()['parameters'][0x0]=_0x8d6c9c,_0x163c3f++));break;}},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x2a4)]=function(_0x216152){const _0x3c2e8e=_0x2d27b8;_0x216152=_0x216152[_0x3c2e8e(0x19d)](/\x1b!/g,''),_0x216152=_0x216152[_0x3c2e8e(0x19d)](/\x1b\|/g,''),_0x216152=_0x216152[_0x3c2e8e(0x19d)](/\x1b\./g,'');const _0x43f3e3=this[_0x3c2e8e(0xb6)](_0x216152,0x0,0x0,0x0),_0x1a7cfb=this[_0x3c2e8e(0x324)]();return _0x43f3e3[_0x3c2e8e(0x147)]=![],this['processAllText'](_0x43f3e3),this['returnPreservedFontSettings'](_0x1a7cfb),{'width':_0x43f3e3['outputWidth'],'height':_0x43f3e3[_0x3c2e8e(0x31a)]};},Window_Base[_0x2d27b8(0x2c6)]=VisuMZ['MessageCore'][_0x2d27b8(0x1d3)][_0x2d27b8(0xc9)][_0x2d27b8(0x128)]||0x0,Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x2c3)]=function(_0x54b1f1){const _0x24148a=_0x2d27b8,_0x4d2212=(_0x54b1f1[_0x24148a(0x30e)]?-0x1:0x1)*this['textWidth']('\x20');_0x54b1f1['x']+=_0x4d2212;if(this['obtainEscapeParam'](_0x54b1f1)>0x0)_0x54b1f1['x']+=_0x4d2212;if(_0x54b1f1[_0x24148a(0x30e)])return;let _0x49b742=_0x54b1f1['text']['indexOf'](_0x24148a(0x1d6),_0x54b1f1[_0x24148a(0x196)]+0x1),_0x5c4963=_0x54b1f1[_0x24148a(0x105)][_0x24148a(0x269)]('\x0a',_0x54b1f1[_0x24148a(0x196)]+0x1);if(_0x49b742<0x0)_0x49b742=_0x54b1f1[_0x24148a(0x105)][_0x24148a(0x315)]+0x1;if(_0x5c4963>0x0)_0x49b742=Math[_0x24148a(0x312)](_0x49b742,_0x5c4963);const _0x175293=_0x54b1f1[_0x24148a(0x105)][_0x24148a(0x2a2)](_0x54b1f1[_0x24148a(0x196)],_0x49b742),_0x505317=this[_0x24148a(0x100)](_0x175293)[_0x24148a(0x2c7)];let _0x1aaa33=_0x54b1f1[_0x24148a(0x2c7)]||this['innerWidth'];_0x1aaa33-=Window_Base[_0x24148a(0x2c6)];if(this['constructor']===Window_Message){if(_0x24148a(0x236)===_0x24148a(0x236)){const _0x304652=$gameMessage[_0x24148a(0x30b)]()===''?0x0:ImageManager['faceWidth']+0x14;_0x1aaa33-=_0x304652,VisuMZ[_0x24148a(0xe8)][_0x24148a(0x1d3)]['WordWrap'][_0x24148a(0x12a)]&&(_0x1aaa33-=_0x304652);}else{const _0x572709=_0x57443f>=0x1?_0x42e3d2[_0x24148a(0x8b)](_0x49167e):null,_0xce6318=_0x572709?_0x572709[_0x24148a(0x222)]():'',_0x5364ec=_0x488996(_0x3ed02d[_0x24148a(0xe8)][_0x24148a(0x1d3)][_0x24148a(0x18c)]['Actors']);return this['isAutoColorAffected']()&&_0x5364ec!==0x0?_0x24148a(0x1b6)['format'](_0x5364ec,_0xce6318):_0xce6318;}}let _0x1bd41f=![];if(_0x54b1f1['x']+_0x505317>_0x54b1f1[_0x24148a(0x31f)]+_0x1aaa33)_0x1bd41f=!![];if(_0x505317===0x0)_0x1bd41f=!![];_0x1bd41f&&(_0x24148a(0x226)!==_0x24148a(0x226)?(this['adjustShowChoiceDefault'](_0x4736cd,_0xbdf562,_0x2d193d),this[_0x24148a(0xf1)](_0x4daf61,_0x205a5a,_0x4b64d3),this[_0x24148a(0x28e)](_0x552004,_0x262bf1)):_0x54b1f1['text']=_0x54b1f1[_0x24148a(0x105)][_0x24148a(0xc0)](0x0,_0x54b1f1['index'])+'\x0a'+_0x54b1f1['text'][_0x24148a(0x126)](_0x54b1f1[_0x24148a(0x196)]));},Window_Base[_0x2d27b8(0x244)]['textSizeExWordWrap']=function(_0x36dc3d){const _0x50ee7c=_0x2d27b8,_0x4818c7=this[_0x50ee7c(0xb6)](_0x36dc3d,0x0,0x0,0x0),_0x1cdb80=this['getPreservedFontSettings']();return _0x4818c7['drawing']=![],this[_0x50ee7c(0x29b)](![]),this[_0x50ee7c(0x1bc)](_0x4818c7),this[_0x50ee7c(0x29b)](!![]),this[_0x50ee7c(0x302)](_0x1cdb80),{'width':_0x4818c7[_0x50ee7c(0x317)],'height':_0x4818c7['outputHeight']};},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x163)]=function(_0x4c6780){const _0x2b0d80=_0x2d27b8;return this[_0x2b0d80(0x2cf)](_0x4c6780);},Window_Base['prototype'][_0x2d27b8(0x152)]=function(_0x1c81da){const _0x4e811b=_0x2d27b8,_0x5e566f=this['obtainEscapeString'](_0x1c81da)[_0x4e811b(0xc8)](',');if(!_0x1c81da[_0x4e811b(0x147)])return;const _0x3bebe1=_0x5e566f[0x0][_0x4e811b(0x18b)](),_0x1bd1ae=_0x5e566f[0x1]||0x0,_0x17e166=_0x5e566f[0x2]||0x0,_0x1c48fb=ImageManager[_0x4e811b(0x26b)](_0x3bebe1),_0x28f7ca=this[_0x4e811b(0x172)][_0x4e811b(0x135)];_0x1c48fb[_0x4e811b(0x87)](this['drawBackPicture'][_0x4e811b(0x111)](this,_0x1c48fb,_0x1c81da['x'],_0x1c81da['y'],_0x1bd1ae,_0x17e166,_0x28f7ca));},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x20c)]=function(_0x58af31,_0x40417c,_0x390376,_0x4e3a93,_0x59347d,_0x4949db){const _0x3f85bc=_0x2d27b8;_0x4e3a93=_0x4e3a93||_0x58af31[_0x3f85bc(0x2c7)],_0x59347d=_0x59347d||_0x58af31[_0x3f85bc(0x2dc)],this[_0x3f85bc(0x279)][_0x3f85bc(0x135)]=_0x4949db,this['contentsBack'][_0x3f85bc(0x211)](_0x58af31,0x0,0x0,_0x58af31[_0x3f85bc(0x2c7)],_0x58af31[_0x3f85bc(0x2dc)],_0x40417c,_0x390376,_0x4e3a93,_0x59347d),this['contentsBack'][_0x3f85bc(0x135)]=0xff;},Window_Base['prototype'][_0x2d27b8(0xc6)]=function(_0x6981d){const _0x5bd5a5=_0x2d27b8,_0x1b94b9=this[_0x5bd5a5(0x120)](_0x6981d)[_0x5bd5a5(0xc8)](',');if(!_0x6981d['drawing'])return;const _0x2962ab=_0x1b94b9[0x0][_0x5bd5a5(0x18b)](),_0x40d69c=ImageManager[_0x5bd5a5(0x26b)](_0x2962ab),_0x4f5565=JsonEx[_0x5bd5a5(0x8c)](_0x6981d),_0x13cb0f=this[_0x5bd5a5(0x172)][_0x5bd5a5(0x135)];_0x40d69c[_0x5bd5a5(0x87)](this[_0x5bd5a5(0xea)]['bind'](this,_0x40d69c,_0x4f5565,_0x13cb0f));},Window_Base['prototype'][_0x2d27b8(0xea)]=function(_0x15ca0e,_0x6b3032,_0x34228f){const _0x1b718c=_0x2d27b8,_0x8e1bcb=_0x6b3032[_0x1b718c(0x2c7)]||this['innerWidth'],_0x558bfe=this[_0x1b718c(0x150)]!==undefined?this['itemHeight']():this[_0x1b718c(0x32a)],_0x2254ea=_0x8e1bcb/_0x15ca0e['width'],_0x433568=_0x558bfe/_0x15ca0e['height'],_0x26b622=Math[_0x1b718c(0x312)](_0x2254ea,_0x433568,0x1),_0x807d82=this['_index']!==undefined?(this['itemRectWithPadding'](0x0)[_0x1b718c(0x2dc)]-this['lineHeight']())/0x2:0x0,_0x3e2e9e=_0x15ca0e[_0x1b718c(0x2c7)]*_0x26b622,_0x1673af=_0x15ca0e[_0x1b718c(0x2dc)]*_0x26b622,_0x230ba4=Math['floor']((_0x8e1bcb-_0x3e2e9e)/0x2)+_0x6b3032[_0x1b718c(0x31f)],_0x5e75f1=Math[_0x1b718c(0x205)]((_0x558bfe-_0x1673af)/0x2)+_0x6b3032[_0x1b718c(0x2de)]-_0x807d82*0x2;this[_0x1b718c(0x279)][_0x1b718c(0x135)]=_0x34228f,this['contentsBack'][_0x1b718c(0x211)](_0x15ca0e,0x0,0x0,_0x15ca0e[_0x1b718c(0x2c7)],_0x15ca0e[_0x1b718c(0x2dc)],_0x230ba4,_0x5e75f1,_0x3e2e9e,_0x1673af),this[_0x1b718c(0x279)][_0x1b718c(0x135)]=0xff;},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x2db)]=function(_0x5f003a){const _0x5b7df1=_0x2d27b8,_0x255d00=this['obtainEscapeParam'](_0x5f003a);if(_0x5f003a['drawing'])this[_0x5b7df1(0xfc)](_0x255d00>0x0);},Window_Base[_0x2d27b8(0x244)][_0x2d27b8(0x283)]=function(_0x2b554e){const _0x288167=_0x2d27b8,_0x15d0a0=this[_0x288167(0x2cf)](_0x2b554e);this['constructor']===Window_Message&&_0x2b554e['drawing']&&(_0x288167(0x14a)===_0x288167(0x27a)?this[_0x288167(0x29b)](![]):this['startWait'](_0x15d0a0));},Window_Help[_0x2d27b8(0x244)][_0x2d27b8(0x20e)]=function(){const _0xe47ffc=_0x2d27b8;this[_0xe47ffc(0x29b)]($gameSystem[_0xe47ffc(0x2da)]());},Window_Help[_0x2d27b8(0x244)]['isAutoColorAffected']=function(){return!![];},VisuMZ['MessageCore'][_0x2d27b8(0x16a)]=Window_Help[_0x2d27b8(0x244)][_0x2d27b8(0x82)],Window_Help[_0x2d27b8(0x244)]['refresh']=function(){const _0x18e234=_0x2d27b8;this[_0x18e234(0x22f)](),VisuMZ[_0x18e234(0xe8)]['Window_Help_refresh'][_0x18e234(0x1ca)](this),this[_0x18e234(0x20e)]();},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0xf4)]=Window_Options['prototype']['addGeneralOptions'],Window_Options[_0x2d27b8(0x244)][_0x2d27b8(0x2ce)]=function(){const _0x15ecb9=_0x2d27b8;VisuMZ[_0x15ecb9(0xe8)][_0x15ecb9(0xf4)][_0x15ecb9(0x1ca)](this),this[_0x15ecb9(0x1a1)]();},Window_Options[_0x2d27b8(0x244)][_0x2d27b8(0x1a1)]=function(){const _0x2d1204=_0x2d27b8;VisuMZ[_0x2d1204(0xe8)]['Settings']['TextSpeed'][_0x2d1204(0xc4)]&&this[_0x2d1204(0x7e)]();},Window_Options[_0x2d27b8(0x244)][_0x2d27b8(0x7e)]=function(){const _0x5ddcdb=_0x2d27b8,_0x17d573=TextManager[_0x5ddcdb(0x74)],_0x2a34a3='textSpeed';this[_0x5ddcdb(0x2a1)](_0x17d573,_0x2a34a3);},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x2f1)]=Window_Options['prototype']['statusText'],Window_Options[_0x2d27b8(0x244)][_0x2d27b8(0x276)]=function(_0x59de2d){const _0x7a8314=_0x2d27b8,_0x3ca303=this[_0x7a8314(0x2cd)](_0x59de2d);if(_0x3ca303===_0x7a8314(0xe4))return this[_0x7a8314(0x228)]();return VisuMZ[_0x7a8314(0xe8)][_0x7a8314(0x2f1)]['call'](this,_0x59de2d);},VisuMZ[_0x2d27b8(0xe8)]['Window_Options_isVolumeSymbol']=Window_Options[_0x2d27b8(0x244)][_0x2d27b8(0x1f4)],Window_Options[_0x2d27b8(0x244)]['isVolumeSymbol']=function(_0x1aceca){const _0x22810e=_0x2d27b8;if(_0x1aceca===_0x22810e(0xe4))return!![];return VisuMZ['MessageCore']['Window_Options_isVolumeSymbol'][_0x22810e(0x1ca)](this,_0x1aceca);},Window_Options[_0x2d27b8(0x244)][_0x2d27b8(0x228)]=function(){const _0x277288=_0x2d27b8,_0x29e1a2=this[_0x277288(0x299)]('textSpeed');if(_0x29e1a2>0xa){if(_0x277288(0x1c5)!==_0x277288(0x322))return TextManager[_0x277288(0x281)];else _0x974912[_0x277288(0xe8)]['Sprite_Picture_updateBitmap'][_0x277288(0x1ca)](this),this['createPictureText']();}else return _0x29e1a2;},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x2a6)]=Window_Options['prototype'][_0x2d27b8(0xd5)],Window_Options[_0x2d27b8(0x244)]['changeVolume']=function(_0x3696f1,_0x36a05f,_0x3d295c){const _0x9781d2=_0x2d27b8;if(_0x3696f1===_0x9781d2(0xe4))return this['changeTextSpeed'](_0x3696f1,_0x36a05f,_0x3d295c);VisuMZ['MessageCore'][_0x9781d2(0x2a6)][_0x9781d2(0x1ca)](this,_0x3696f1,_0x36a05f,_0x3d295c);},Window_Options[_0x2d27b8(0x244)][_0x2d27b8(0x162)]=function(_0x4cdea0,_0x49a258,_0x408421){const _0x4512eb=_0x2d27b8,_0x2c4104=this[_0x4512eb(0x299)](_0x4cdea0),_0x120287=0x1,_0x30d3ff=_0x2c4104+(_0x49a258?_0x120287:-_0x120287);_0x30d3ff>0xb&&_0x408421?_0x4512eb(0x14d)==='hPilI'?(_0x3138bb[_0x4512eb(0x1e5)](_0x532656),_0xed16e1[_0x4512eb(0x30f)](_0x1e3e43)):this[_0x4512eb(0x1c1)](_0x4cdea0,0x1):this[_0x4512eb(0x1c1)](_0x4cdea0,_0x30d3ff[_0x4512eb(0x18f)](0x1,0xb));},Window_Message['prototype'][_0x2d27b8(0x1c2)]=function(){const _0x354b77=_0x2d27b8;let _0x29ede1=Window_Base[_0x354b77(0x244)][_0x354b77(0x1c2)][_0x354b77(0x1ca)](this);return _0x29ede1-=this['addedHeight'](),_0x29ede1;},Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x330)]=function(){const _0xc34f8c=_0x2d27b8;Window_Base[_0xc34f8c(0x244)]['refreshDimmerBitmap'][_0xc34f8c(0x1ca)](this);if(VisuMZ[_0xc34f8c(0xe8)]['Settings']['General']['StretchDimmedBg']){if('IqSsk'!==_0xc34f8c(0x2cc))this[_0xc34f8c(0x2ac)]();else return this['_scene']&&this[_0xc34f8c(0x1b4)]['constructor']===_0x28ce4b;}},Window_Message['prototype']['stretchDimmerSprite']=function(){const _0x37a3e4=_0x2d27b8;this[_0x37a3e4(0x186)]['x']=Math[_0x37a3e4(0x204)](this[_0x37a3e4(0x2c7)]/0x2),this['_dimmerSprite']['anchor']['x']=0.5,this[_0x37a3e4(0x186)]['scale']['x']=Graphics['width'];},VisuMZ['MessageCore'][_0x2d27b8(0x1c3)]=Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x81)],Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x81)]=function(){const _0x5a167e=_0x2d27b8;VisuMZ[_0x5a167e(0xe8)][_0x5a167e(0x1c3)]['call'](this),this[_0x5a167e(0x22f)](),this[_0x5a167e(0x20e)](),this[_0x5a167e(0xfc)](![]),this['setTextAlignment'](_0x5a167e(0x20f)),this[_0x5a167e(0xd3)](VisuMZ[_0x5a167e(0xe8)][_0x5a167e(0x1d3)]['General'][_0x5a167e(0x232)]);},Window_Message[_0x2d27b8(0x244)]['resetWordWrap']=function(){const _0x2d1c67=_0x2d27b8;this[_0x2d1c67(0x29b)]($gameSystem[_0x2d1c67(0x217)]());},Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0xfb)]=function(){return!![];},Window_Message['prototype'][_0x2d27b8(0xd3)]=function(_0x21bfb0){const _0xb02ac7=_0x2d27b8,_0x35717a=0xb-ConfigManager[_0xb02ac7(0xe4)];_0x21bfb0=Math[_0xb02ac7(0x204)](_0x21bfb0*_0x35717a),this['_textDelayCount']=_0x21bfb0,this[_0xb02ac7(0x220)]=_0x21bfb0;},VisuMZ['MessageCore'][_0x2d27b8(0x13a)]=Window_Message['prototype'][_0x2d27b8(0x141)],Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x141)]=function(){const _0x33116a=_0x2d27b8;return VisuMZ[_0x33116a(0xe8)][_0x33116a(0x13a)]['call'](this)||Input[_0x33116a(0x159)](VisuMZ[_0x33116a(0xe8)][_0x33116a(0x1d3)]['General'][_0x33116a(0x1d2)]);},VisuMZ['MessageCore'][_0x2d27b8(0x20d)]=Window_Message['prototype'][_0x2d27b8(0x24d)],Window_Message[_0x2d27b8(0x244)]['updatePlacement']=function(){const _0x17422c=_0x2d27b8;let _0x58e030=this['y'];this['x']=Math['round']((Graphics['boxWidth']-this[_0x17422c(0x2c7)])/0x2),VisuMZ[_0x17422c(0xe8)][_0x17422c(0x20d)]['call'](this);if(this[_0x17422c(0x116)])this['y']=_0x58e030;this[_0x17422c(0x300)](),this['updateForcedPlacement'](),this[_0x17422c(0x24e)]();},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x2a0)]=Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0xf2)],Window_Message['prototype'][_0x2d27b8(0xf2)]=function(_0x4f5931){const _0x505990=_0x2d27b8;this[_0x505990(0x68)](_0x4f5931),this['onNewPageMessageCore'](_0x4f5931),VisuMZ[_0x505990(0xe8)]['Window_Message_newPage']['call'](this,_0x4f5931),this['createContents']();},Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x68)]=function(_0x50f400){const _0x50506a=_0x2d27b8;if(!_0x50f400)return;this['_macroBypassWordWrap']=![],_0x50f400['text']=this[_0x50506a(0x93)](_0x50f400[_0x50506a(0x105)]),this[_0x50506a(0x28d)]&&(_0x50506a(0x145)==='pwxej'?(_0x50f400['text']=this['prepareWordWrapEscapeCharacters'](_0x50f400[_0x50506a(0x105)]),this[_0x50506a(0x18e)]=!![]):this[_0x50506a(0x7e)]());},Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0xc5)]=function(_0x421821){const _0x82e813=_0x2d27b8;if(this[_0x82e813(0x18e)])return _0x421821;return Window_Base[_0x82e813(0x244)][_0x82e813(0xc5)][_0x82e813(0x1ca)](this,_0x421821);},Window_Message[_0x2d27b8(0x244)]['onNewPageMessageCore']=function(_0x22b1d7){const _0x2f870f=_0x2d27b8;this[_0x2f870f(0x2d6)](_0x22b1d7),this[_0x2f870f(0x1cc)](_0x22b1d7),this['updateDimensions']();},VisuMZ['MessageCore'][_0x2d27b8(0x257)]=Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x168)],Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x168)]=function(){const _0x214b33=_0x2d27b8;VisuMZ[_0x214b33(0xe8)][_0x214b33(0x257)][_0x214b33(0x1ca)](this),this[_0x214b33(0x81)]();if(this['_messagePositionReset'])this['messagePositionReset']();},Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x75)]=function(){const _0x397953=_0x2d27b8;this[_0x397953(0x2c7)]=$gameSystem['getMessageWindowWidth']()+this[_0x397953(0x107)]();;this['width']=Math[_0x397953(0x312)](Graphics[_0x397953(0x2c7)],this[_0x397953(0x2c7)]);const _0x4376dd=$gameSystem[_0x397953(0x99)]();this[_0x397953(0x2dc)]=SceneManager[_0x397953(0x1b4)]['calcWindowHeight'](_0x4376dd,![])+this[_0x397953(0x1d9)](),this['height']=Math[_0x397953(0x312)](Graphics[_0x397953(0x2dc)],this[_0x397953(0x2dc)]);if($gameTemp[_0x397953(0x29f)])this[_0x397953(0x2b3)]();},Window_Message['prototype']['addedWidth']=function(){return 0x0;},Window_Message[_0x2d27b8(0x244)]['addedHeight']=function(){return 0x0;},Window_Message['prototype']['resetPositionX']=function(){const _0x2e9c94=_0x2d27b8;this['x']=(Graphics[_0x2e9c94(0x1f2)]-this[_0x2e9c94(0x2c7)])/0x2,$gameTemp[_0x2e9c94(0x29f)]=undefined,this[_0x2e9c94(0x24e)]();},Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x171)]=function(){const _0xbd366=_0x2d27b8,_0x339817={'x':this['x'],'y':this['y']};Window_Base['prototype'][_0xbd366(0x171)][_0xbd366(0x1ca)](this),this[_0xbd366(0x21f)](_0x339817);},Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x80)]=function(){return!![];},Window_Message['prototype']['updateNameBoxMove']=function(_0x5395b5){const _0x38683b=_0x2d27b8;this[_0x38683b(0x261)]&&(this[_0x38683b(0x261)]['x']+=this['x']-_0x5395b5['x'],this[_0x38683b(0x261)]['y']+=this['y']-_0x5395b5['y']);},Window_Message['prototype'][_0x2d27b8(0x293)]=function(_0x2049a9,_0x144307){const _0xd85de4=_0x2d27b8;this[_0xd85de4(0x1ea)](this[_0xd85de4(0x2dd)]['x'],this[_0xd85de4(0x2b6)]*(Graphics[_0xd85de4(0x198)]-this[_0xd85de4(0x2dc)])/0x2,this[_0xd85de4(0x2dd)][_0xd85de4(0x2c7)],this[_0xd85de4(0x2dd)][_0xd85de4(0x2dc)],_0x2049a9,_0x144307);},Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x163)]=function(_0x4d4ae5){const _0x410cdc=_0x2d27b8,_0x8c9b97=Window_Base[_0x410cdc(0x244)]['processCommonEvent'][_0x410cdc(0x1ca)](this,_0x4d4ae5);_0x4d4ae5[_0x410cdc(0x147)]&&this[_0x410cdc(0x27f)](_0x8c9b97);},Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x27f)]=function(_0x3e7dde){const _0xfc9eb4=_0x2d27b8;if($gameParty[_0xfc9eb4(0x21d)]()){}else $gameMap[_0xfc9eb4(0x21b)](_0x3e7dde);},Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x33c)]=function(_0x5d7b8a){const _0x51f739=_0x2d27b8;this['_textDelayCount']--;if(this['_textDelayCount']<=0x0){if(_0x51f739(0x76)===_0x51f739(0x76))this[_0x51f739(0x167)](_0x5d7b8a),Window_Base[_0x51f739(0x244)][_0x51f739(0x33c)][_0x51f739(0x1ca)](this,_0x5d7b8a);else{if(this['_MessageCoreSettings']===_0x564a67)this[_0x51f739(0x16c)]();if(this[_0x51f739(0x225)][_0x51f739(0xbd)]===_0x5dfb23)this[_0x51f739(0x16c)]();return this[_0x51f739(0x225)][_0x51f739(0xbd)];}}},Window_Message['prototype'][_0x2d27b8(0x167)]=function(_0x5f1067){const _0x3b8eba=_0x2d27b8;this[_0x3b8eba(0x29e)]=this[_0x3b8eba(0x220)];if(this[_0x3b8eba(0x220)]<=0x0)this[_0x3b8eba(0x70)]=!![];},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x224)]=Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x15a)],Window_Message['prototype']['processEscapeCharacter']=function(_0xa1f84b,_0x4fed33){const _0x4190b4=_0x2d27b8;!_0x4fed33[_0x4190b4(0x147)]?_0x4190b4(0x2b9)!=='QVacd'?(_0x436aaa=_0x5dfa55[_0x4190b4(0x19d)](/[\n\r]+/g,'\x20'),_0x1f9ad7=_0x11ae5c['replace'](/<(?:BR|LINEBREAK)>/gi,'\x20\x0a')):Window_Base[_0x4190b4(0x244)]['processEscapeCharacter'][_0x4190b4(0x1ca)](this,_0xa1f84b,_0x4fed33):_0x4190b4(0x2a7)!==_0x4190b4(0x12d)?VisuMZ[_0x4190b4(0xe8)]['Window_Message_processEscapeCharacter'][_0x4190b4(0x1ca)](this,_0xa1f84b,_0x4fed33):(_0x4eddc5[_0x4190b4(0xe8)][_0x4190b4(0x1ac)][_0x4190b4(0x1ca)](this),this[_0x4190b4(0x171)]());},VisuMZ['MessageCore'][_0x2d27b8(0x1c9)]=Window_Message[_0x2d27b8(0x244)]['needsNewPage'],Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x271)]=function(_0x591ba4){const _0x3a3058=_0x2d27b8;if(this[_0x3a3058(0xe2)])return'cFoGa'!==_0x3a3058(0xb2)?_0x296cf1:![];return VisuMZ['MessageCore'][_0x3a3058(0x1c9)][_0x3a3058(0x1ca)](this,_0x591ba4);},Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x2d6)]=function(_0x4d62bd){const _0x49b72b=_0x2d27b8;let _0x1c2108=_0x4d62bd[_0x49b72b(0x105)];this[_0x49b72b(0x223)]={};if(this[_0x49b72b(0x25c)]())return _0x1c2108;_0x1c2108=_0x1c2108['replace'](/<POSITION:[ ]*(.*)>/gi,(_0x4659e0,_0x112009)=>{const _0x462532=_0x49b72b,_0xf2ec2d=_0x112009[_0x462532(0xc8)](',')[_0x462532(0x154)](_0x3a1abe=>Number(_0x3a1abe)||0x0);if(_0xf2ec2d[0x0]!==undefined)this[_0x462532(0x223)]['x']=Number(_0xf2ec2d[0x0]);if(_0xf2ec2d[0x1]!==undefined)this[_0x462532(0x223)]['y']=Number(_0xf2ec2d[0x1]);if(_0xf2ec2d[0x2]!==undefined)this[_0x462532(0x223)][_0x462532(0x2c7)]=Number(_0xf2ec2d[0x2]);if(_0xf2ec2d[0x3]!==undefined)this['_forcedPosition'][_0x462532(0x2dc)]=Number(_0xf2ec2d[0x3]);return'';}),_0x1c2108=_0x1c2108['replace'](/<COORDINATES:[ ]*(.*)>/gi,(_0xea7780,_0x448743)=>{const _0x1eb969=_0x49b72b,_0x141d4b=_0x448743[_0x1eb969(0xc8)](',')[_0x1eb969(0x154)](_0x4b299a=>Number(_0x4b299a)||0x0);if(_0x141d4b[0x0]!==undefined)this[_0x1eb969(0x223)]['x']=Number(_0x141d4b[0x0]);if(_0x141d4b[0x1]!==undefined)this['_forcedPosition']['y']=Number(_0x141d4b[0x1]);return'';}),_0x1c2108=_0x1c2108['replace'](/<DIMENSIONS:[ ]*(.*)>/gi,(_0xf184fe,_0x5f53c8)=>{const _0x2a0c0d=_0x49b72b,_0x37d77d=_0x5f53c8[_0x2a0c0d(0xc8)](',')[_0x2a0c0d(0x154)](_0x33bba4=>Number(_0x33bba4)||0x0);if(_0x37d77d[0x0]!==undefined)this[_0x2a0c0d(0x223)]['width']=Number(_0x37d77d[0x2]);if(_0x37d77d[0x1]!==undefined)this['_forcedPosition']['height']=Number(_0x37d77d[0x3]);return'';}),_0x1c2108=_0x1c2108['replace'](/<OFFSET:[ ]*(.*)>/gi,(_0x267db9,_0xe94980)=>{const _0x3a47ff=_0x49b72b,_0xbb51ff=_0xe94980[_0x3a47ff(0xc8)](',')[_0x3a47ff(0x154)](_0x257c77=>Number(_0x257c77)||0x0);let _0x440e03=_0xbb51ff[0x0]||0x0,_0x250279=_0xbb51ff[0x1]||0x0;return $gameSystem[_0x3a47ff(0x307)](_0x440e03,_0x250279),'';}),_0x4d62bd['text']=_0x1c2108;},Window_Message[_0x2d27b8(0x244)]['updateXyOffsets']=function(){const _0x5c07f5=_0x2d27b8,_0x1513fb=$gameSystem[_0x5c07f5(0x216)]();this['x']+=_0x1513fb['x'],this['y']+=_0x1513fb['y'];},Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x136)]=function(){const _0x586a0f=_0x2d27b8;this[_0x586a0f(0x223)]=this[_0x586a0f(0x223)]||{};const _0x3ea384=['x','y',_0x586a0f(0x2c7),_0x586a0f(0x2dc)];for(const _0x26c195 of _0x3ea384){if(_0x586a0f(0x199)==='XYROZ'){if(!this[_0x586a0f(0x221)])return;if(this[_0x586a0f(0x157)]===this[_0x586a0f(0x2c7)]&&this['_pictureTextHeight']===this[_0x586a0f(0x2dc)])return;this[_0x586a0f(0x157)]=this[_0x586a0f(0x2c7)],this[_0x586a0f(0x175)]=this[_0x586a0f(0x2dc)],this[_0x586a0f(0x23a)]={},this['_pictureTextWindow']['move'](0x0,0x0,this[_0x586a0f(0x2c7)],this['height']);}else this[_0x586a0f(0x223)][_0x26c195]!==undefined&&(this[_0x26c195]=Number(this[_0x586a0f(0x223)][_0x26c195]));}},Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x1cc)]=function(_0x25a730){const _0x14c6cd=_0x2d27b8;this[_0x14c6cd(0xe2)]=![];let _0x38d634=_0x25a730['text'];_0x38d634=_0x38d634['replace'](/<(?:AUTO|AUTOSIZE|AUTO SIZE)>/gi,()=>{const _0x3fe2d7=_0x14c6cd;return this[_0x3fe2d7(0xa7)](_0x38d634,!![],!![]),this[_0x3fe2d7(0x2c9)](_0x3fe2d7(0xe6)),'';}),_0x38d634=_0x38d634['replace'](/<(?:AUTOWIDTH|AUTO WIDTH)>/gi,()=>{const _0x1afa21=_0x14c6cd;return _0x1afa21(0x9a)===_0x1afa21(0xf8)?![]:(this[_0x1afa21(0xa7)](_0x38d634,!![],![]),this[_0x1afa21(0x2c9)](_0x1afa21(0xe6)),'');}),_0x38d634=_0x38d634[_0x14c6cd(0x19d)](/<(?:AUTOHEIGHT|AUTO HEIGHT)>/gi,()=>{const _0x4ed67e=_0x14c6cd;return this[_0x4ed67e(0xa7)](_0x38d634,![],!![]),this[_0x4ed67e(0x2c9)]('none'),'';});if(SceneManager['isSceneBattle']())_0x38d634=_0x38d634['replace'](/<(?:AUTOACTOR|AUTO ACTOR):[ ](.*?)>/gi,(_0x502936,_0x4870a5)=>{const _0x38ec24=_0x14c6cd;return this['processAutoSize'](_0x38d634,!![],!![]),this['processAutoPosition'](_0x38ec24(0x309),Number(_0x4870a5)||0x1),'';}),_0x38d634=_0x38d634[_0x14c6cd(0x19d)](/<(?:AUTOPARTY|AUTO PARTY):[ ](.*?)>/gi,(_0x1032b0,_0x4d1045)=>{const _0x4ef7c6=_0x14c6cd;return this[_0x4ef7c6(0xa7)](_0x38d634,!![],!![]),this[_0x4ef7c6(0x2c9)](_0x4ef7c6(0xad),Number(_0x4d1045)||0x0),'';}),_0x38d634=_0x38d634[_0x14c6cd(0x19d)](/<(?:AUTOENEMY|AUTO ENEMY):[ ](.*?)>/gi,(_0x1d91b7,_0xc41784)=>{const _0x22b47a=_0x14c6cd;if(_0x22b47a(0x1dc)===_0x22b47a(0x1dc))return this[_0x22b47a(0xa7)](_0x38d634,!![],!![]),this[_0x22b47a(0x2c9)](_0x22b47a(0xd9),Number(_0xc41784)||0x0),'';else{const _0x3c65c0=this[_0x22b47a(0x10d)],_0x484373=_0x3c65c0['y'],_0x4a5363=_0x1e4720[_0x22b47a(0xe8)][_0x22b47a(0x1d3)]['General'][_0x22b47a(0x2c8)];_0x484373>this['y']&&_0x484373<this['y']+this[_0x22b47a(0x2dc)]-_0x4a5363&&(this['y']=_0x3c65c0['y']+_0x3c65c0[_0x22b47a(0x2dc)]);}});else{if(SceneManager['isSceneMap']()){if(_0x14c6cd(0x139)!==_0x14c6cd(0x139)){_0x4a97e2[_0x14c6cd(0x2f5)]=_0x452ac0[_0x14c6cd(0x2f5)][_0x14c6cd(0xd4)](),_0x32dc7c[_0x14c6cd(0x1c4)]=new _0x16e8da('\x1b'+_0x2f3b7c[_0x14c6cd(0x2f5)],'gi'),_0x6a822d[_0x14c6cd(0x325)]='\x1b'+_0x16c077[_0x14c6cd(0x2f5)];if(_0x518b6e[_0x14c6cd(0xff)]==='')_0x38075d[_0x14c6cd(0x325)]+='[0]';}else _0x38d634=_0x38d634[_0x14c6cd(0x19d)](/<(?:AUTOPLAYER|AUTO PLAYER)>/gi,(_0x28ddb0,_0x486475)=>{const _0x409684=_0x14c6cd;return this['processAutoSize'](_0x38d634,!![],!![]),this[_0x409684(0x2c9)](_0x409684(0x19a),0x0),'';}),_0x38d634=_0x38d634[_0x14c6cd(0x19d)](/<(?:AUTOACTOR|AUTO ACTOR):[ ](.*?)>/gi,(_0x566313,_0x38384c)=>{const _0x73c655=_0x14c6cd;return this['processAutoSize'](_0x38d634,!![],!![]),this[_0x73c655(0x2c9)](_0x73c655(0x296),Number(_0x38384c)||0x1),'';}),_0x38d634=_0x38d634[_0x14c6cd(0x19d)](/<(?:AUTOPARTY|AUTO PARTY):[ ](.*?)>/gi,(_0x55a901,_0x20e6ca)=>{const _0x150dda=_0x14c6cd;return this['processAutoSize'](_0x38d634,!![],!![]),this[_0x150dda(0x2c9)]('map\x20party',Number(_0x20e6ca)||0x0),'';}),_0x38d634=_0x38d634[_0x14c6cd(0x19d)](/<(?:AUTOEVENT|AUTO EVENT):[ ](.*?)>/gi,(_0x2ca414,_0x243f2b)=>{const _0x1e952b=_0x14c6cd;return this[_0x1e952b(0xa7)](_0x38d634,!![],!![]),this[_0x1e952b(0x2c9)](_0x1e952b(0xba),Number(_0x243f2b)||0x0),'';});}}_0x25a730[_0x14c6cd(0x105)]=_0x38d634;},Window_Message[_0x2d27b8(0x2f0)]=/<(?:AUTO|AUTOSIZE|AUTO SIZE|AUTOWIDTH|AUTO WIDTH|AUTOHEIGHT|AUTO HEIGHT|AUTOPLAYER|AUTO PLAYER)>/gi,Window_Message[_0x2d27b8(0x2e7)]=/<(?:AUTOPARTY|AUTO PARTY|AUTOPLAYER|AUTO PLAYER|AUTOEVENT|AUTO EVENT|AUTOENEMY|AUTO ENEMY|AUTOACTOR|AUTO ACTOR):[ ](.*?)>/gi,Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0xa7)]=function(_0x1a1ab8,_0x132f02,_0xf92c28){const _0x522830=_0x2d27b8;_0x1a1ab8=_0x1a1ab8[_0x522830(0x19d)](Window_Message[_0x522830(0x2f0)],''),_0x1a1ab8=_0x1a1ab8['replace'](Window_Message[_0x522830(0x2e7)],''),this[_0x522830(0x254)]=!![],this['_currentAutoSize']=!![],this['setWordWrap'](![]);const _0x323b2c=this[_0x522830(0x29d)](_0x1a1ab8);if(_0x132f02){let _0x84c887=_0x323b2c[_0x522830(0x2c7)]+$gameSystem[_0x522830(0x201)]()*0x2+0x6;const _0xe9b07f=$gameMessage[_0x522830(0x30b)]()!=='',_0x467efe=ImageManager['faceWidth'],_0x59b379=0x14;_0x84c887+=_0xe9b07f?_0x467efe+_0x59b379:0x4;if(_0x84c887%0x2!==0x0)_0x84c887+=0x1;$gameSystem[_0x522830(0x13d)](_0x84c887);}if(_0xf92c28){let _0x1b2e0f=Math[_0x522830(0x1c6)](_0x323b2c[_0x522830(0x2dc)]/this[_0x522830(0xbc)]());$gameSystem['setMessageWindowRows'](_0x1b2e0f);}this[_0x522830(0xf6)](),this[_0x522830(0x146)](),this[_0x522830(0x254)]=![],this['_messagePositionReset']=!![];},Window_Message['prototype'][_0x2d27b8(0xf6)]=function(){const _0x31bd39=_0x2d27b8;this['updateDimensions'](),this[_0x31bd39(0x24d)](),this[_0x31bd39(0x2b3)](),this[_0x31bd39(0x1b3)](),this['contents'][_0x31bd39(0x114)](),this['createContents']();},Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x2c9)]=function(_0x46ceff,_0x3146b2){const _0x38e234=_0x2d27b8;switch(_0x46ceff[_0x38e234(0x294)]()[_0x38e234(0x18b)]()){case'battle\x20actor':this[_0x38e234(0x116)]=$gameActors['actor'](_0x3146b2);break;case _0x38e234(0xad):this[_0x38e234(0x116)]=$gameParty[_0x38e234(0x26e)]()[_0x3146b2-0x1];break;case'battle\x20enemy':this[_0x38e234(0x116)]=$gameTroop[_0x38e234(0x26e)]()[_0x3146b2-0x1];break;case'map\x20player':this[_0x38e234(0x116)]=$gamePlayer;break;case'map\x20actor':const _0x3e41b9=$gameActors[_0x38e234(0x8b)](_0x3146b2)[_0x38e234(0x196)]();_0x3e41b9===0x0?this[_0x38e234(0x116)]=$gamePlayer:this[_0x38e234(0x116)]=$gamePlayer[_0x38e234(0x1ee)]()[_0x38e234(0x2fe)](_0x3e41b9-0x1);break;case'map\x20party':_0x3146b2===0x1?this[_0x38e234(0x116)]=$gamePlayer:this['_autoPositionTarget']=$gamePlayer['followers']()[_0x38e234(0x2fe)](_0x3146b2-0x2);break;case _0x38e234(0xba):this['_autoPositionTarget']=$gameMap[_0x38e234(0x16f)](_0x3146b2);break;}this[_0x38e234(0x116)]&&this[_0x38e234(0x173)]();},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x72)]=Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x28f)],Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x28f)]=function(){const _0x5bb3c2=_0x2d27b8;this[_0x5bb3c2(0x173)](),VisuMZ[_0x5bb3c2(0xe8)]['Window_Message_synchronizeNameBox'][_0x5bb3c2(0x1ca)](this);},Window_Message['prototype'][_0x2d27b8(0x173)]=function(){const _0x41df56=_0x2d27b8;if(!this[_0x41df56(0x116)])return;const _0x1f54a4=SceneManager[_0x41df56(0x1b4)];if(!_0x1f54a4)return;if(!_0x1f54a4[_0x41df56(0x1de)])return;const _0x120a83=_0x1f54a4[_0x41df56(0x1de)]['findTargetSprite'](this[_0x41df56(0x116)]);if(!_0x120a83)return;let _0x57fb01=_0x120a83['x'];_0x57fb01-=this['width']/0x2,_0x57fb01-=(Graphics['width']-Graphics['boxWidth'])/0x2,_0x57fb01+=this[_0x41df56(0x16d)]();let _0x2e604c=_0x120a83['y'];_0x2e604c-=this['height'],_0x2e604c-=(Graphics['height']-Graphics['boxHeight'])/0x2,_0x2e604c+=this['autoPositionOffsetY'](),_0x2e604c-=_0x120a83['height']+0x8;const _0xe7db=$gameSystem[_0x41df56(0x216)]();_0x57fb01+=_0xe7db['x'],_0x2e604c+=_0xe7db['y'],this['x']=Math[_0x41df56(0x204)](_0x57fb01),this['y']=Math['round'](_0x2e604c),this['clampPlacementPosition'](!![],![]),this[_0x41df56(0x223)]=this[_0x41df56(0x223)]||{},this[_0x41df56(0x223)]['x']=this['x'],this[_0x41df56(0x223)]['y']=this['y'],this['_forcedPosition']['width']=this[_0x41df56(0x2c7)],this['_forcedPosition']['height']=this['height'],this[_0x41df56(0x261)][_0x41df56(0x24d)]();},Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x16d)]=function(){return 0x0;},Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x17f)]=function(){return 0x0;},Window_Message[_0x2d27b8(0x244)]['messagePositionReset']=function(){const _0x1e3c92=_0x2d27b8;this[_0x1e3c92(0xf7)]=![],this['_autoPositionTarget']=undefined,$gameSystem[_0x1e3c92(0x16c)](),this['updateAutoSizePosition'](),this['openness']=0x0;},Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x273)]=function(_0x417b8a){const _0x1c7f74=_0x2d27b8;return Window_Base['prototype'][_0x1c7f74(0x273)][_0x1c7f74(0x1ca)](this,_0x417b8a);},Window_Message[_0x2d27b8(0x244)]['postConvertEscapeCharacters']=function(_0x5139e5){const _0x388694=_0x2d27b8;return Window_Base[_0x388694(0x244)][_0x388694(0x10e)]['call'](this,_0x5139e5);},Window_Message[_0x2d27b8(0x244)][_0x2d27b8(0x124)]=function(_0x3747e6){const _0x4d3e0f=_0x2d27b8;this[_0x4d3e0f(0x292)](_0x3747e6),Window_Base['prototype'][_0x4d3e0f(0x124)][_0x4d3e0f(0x1ca)](this,_0x3747e6),this[_0x4d3e0f(0x2bd)](_0x3747e6);},Window_Message[_0x2d27b8(0x244)]['preFlushTextState']=function(_0xd28309){},Window_Message[_0x2d27b8(0x244)]['postFlushTextState']=function(_0x45bf93){},Window_NameBox[_0x2d27b8(0x244)][_0x2d27b8(0xfb)]=function(){return![];},Window_NameBox[_0x2d27b8(0x244)]['resetTextColor']=function(){const _0xd78d59=_0x2d27b8;Window_Base[_0xd78d59(0x244)][_0xd78d59(0x188)][_0xd78d59(0x1ca)](this),this[_0xd78d59(0xcd)](this['defaultColor']());},Window_NameBox['prototype']['defaultColor']=function(){const _0x498cf3=_0x2d27b8,_0x347e65=VisuMZ[_0x498cf3(0xe8)]['Settings'][_0x498cf3(0x192)]['NameBoxWindowDefaultColor'];return ColorManager[_0x498cf3(0x2df)](_0x347e65);},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0xf0)]=Window_NameBox[_0x2d27b8(0x244)][_0x2d27b8(0x24d)],Window_NameBox[_0x2d27b8(0x244)][_0x2d27b8(0x24d)]=function(){const _0x1fac8a=_0x2d27b8;VisuMZ[_0x1fac8a(0xe8)][_0x1fac8a(0xf0)][_0x1fac8a(0x1ca)](this),this[_0x1fac8a(0x25d)](),this['updateOffsetPosition'](),this[_0x1fac8a(0x24e)](),this['updateOverlappingY']();},Window_NameBox[_0x2d27b8(0x244)][_0x2d27b8(0x273)]=function(_0x2dd3a7){const _0x4c72d8=_0x2d27b8;return _0x2dd3a7=_0x2dd3a7['replace'](/<LEFT>/gi,this[_0x4c72d8(0x20b)]['bind'](this,0x0)),_0x2dd3a7=_0x2dd3a7['replace'](/<CENTER>/gi,this[_0x4c72d8(0x20b)]['bind'](this,0x5)),_0x2dd3a7=_0x2dd3a7[_0x4c72d8(0x19d)](/<RIGHT>/gi,this[_0x4c72d8(0x20b)]['bind'](this,0xa)),_0x2dd3a7=_0x2dd3a7[_0x4c72d8(0x19d)](/<POSITION:[ ](\d+)>/gi,(_0x4fe1d7,_0x50c089)=>this[_0x4c72d8(0x20b)](parseInt(_0x50c089))),_0x2dd3a7=_0x2dd3a7[_0x4c72d8(0x19d)](/<\/LEFT>/gi,''),_0x2dd3a7=_0x2dd3a7[_0x4c72d8(0x19d)](/<\/CENTER>/gi,''),_0x2dd3a7=_0x2dd3a7['replace'](/<\/RIGHT>/gi,''),Window_Base[_0x4c72d8(0x244)][_0x4c72d8(0x273)]['call'](this,_0x2dd3a7);},Window_NameBox['prototype'][_0x2d27b8(0x20b)]=function(_0x31d8a2){const _0x85899c=_0x2d27b8;return this[_0x85899c(0x14c)]=_0x31d8a2,'';},Window_NameBox[_0x2d27b8(0x244)][_0x2d27b8(0x25d)]=function(){const _0x14d649=_0x2d27b8;if($gameMessage[_0x14d649(0x17e)]())return;this[_0x14d649(0x14c)]=this[_0x14d649(0x14c)]||0x0;const _0x545b68=this[_0x14d649(0x10d)],_0x31deb6=Math['floor'](_0x545b68[_0x14d649(0x2c7)]*this[_0x14d649(0x14c)]/0xa);this['x']=_0x545b68['x']+_0x31deb6-Math['floor'](this['width']/0x2),this['x']=this['x'][_0x14d649(0x18f)](_0x545b68['x'],_0x545b68['x']+_0x545b68['width']-this[_0x14d649(0x2c7)]);},Window_NameBox['prototype'][_0x2d27b8(0x94)]=function(){const _0x315aee=_0x2d27b8;if($gameMessage[_0x315aee(0x17e)]())return;this[_0x315aee(0x14c)]=this[_0x315aee(0x14c)]||0x0;const _0x5adc8f=VisuMZ[_0x315aee(0xe8)][_0x315aee(0x1d3)]['General'][_0x315aee(0x151)],_0x52df20=VisuMZ['MessageCore'][_0x315aee(0x1d3)][_0x315aee(0x192)][_0x315aee(0x2c8)],_0x1d3b4b=(0x5-this[_0x315aee(0x14c)])/0x5;this['x']+=Math[_0x315aee(0x205)](_0x5adc8f*_0x1d3b4b),this['y']+=_0x52df20;},Window_NameBox[_0x2d27b8(0x244)]['updateOverlappingY']=function(){const _0xc38fb8=_0x2d27b8,_0xe9adec=this['_messageWindow'],_0x158ae2=_0xe9adec['y'],_0xdbea3b=VisuMZ[_0xc38fb8(0xe8)]['Settings'][_0xc38fb8(0x192)][_0xc38fb8(0x2c8)];_0x158ae2>this['y']&&_0x158ae2<this['y']+this[_0xc38fb8(0x2dc)]-_0xdbea3b&&(this['y']=_0xe9adec['y']+_0xe9adec[_0xc38fb8(0x2dc)]);},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x2af)]=Window_NameBox['prototype'][_0x2d27b8(0x82)],Window_NameBox['prototype'][_0x2d27b8(0x82)]=function(){const _0x289130=_0x2d27b8;this['_relativePosition']=0x0,VisuMZ['MessageCore'][_0x289130(0x2af)][_0x289130(0x1ca)](this);},Window_ChoiceList['prototype']['isWordWrapEnabled']=function(){return![];},Window_ChoiceList['prototype'][_0x2d27b8(0xfb)]=function(){return!![];},Window_ChoiceList[_0x2d27b8(0x244)][_0x2d27b8(0x28b)]=function(){const _0x2d7ccc=_0x2d27b8;return $gameSystem[_0x2d7ccc(0x2ab)]()+0x8;},Window_ChoiceList[_0x2d27b8(0x244)][_0x2d27b8(0x237)]=function(){const _0x1645e0=_0x2d27b8;return $gameSystem[_0x1645e0(0x15c)]();},Window_ChoiceList[_0x2d27b8(0x244)][_0x2d27b8(0xd8)]=function(){const _0x7ec343=_0x2d27b8;this[_0x7ec343(0x82)](),this['selectDefault'](),this[_0x7ec343(0x1fc)](),this[_0x7ec343(0x2ae)]();},Window_ChoiceList[_0x2d27b8(0x244)][_0x2d27b8(0x82)]=function(){const _0x2016a8=_0x2d27b8;this[_0x2016a8(0x1a3)](),this[_0x2016a8(0x148)](),this[_0x2016a8(0x10d)]&&(this['updatePlacement'](),this['placeCancelButton']()),this[_0x2016a8(0x332)](),this[_0x2016a8(0x1ae)](),this[_0x2016a8(0x330)](),Window_Selectable['prototype'][_0x2016a8(0x82)][_0x2016a8(0x1ca)](this);},Window_ChoiceList['prototype'][_0x2d27b8(0x148)]=function(){const _0x3df2d9=_0x2d27b8,_0x437435=$gameMessage[_0x3df2d9(0x23d)]();let _0x5cfa38=0x0;for(let _0xdb125b of _0x437435){_0xdb125b=this[_0x3df2d9(0x278)](_0xdb125b);if(this[_0x3df2d9(0x190)](_0xdb125b)){if('hEaMY'===_0x3df2d9(0x27c)){const _0x40a6ce=this['parseChoiceText'](_0xdb125b),_0x25c8ee=this[_0x3df2d9(0x2d5)](_0xdb125b);this['addCommand'](_0x40a6ce,'choice',_0x25c8ee,_0x5cfa38);}else _0xd37a62=_0x51fd17[_0x3df2d9(0x19d)](/[\n\r]+/g,''),_0x2c7987=_0x463c2f['replace'](/<(?:BR|LINEBREAK)>/gi,'\x0a');}_0x5cfa38++;}},Window_ChoiceList['prototype'][_0x2d27b8(0x278)]=function(_0x218a52){const _0x510369=_0x2d27b8;return Window_Base['prototype'][_0x510369(0x93)][_0x510369(0x1ca)](this,_0x218a52);},Window_ChoiceList[_0x2d27b8(0x244)]['isChoiceVisible']=function(_0x9eb441){const _0x3ceb35=_0x2d27b8;if(Imported[_0x3ceb35(0x288)])$gameMessage[_0x3ceb35(0x207)]();if(_0x9eb441[_0x3ceb35(0x1c7)](/<HIDE>/i))return![];if(_0x9eb441['match'](/<SHOW>/i))return!![];if(_0x9eb441[_0x3ceb35(0x1c7)](/<SHOW[ ](?:SW|SWITCH|SWITCHES):[ ](.*?)>/i)){if(_0x3ceb35(0x22a)!==_0x3ceb35(0xd0)){const _0x448d86=RegExp['$1']['split'](',')[_0x3ceb35(0x154)](_0x48b495=>Number(_0x48b495)||0x0);for(const _0x3fd05d of _0x448d86){if(_0x3ceb35(0x1ef)!==_0x3ceb35(0x2ca)){if(!$gameSwitches[_0x3ceb35(0x1aa)](_0x3fd05d))return![];}else _0x4ab0c9=_0x3e6939['max'](_0x138f3e,_0x9f57f3);}return!![];}else this['updateAutoPosition']();}if(_0x9eb441[_0x3ceb35(0x1c7)](/<SHOW ALL[ ](?:SW|SWITCH|SWITCHES):[ ](.*?)>/i)){const _0x599436=RegExp['$1'][_0x3ceb35(0xc8)](',')['map'](_0xc223=>Number(_0xc223)||0x0);for(const _0x3fa19e of _0x599436){if(_0x3ceb35(0x27e)==='mkTSs'){if(!$gameSwitches[_0x3ceb35(0x1aa)](_0x3fa19e))return![];}else _0x10d3b1['MessageCore']['Window_Options_addGeneralOptions']['call'](this),this['addMessageCoreCommands']();}return!![];}if(_0x9eb441['match'](/<SHOW ANY[ ](?:SW|SWITCH|SWITCHES):[ ](.*?)>/i)){const _0x595a53=RegExp['$1'][_0x3ceb35(0xc8)](',')[_0x3ceb35(0x154)](_0x4083ea=>Number(_0x4083ea)||0x0);for(const _0x3fbd3b of _0x595a53){if($gameSwitches[_0x3ceb35(0x1aa)](_0x3fbd3b))return!![];}return![];}if(_0x9eb441['match'](/<HIDE[ ](?:SW|SWITCH|SWITCHES):[ ](.*?)>/i)){if(_0x3ceb35(0x267)!==_0x3ceb35(0x11c)){const _0x4eb17d=RegExp['$1']['split'](',')[_0x3ceb35(0x154)](_0x51c9e9=>Number(_0x51c9e9)||0x0);for(const _0x901e5d of _0x4eb17d){if(!$gameSwitches['value'](_0x901e5d))return!![];}return![];}else return _0x3487d9=_0x29384d[_0x3ceb35(0x19d)](/<LEFT>/gi,this[_0x3ceb35(0x20b)][_0x3ceb35(0x111)](this,0x0)),_0x3d7408=_0x436d04['replace'](/<CENTER>/gi,this[_0x3ceb35(0x20b)][_0x3ceb35(0x111)](this,0x5)),_0x193a55=_0xc29b0d[_0x3ceb35(0x19d)](/<RIGHT>/gi,this[_0x3ceb35(0x20b)][_0x3ceb35(0x111)](this,0xa)),_0x3fda54=_0x3ca746[_0x3ceb35(0x19d)](/<POSITION:[ ](\d+)>/gi,(_0x8a81b9,_0x40d791)=>this[_0x3ceb35(0x20b)](_0x1172ff(_0x40d791))),_0xa33717=_0x324429[_0x3ceb35(0x19d)](/<\/LEFT>/gi,''),_0x46b2c1=_0x6a4fd1[_0x3ceb35(0x19d)](/<\/CENTER>/gi,''),_0x22784c=_0x5c4cbf[_0x3ceb35(0x19d)](/<\/RIGHT>/gi,''),_0x1466d8[_0x3ceb35(0x244)][_0x3ceb35(0x273)]['call'](this,_0x5d0513);}if(_0x9eb441[_0x3ceb35(0x1c7)](/<HIDE ALL[ ](?:SW|SWITCH|SWITCHES):[ ](.*?)>/i)){const _0x2a608f=RegExp['$1'][_0x3ceb35(0xc8)](',')['map'](_0x1f9d13=>Number(_0x1f9d13)||0x0);for(const _0x1d3616 of _0x2a608f){if(!$gameSwitches[_0x3ceb35(0x1aa)](_0x1d3616))return!![];}return![];}if(_0x9eb441[_0x3ceb35(0x1c7)](/<HIDE ANY[ ](?:SW|SWITCH|SWITCHES):[ ](.*?)>/i)){const _0x1db6ef=RegExp['$1']['split'](',')[_0x3ceb35(0x154)](_0x3658e6=>Number(_0x3658e6)||0x0);for(const _0x4c30ce of _0x1db6ef){if($gameSwitches[_0x3ceb35(0x1aa)](_0x4c30ce))return![];}return!![];}return!![];},Window_ChoiceList['prototype'][_0x2d27b8(0x24b)]=function(_0xa27f05){const _0x22a6d4=_0x2d27b8;let _0x496f2a=_0xa27f05;return _0x496f2a=_0x496f2a[_0x22a6d4(0x19d)](/<(?:BR|LINEBREAK)>/gi,'\x0a'),_0x496f2a=_0x496f2a[_0x22a6d4(0x19d)](/<LINE\x1bWrapBreak[0]BREAK>/gi,'\x0a'),_0x496f2a;},Window_ChoiceList['prototype'][_0x2d27b8(0x2d5)]=function(_0x14f014){const _0x593863=_0x2d27b8;if(Imported['VisuMZ_1_EventsMoveCore'])$gameMessage[_0x593863(0x207)]();if(_0x14f014[_0x593863(0x1c7)](/<DISABLE>/i))return![];if(_0x14f014[_0x593863(0x1c7)](/<ENABLE>/i))return!![];if(_0x14f014[_0x593863(0x1c7)](/<ENABLE[ ](?:SWITCH|SWITCHES):[ ](.*?)>/i)){const _0x1d0507=RegExp['$1'][_0x593863(0xc8)](',')[_0x593863(0x154)](_0x2c2ec7=>Number(_0x2c2ec7)||0x0);for(const _0x584e03 of _0x1d0507){if(!$gameSwitches[_0x593863(0x1aa)](_0x584e03))return![];}return!![];}if(_0x14f014[_0x593863(0x1c7)](/<ENABLE ALL[ ](?:SWITCH|SWITCHES):[ ](.*?)>/i)){if(_0x593863(0x156)!==_0x593863(0x11a)){const _0x12f8ad=RegExp['$1']['split'](',')['map'](_0xdb6415=>Number(_0xdb6415)||0x0);for(const _0x2b3d1e of _0x12f8ad){if('NQnRx'==='NQnRx'){if(!$gameSwitches[_0x593863(0x1aa)](_0x2b3d1e))return![];}else{if(this[_0x593863(0x225)]===_0x4355ab)this[_0x593863(0x16c)]();if(this[_0x593863(0x225)][_0x593863(0x286)]===_0x14d628)this['initMessageCore']();_0x19e179=_0x6b5110[_0x593863(0x1c6)](_0xee4d47);if(_0x97c3d1%0x2!==0x0)_0x132028+=0x1;this[_0x593863(0x225)][_0x593863(0x286)]=_0x3baadf||0x2;}}return!![];}else this[_0x593863(0x2dd)]=_0x541622[_0x593863(0x8c)](_0x502c52);}if(_0x14f014['match'](/<ENABLE ANY[ ](?:SWITCH|SWITCHES):[ ](.*?)>/i)){const _0x2a8c14=RegExp['$1'][_0x593863(0xc8)](',')[_0x593863(0x154)](_0xb64e6c=>Number(_0xb64e6c)||0x0);for(const _0x3fab0b of _0x2a8c14){if(_0x593863(0x218)!==_0x593863(0x31b)){if($gameSwitches[_0x593863(0x1aa)](_0x3fab0b))return!![];}else{if(_0xafe611){let _0x5dac97=this['_pictures'][_0x593863(0x269)](_0x122400);this['requestPictureTextRefresh'](_0x5dac97);}}}return![];}if(_0x14f014[_0x593863(0x1c7)](/<DISABLE[ ](?:SWITCH|SWITCHES):[ ](.*?)>/i)){const _0x65a32e=RegExp['$1'][_0x593863(0xc8)](',')[_0x593863(0x154)](_0x236ec9=>Number(_0x236ec9)||0x0);for(const _0x1e9ff5 of _0x65a32e){if(!$gameSwitches[_0x593863(0x1aa)](_0x1e9ff5))return!![];}return![];}if(_0x14f014[_0x593863(0x1c7)](/<DISABLE ALL[ ](?:SWITCH|SWITCHES):[ ](.*?)>/i)){const _0x25a855=RegExp['$1'][_0x593863(0xc8)](',')[_0x593863(0x154)](_0x301be9=>Number(_0x301be9)||0x0);for(const _0x13e49c of _0x25a855){if(!$gameSwitches[_0x593863(0x1aa)](_0x13e49c))return!![];}return![];}if(_0x14f014[_0x593863(0x1c7)](/<DISABLE ANY[ ](?:SWITCH|SWITCHES):[ ](.*?)>/i)){const _0x35c3dc=RegExp['$1'][_0x593863(0xc8)](',')[_0x593863(0x154)](_0x5afe1d=>Number(_0x5afe1d)||0x0);for(const _0x5561c9 of _0x35c3dc){if($gameSwitches[_0x593863(0x1aa)](_0x5561c9))return![];}return!![];}return!![];},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x1c0)]=Window_ChoiceList[_0x2d27b8(0x244)]['updatePlacement'],Window_ChoiceList['prototype']['updatePlacement']=function(){const _0x1351b7=_0x2d27b8;VisuMZ[_0x1351b7(0xe8)][_0x1351b7(0x1c0)][_0x1351b7(0x1ca)](this),this['clampPlacementPosition']();},Window_ChoiceList['prototype'][_0x2d27b8(0x1a9)]=function(){const _0x51932d=_0x2d27b8;if(!this['_cancelButton'])return;const _0x3552fa=0x8,_0x40a98c=this['_cancelButton'],_0x2fa292=this['x']+this[_0x51932d(0x2c7)],_0x5b724d=Math[_0x51932d(0x205)]((Graphics[_0x51932d(0x2c7)]-Graphics['boxWidth'])/0x2);_0x2fa292>=Graphics['boxWidth']+_0x5b724d-_0x40a98c[_0x51932d(0x2c7)]+_0x3552fa?_0x40a98c['x']=-_0x40a98c[_0x51932d(0x2c7)]-_0x3552fa:_0x40a98c['x']=this[_0x51932d(0x2c7)]+_0x3552fa,_0x40a98c['y']=this['height']/0x2-_0x40a98c[_0x51932d(0x2dc)]/0x2;},VisuMZ[_0x2d27b8(0xe8)][_0x2d27b8(0x337)]=Window_ChoiceList[_0x2d27b8(0x244)]['windowX'],Window_ChoiceList[_0x2d27b8(0x244)]['windowX']=function(){const _0x20e526=_0x2d27b8;return this[_0x20e526(0x10d)]?this[_0x20e526(0x9c)]():VisuMZ[_0x20e526(0xe8)][_0x20e526(0x337)][_0x20e526(0x1ca)](this);},Window_ChoiceList[_0x2d27b8(0x244)][_0x2d27b8(0x9c)]=function(){const _0x6ed656=_0x2d27b8,_0x15cad2=$gameMessage['choicePositionType']();if(_0x15cad2===0x1)return(Graphics[_0x6ed656(0x1f2)]-this[_0x6ed656(0x11f)]())/0x2;else return _0x15cad2===0x2?this[_0x6ed656(0x10d)]['x']+this[_0x6ed656(0x10d)]['width']-this[_0x6ed656(0x11f)]():this[_0x6ed656(0x10d)]['x'];},Window_ChoiceList[_0x2d27b8(0x244)][_0x2d27b8(0x11f)]=function(){const _0x182803=_0x2d27b8,_0x44c41a=(this[_0x182803(0x1b8)]()+this['colSpacing']())*this[_0x182803(0x237)]()+this['padding']*0x2;return Math['min'](_0x44c41a,Graphics[_0x182803(0x2c7)]);},Window_ChoiceList[_0x2d27b8(0x244)]['numVisibleRows']=function(){const _0x49dc9d=_0x2d27b8,_0x22567b=$gameMessage[_0x49dc9d(0x23d)]()[_0x49dc9d(0x154)](_0x35619a=>this[_0x49dc9d(0x278)](_0x35619a))[_0x49dc9d(0x2c5)](_0x3c4c6f=>this[_0x49dc9d(0x190)](_0x3c4c6f)),_0x2c9567=Math[_0x49dc9d(0x1c6)](_0x22567b['length']/this[_0x49dc9d(0x237)]());return Math[_0x49dc9d(0x9b)](0x1,Math[_0x49dc9d(0x312)](_0x2c9567,this[_0x49dc9d(0xb3)]()));},Window_ChoiceList[_0x2d27b8(0x244)][_0x2d27b8(0xb3)]=function(){const _0x26ce14=_0x2d27b8,_0x6bd791=this[_0x26ce14(0x10d)],_0x86e9bd=_0x6bd791?_0x6bd791['y']:0x0,_0x5e47a0=_0x6bd791?_0x6bd791[_0x26ce14(0x2dc)]:0x0,_0x4b4a49=Graphics[_0x26ce14(0x198)]/0x2;return _0x86e9bd<_0x4b4a49&&_0x86e9bd+_0x5e47a0>_0x4b4a49?0x4:$gameSystem[_0x26ce14(0x2ed)]();},Window_ChoiceList[_0x2d27b8(0x244)]['maxChoiceWidth']=function(){const _0xff79ac=_0x2d27b8;let _0x57d828=this[_0xff79ac(0x318)]();for(const _0x568778 of this[_0xff79ac(0x110)]){if(_0xff79ac(0x12c)==='UidqT')_0x211bec['y']+=_0x3f714c[_0xff79ac(0x2de)];else{const _0xa3d3cf=_0x568778['name'],_0x2dc934=this['getChoiceIndent'](_0xa3d3cf),_0x1fc8ab=this[_0xff79ac(0x277)](_0xa3d3cf)['width']+_0x2dc934,_0x18f892=Math[_0xff79ac(0x1c6)](_0x1fc8ab)+this['itemPadding']()*0x2;_0x57d828=Math[_0xff79ac(0x9b)](_0x57d828,_0x18f892);}}return _0x57d828;},Window_ChoiceList[_0x2d27b8(0x244)]['getStartingChoiceWidth']=function(){const _0x38a52f=_0x2d27b8;let _0x568db6=0x60;const _0x29d5cf=$gameMessage[_0x38a52f(0x23d)]();for(const _0x240ea7 of _0x29d5cf){_0x240ea7['match'](/<CHOICE WIDTH:[ ](\d+)>/gi)&&(_0x568db6=Math[_0x38a52f(0x9b)](_0x568db6,Number(RegExp['$1'])));}return _0x568db6;},Window_ChoiceList['prototype']['drawItem']=function(_0x1b6ad8){const _0x216ef6=_0x2d27b8,_0x1c206d=this[_0x216ef6(0x2be)](_0x1b6ad8),_0x10af48=$gameSystem[_0x216ef6(0x230)]()!==_0x216ef6(0x20f)?_0x216ef6(0x17a)[_0x216ef6(0x165)]($gameSystem[_0x216ef6(0x230)]()):'',_0x52c7a4=_0x10af48+this['commandName'](_0x1b6ad8);this[_0x216ef6(0x2c2)](this['isCommandEnabled'](_0x1b6ad8));const _0x3d267b=this['textSizeEx'](_0x52c7a4)[_0x216ef6(0x2dc)],_0x288f4d=_0x1c206d['x']+this[_0x216ef6(0x133)](_0x52c7a4),_0x24f1fe=Math[_0x216ef6(0x9b)](_0x1c206d['y'],_0x1c206d['y']+Math[_0x216ef6(0x204)]((_0x1c206d['height']-_0x3d267b)/0x2));this[_0x216ef6(0x1b1)](_0x52c7a4,_0x288f4d,_0x24f1fe,_0x1c206d[_0x216ef6(0x2c7)]);},Window_ChoiceList[_0x2d27b8(0x244)][_0x2d27b8(0x133)]=function(_0x56cfde){let _0x1c752b=0x0;return _0x56cfde['match'](/<CHOICE INDENT:[ ](\d+)>/gi)&&(_0x1c752b=Number(RegExp['$1'])),_0x1c752b;},Window_ChoiceList['prototype'][_0x2d27b8(0xac)]=function(){const _0x15a180=_0x2d27b8;$gameMessage[_0x15a180(0x266)](this['currentExt']()),this['_messageWindow'][_0x15a180(0x168)](),this[_0x15a180(0xbf)]();};function _0x38f1(){const _0x476aa8=['getMessageWindowXyOffsets','isMessageWindowWordWrap','NSuMF','updateOverlappingY','convertButtonAssistEscapeCharacters','addMessageCommonEvent','_pictureTextSprite','inBattle','sAIvt','updateNameBoxMove','_textDelay','_pictureTextWindow','name','_forcedPosition','Window_Message_processEscapeCharacter','_MessageCoreSettings','LMdZm','<LINE\x20BREAK>','textSpeedStatusText','DefaultOutlineWidth','ubNYD','lNnrq','<CENTER>','fontSize','splice','clearActorNameAutoColor','getChoiceListTextAlign','bWlPs','MessageTextDelay','_wholeMoveDuration','WAIT','Oyudd','gEkjE','maxCols','fontItalic','ocKOH','_pictureTextCache','convertMessageCoreEscapeReplacements','SortObjectByKeyLength','choices','registerActorNameAutoColorChanges','ARRAYFUNC','cancel','MsgWindowOffsetY','getTextAlignment','2152puoDgZ','prototype','zQxWb','_messageCommonEvents','States','setLastGainedItemData','push','false','parseChoiceText','mainFontSize','updatePlacement','clampPlacementPosition','OffsetY','TextColor','lastGainedObjectQuantity','jxHeT','convertBaseEscapeCharacters','_autoSizeCheck','BcBrf','fcqcK','Window_Message_terminateMessage','return\x200','CreateAutoColorFor','processStoredAutoColorChanges','xvENm','isWordWrapEnabled','updateRelativePosition','</B>','convertButtonAssistText','some','_nameBoxWindow','setWaitMode','clearPictureTextRefresh','\x1bITALIC[0]','_target','onChoice','RJCxt','center','indexOf','MaxRows','loadPicture','bitmap','dJNCm','members','convertMessageCoreEscapeActions','Padding','needsNewPage','isSceneBattle','preConvertEscapeCharacters','MWmoP','HIDE','statusText','textSizeEx','convertChoiceMacros','contentsBack','FDswk','MessageWindowXyOffsets','hEaMY','setupEvents','mkTSs','launchMessageCommonEvent','iconIndex','instantTextSpeed','Game_Party_gainItem','processCustomWait','move','isBreakShowTextCommands','messageWidth','Window_Base_initialize','VisuMZ_1_EventsMoveCore','constructor','ARRAYSTR','itemHeight','process_VisuMZ_MessageCore_TextMacros','_textMacroFound','addExtraShowChoices','synchronizeNameBox','Classes','AutoColorRegExp','preFlushTextState','resetRect','toLowerCase','PictureTextChange','map\x20actor','Instant','resizePictureText','getConfigValue','messageRows','setWordWrap','_subject','textSizeExRaw','_textDelayCount','_centerMessageWindow','Window_Message_newPage','addCommand','substring','MaxCols','textSizeExTextAlignment','addChildAt','Window_Options_changeVolume','YeJEE','RelativePXPY','yFkZi','KKhkp','getChoiceListLineHeight','stretchDimmerSprite','_pictureId','activate','Window_NameBox_refresh','isColorLocked','isArmor','processFsTextCode','resetPositionX','CreateAutoColorRegExpLists','\x1bTEXTALIGNMENT[0]','_positionType','MessageRows','getInputButtonString','QVacd','version','ptGeq','ParseArmorNotetags','postFlushTextState','itemRectWithPadding','GjfeN','Weapons','_moveDuration','changePaintOpacity','processWrapBreak','PICTURE','filter','WORD_WRAP_PADDING','width','NameBoxWindowOffsetY','processAutoPosition','chUAu','_commonEventId','szbVO','commandSymbol','addGeneralOptions','obtainEscapeParam','applyData','getPictureTextData','calcMoveEasing','type','makeFontSmaller','isChoiceEnabled','prepareForcedPositionEscapeCharacters','battleUserName','171752ljRMgu','exit','isHelpWindowWordWrap','processColorLock','height','_resetRect','startY','textColor','TextAlign','setMessageWindowRows','MessageWidth','easeIn','processPreviousColor','setupItemChoice','vteLo','_autoPosRegExp','MsgWindowOffsetX','TextSpeed','lRDdj','setChoiceListMaxColumns','2uMerJl','getChoiceListMaxRows','setupNumInput','getMessageWindowWidth','_autoSizeRegexp','Window_Options_statusText','ohFHG','hasPictureText','setPositionType','Match','\x1bCOLORLOCK[0]','ParseClassNotetags','obtainExp','processActorNameAutoColorChanges','pqsES','yjXeZ','updateEvents','_pictureTextBuffer','follower','_messageOffsetY','updateXyOffsets','FontSmallerCap','returnPreservedFontSettings','</LEFT>','WkiZg','gvTFS','ARRAYSTRUCT','setMessageWindowXyOffsets','759MtnUgr','battle\x20actor','BnJwB','faceName','oErAf','onDatabaseLoaded','rtl','erasePictureTextBuffer','Window_Base_processAllText','messageWindowRect','min','ITALIC','requestPictureTextRefresh','length','SWITCH','outputWidth','getStartingChoiceWidth','isItem','outputHeight','OqaQL','_lastGainedItemData','convertTextAlignmentEscapeCharacters','3240215oGvnYZ','startX','Game_Map_initialize','vpOQh','BEyPT','defeat','getPreservedFontSettings','textCodeResult','convertBackslashCharacters','setTextAlignment','ENABLE','inputtingAction','innerHeight','convertHardcodedEscapeReplacements','TextMacros','processMessageCoreEscapeActions','CommonEvent','outLineColor','refreshDimmerBitmap','processPxTextCode','createContents','prepareShowTextFollowups','\x1bBOLD[0]','CMjBX','ChoiceWindowLineHeight','Window_ChoiceList_windowX','_moveTargetHeight','%1\x20is\x20missing\x20a\x20required\x20plugin.\x0aPlease\x20install\x20%2\x20into\x20the\x20Plugin\x20Manager.','1029235gDvNYn','ParseItemNotetags','processCharacter','Items','Game_System_initialize','shift','calcWindowHeight','TextColor%1','convertNewPageTextStateMacros','\x1bi[%1]%2','TEXTALIGNMENT','updatePictureText','lowerright','ParseWeaponNotetags','true','maxCommands','_showFast','ParseSkillNotetags','Window_Message_synchronizeNameBox','roOnd','messageCoreTextSpeed','updateDimensions','DiWVF','RwRTf','Enemies','Skills','PictureTextErase','processFontChangeItalic','vAGNY','lastGainedObjectName','addMessageCoreTextSpeedCommand','ConvertParams','canMove','clearFlags','refresh','ChoiceWindowMaxCols','ParseStateNotetags','levelUp','aZRUi','addLoadListener','exec','isContinuePrepareShowTextCommands','choiceRows','actor','makeDeepCopy','<BR>','lowerleft','update','parameters','initialize','ConvertTextAutoColorRegExpFriendly','convertTextMacros','updateOffsetPosition','clearAllPictureTexts','zScxI','choiceLineHeight','\x1bTEXTALIGNMENT[3]','getMessageWindowRows','TsAZx','max','messageCoreWindowX','messageWordWrap','processControlCharacter','FontBiggerCap','1008952RmEWGF','convertLockColorsEscapeCharacters','CreateAutoColorRegExpListEntries','_eventId','choiceCols','initTextAlignement','outlineWidth','processAutoSize','fontBold','setMessageWindowWordWrap','Undefined','pagedown','callOkHandler','battle\x20party','join','jJSju','addWrapBreakAfterPunctuation','_messageOffsetX','cFoGa','maxLines','sort','AddAutoColor','createTextState','\x1bTEXTALIGNMENT[2]','_moveTargetY','_moveEasingType','map\x20event','Sprite_Picture_update','lineHeight','choiceTextAlign','RicKt','close','slice','Window_Base_processControlCharacter','STRUCT','124396jJnNtg','AddOption','prepareWordWrapEscapeCharacters','processDrawCenteredPicture','Scene_Boot_onDatabaseLoaded','split','WordWrap','down','adjustShowChoiceDefault','emerge','changeTextColor','getPictureText','PictureIDs','jWAvb','TkndD','isSceneMap','setTextDelay','toUpperCase','changeVolume','addContinuousShowTextCommands','Default','start','battle\x20enemy','Game_Interpreter_setupChoices','AdjustRect','ARRAYJSON','convertShowChoiceEscapeCodes','databaseObjectName','OffsetX','VisuMZ_0_CoreEngine','clearPictures','_currentAutoSize','Width','textSpeed','setPictureTextBuffer','none','upperright','MessageCore','upperleft','drawBackCenteredPicture','LSwqs','Game_Screen_clearPictures','<LEFT>','_indent','Sprite_Picture_updateBitmap','Window_NameBox_updatePlacement','adjustShowChoiceCancel','newPage','processTextAlignmentChange','Window_Options_addGeneralOptions','faceWidth','updateAutoSizePosition','_messagePositionReset','SxNna','FUNC','ChoiceWindowProperties','isAutoColorAffected','setColorLock','_moveTargetX','easeInOut','Type','textSizeExWordWrap','process_VisuMZ_MessageCore_TextCodes_Action','item','Game_Map_refresh','[0]','text','_pictureTextRefresh','addedWidth','URvoL','innerWidth','helpWordWrap','ConfigManager_applyData','setPictureText','_messageWindow','postConvertEscapeCharacters','kByhn','_list','bind','list','right','clear','<B>','_autoPositionTarget','nextEventCode','_data','10jxtVcO','Rddsj','xrOye','CmNmi','_pictureText','_textColorStack','windowWidth','obtainEscapeString','description','NvUft','TDQBk','flushTextState','return\x20\x27','substr','parse','EndPadding','test','TightWrap','suLCY','GGAgn','cVcfy','aarJB','\x1bCOLORLOCK[1]','updateMessageCommonEvents','<I>','processNewLine','getChoiceIndent','setBackground','paintOpacity','updateForcedPlacement','\x1bTEXTALIGNMENT[1]','ParseEnemyNotetags','fMRON','Window_Message_isTriggered','_colorLock','Game_Screen_erasePicture','setMessageWindowWidth','PictureTextRefresh','Game_Map_updateEvents','quantity','isTriggered','setChoiceListLineHeight','getLastGainedItemData','realPictureId','pwxej','_refreshPauseSign','drawing','makeCommandList','battleActionName','AjjYp','remove','_relativePosition','PtWCZ','_pictures','_targets','_index','NameBoxWindowOffsetX','processDrawPicture','convertFontSettingsEscapeCharacters','map','BGvjg','eVLFv','_pictureTextWidth','actorName','isPressed','processEscapeCharacter','process_VisuMZ_MessageCore_TextCodes_Replace','getChoiceListMaxColumns','status','attachPictureText','applyMoveEasing','obtainItem','ROLaX','changeTextSpeed','processCommonEvent','TextCodeReplace','format','Name','onProcessCharacter','terminateMessage','ARRAYNUM','Window_Help_refresh','TextManager_message','initMessageCore','autoPositionOffsetX','%1\x20is\x20incorrectly\x20placed\x20on\x20the\x20plugin\x20list.\x0aIt\x20is\x20a\x20Tier\x20%2\x20plugin\x20placed\x20over\x20other\x20Tier\x20%3\x20plugins.\x0aPlease\x20reorder\x20the\x20plugin\x20list\x20from\x20smallest\x20to\x20largest\x20tier\x20numbers.','event','padding','updateMove','contents','updateAutoPosition','TextStr','_pictureTextHeight','anchor','_moveTargetWidth','setChoiceListTextAlign','setupChoices','<%1>','setChoiceListMaxRows','currentCommand','NLBOV','isRTL','autoPositionOffsetY','Actors','ARRAYEVAL','code','27BJujwA','normalColor','preemptive','_dimmerSprite','getPictureTextBuffer','resetTextColor','STR','Window_Base_processEscapeCharacter','trim','AutoColor','(((','_macroBypassWordWrap','clamp','isChoiceVisible','TextJS','General','convertVariableEscapeCharacters','processTextAlignmentX','victory','index','adjustShowChoiceExtension','boxHeight','BINQa','map\x20player','drawPictureText','processPyTextCode','replace','<WORDWRAP>','includes','pVzic','addMessageCoreCommands',')))','clearCommandList','\x1bI[%1]','visible','ParseAllNotetags','selectDefault','Scene_Options_maxCommands','placeCancelButton','value','isInputting','Window_Base_update','anyPictureTextChanges','updateBackground','pfHtC','message','drawTextEx','maxFontSizeInLine','updateTransform','_scene','COMMONEVENT','\x1bC[%1]%2\x1bPREVCOLOR[0]','PREVCOLOR','maxChoiceWidth','Window_Base_processNewLine','process_VisuMZ_MessageCore_AutoColor','isRunning','processAllText','_wordWrap','gainItem','FontChangeValue','Window_ChoiceList_updatePlacement','changeValue','contentsHeight','Window_Message_clearFlags','textCodeCheck','HTSVB','ceil','match','1055490CWXjxB','Window_Message_needsNewPage','call','moveBy','prepareAutoSizeEscapeCharacters','makeFontBigger','HelpWindow','SHOW','<COLORLOCK>','_texts','FastForwardKey','Settings','\x1bBOLD[1]','Rows','\x1bWrapBreak[0]','_textAlignment','anchorPictureText','addedHeight','LineHeight','fJADZ','bZLKB','updateBitmap','_spriteset','_interpreter','requestPictureTextRefreshAll','DISABLE','erasePicture','registerCommand','left','eraseAllPictureTexts','TextCodeActions','easeOut','JSON','battleTargetName','moveTo','SWITCHES','prepareShowTextCommand','applyDatabaseAutoColor','followers','vvDNb','\x1bITALIC[1]','drawPictureTextZone','boxWidth','Armors','isVolumeSymbol','</RIGHT>','rhoti','processFontChangeBold','resetFontSettings','Game_Map_setupEvents','setFaceImage','command101','open','CENTERPICTURE','kHhIR','ParseAddedText','kciiA','windowPadding','escapeStart','Game_Party_initialize','round','floor','_autoColorActorNames','registerSelfEvent','startWait','Window_Base_changeTextColor','ChoiceWindowTextAlign','setRelativePosition','drawBackPicture','Window_Message_updatePlacement','resetWordWrap','default','</COLORLOCK>','blt','</WORDWRAP>','processAutoColorWords','isWeapon','Window_Base_textSizeEx'];_0x38f1=function(){return _0x476aa8;};return _0x38f1();}
+var tier = tier || 0x0;
+var dependencies = [];
+var pluginData = $plugins.filter(function (_0x93f31e) {
+  return _0x93f31e.status && _0x93f31e.description.includes("[MessageCore]");
+})[0x0];
+VisuMZ.MessageCore.Settings = VisuMZ.MessageCore.Settings || {};
+VisuMZ.ConvertParams = function (_0x10aaa4, _0x4d0bd9) {
+  for (const _0xcdc9b7 in _0x4d0bd9) {
+    if (_0xcdc9b7.match(/(.*):(.*)/i)) {
+      const _0x24f7f7 = String(RegExp.$1);
+      const _0x3f683e = String(RegExp.$2).toUpperCase().trim();
+      let _0x23e49f;
+      let _0x1918e8;
+      let _0x56ab23;
+      switch (_0x3f683e) {
+        case "NUM":
+          _0x23e49f = _0x4d0bd9[_0xcdc9b7] !== '' ? Number(_0x4d0bd9[_0xcdc9b7]) : 0x0;
+          break;
+        case 'ARRAYNUM':
+          _0x1918e8 = _0x4d0bd9[_0xcdc9b7] !== '' ? JSON.parse(_0x4d0bd9[_0xcdc9b7]) : [];
+          _0x23e49f = _0x1918e8.map(_0x506928 => Number(_0x506928));
+          break;
+        case "EVAL":
+          _0x23e49f = _0x4d0bd9[_0xcdc9b7] !== '' ? eval(_0x4d0bd9[_0xcdc9b7]) : null;
+          break;
+        case 'ARRAYEVAL':
+          _0x1918e8 = _0x4d0bd9[_0xcdc9b7] !== '' ? JSON.parse(_0x4d0bd9[_0xcdc9b7]) : [];
+          _0x23e49f = _0x1918e8.map(_0xba02f2 => eval(_0xba02f2));
+          break;
+        case "JSON":
+          _0x23e49f = _0x4d0bd9[_0xcdc9b7] !== '' ? JSON.parse(_0x4d0bd9[_0xcdc9b7]) : '';
+          break;
+        case "ARRAYJSON":
+          _0x1918e8 = _0x4d0bd9[_0xcdc9b7] !== '' ? JSON.parse(_0x4d0bd9[_0xcdc9b7]) : [];
+          _0x23e49f = _0x1918e8.map(_0x169d53 => JSON.parse(_0x169d53));
+          break;
+        case "FUNC":
+          _0x23e49f = _0x4d0bd9[_0xcdc9b7] !== '' ? new Function(JSON.parse(_0x4d0bd9[_0xcdc9b7])) : new Function("return 0");
+          break;
+        case 'ARRAYFUNC':
+          _0x1918e8 = _0x4d0bd9[_0xcdc9b7] !== '' ? JSON.parse(_0x4d0bd9[_0xcdc9b7]) : [];
+          _0x23e49f = _0x1918e8.map(_0xb72f8 => new Function(JSON.parse(_0xb72f8)));
+          break;
+        case "STR":
+          _0x23e49f = _0x4d0bd9[_0xcdc9b7] !== '' ? String(_0x4d0bd9[_0xcdc9b7]) : '';
+          break;
+        case "ARRAYSTR":
+          _0x1918e8 = _0x4d0bd9[_0xcdc9b7] !== '' ? JSON.parse(_0x4d0bd9[_0xcdc9b7]) : [];
+          _0x23e49f = _0x1918e8.map(_0xce398b => String(_0xce398b));
+          break;
+        case "STRUCT":
+          _0x56ab23 = _0x4d0bd9[_0xcdc9b7] !== '' ? JSON.parse(_0x4d0bd9[_0xcdc9b7]) : {};
+          _0x10aaa4[_0x24f7f7] = {};
+          VisuMZ.ConvertParams(_0x10aaa4[_0x24f7f7], _0x56ab23);
+          continue;
+        case "ARRAYSTRUCT":
+          _0x1918e8 = _0x4d0bd9[_0xcdc9b7] !== '' ? JSON.parse(_0x4d0bd9[_0xcdc9b7]) : [];
+          _0x23e49f = _0x1918e8.map(_0x35bdfb => VisuMZ.ConvertParams({}, JSON.parse(_0x35bdfb)));
+          break;
+        default:
+          continue;
+      }
+      _0x10aaa4[_0x24f7f7] = _0x23e49f;
+    }
+  }
+  return _0x10aaa4;
+};
+(_0x4fe03d => {
+  const _0x5671cb = _0x4fe03d.name;
+  for (const _0x159ee7 of dependencies) {
+    if (!Imported[_0x159ee7]) {
+      alert("%1 is missing a required plugin.\nPlease install %2 into the Plugin Manager.".format(_0x5671cb, _0x159ee7));
+      SceneManager.exit();
+      break;
+    }
+  }
+  const _0x427269 = _0x4fe03d.description;
+  if (_0x427269.match(/\[Version[ ](.*?)\]/i)) {
+    const _0x29eac5 = Number(RegExp.$1);
+    if (_0x29eac5 !== VisuMZ.MessageCore.version) {
+      alert("%1's version does not match plugin's. Please update it in the Plugin Manager.".format(_0x5671cb, _0x29eac5));
+      SceneManager.exit();
+    }
+  }
+  if (_0x427269.match(/\[Tier[ ](\d+)\]/i)) {
+    const _0x466f4f = Number(RegExp.$1);
+    if (_0x466f4f < tier) {
+      alert("%1 is incorrectly placed on the plugin list.\nIt is a Tier %2 plugin placed over other Tier %3 plugins.\nPlease reorder the plugin list from smallest to largest tier numbers.".format(_0x5671cb, _0x466f4f, tier));
+      SceneManager.exit();
+    } else {
+      tier = Math.max(_0x466f4f, tier);
+    }
+  }
+  VisuMZ.ConvertParams(VisuMZ.MessageCore.Settings, _0x4fe03d.parameters);
+})(pluginData);
+PluginManager.registerCommand(pluginData.name, "ChoiceWindowDistance", _0x354ef4 => {
+  VisuMZ.ConvertParams(_0x354ef4, _0x354ef4);
+  const _0x3b3242 = Number(_0x354ef4.Distance) || 0x0;
+  $gameSystem.setChoiceMessageDistance(_0x3b3242);
+});
+PluginManager.registerCommand(pluginData.name, 'ChoiceWindowProperties', _0x4a5c9a => {
+  VisuMZ.ConvertParams(_0x4a5c9a, _0x4a5c9a);
+  const _0x4e8f6a = _0x4a5c9a.LineHeight || $gameSystem.getChoiceListLineHeight() || 0x1;
+  const _0x574811 = _0x4a5c9a.MinWidth ?? 0x60;
+  const _0x5a9e65 = _0x4a5c9a.MaxRows || $gameSystem.getChoiceListMaxRows() || 0x1;
+  const _0x49a835 = _0x4a5c9a.MaxCols || $gameSystem.getChoiceListMaxColumns() || 0x1;
+  const _0x1f8d98 = _0x4a5c9a.TextAlign.toLowerCase() || "default";
+  $gameSystem.setChoiceListLineHeight(_0x4e8f6a);
+  $gameSystem.setChoiceListMinChoiceWidth(_0x574811);
+  $gameSystem.setChoiceListMaxRows(_0x5a9e65);
+  $gameSystem.setChoiceListMaxColumns(_0x49a835);
+  $gameSystem.setChoiceListTextAlign(_0x1f8d98);
+});
+PluginManager.registerCommand(pluginData.name, "MessageWindowProperties", _0xa88ab0 => {
+  VisuMZ.ConvertParams(_0xa88ab0, _0xa88ab0);
+  const _0x35038d = _0xa88ab0.Rows || $gameSystem.getMessageWindowRows() || 0x1;
+  const _0x1d4fc3 = _0xa88ab0.Width || $gameSystem.getMessageWindowWidth() || 0x1;
+  $gameTemp._centerMessageWindow = true;
+  const _0xf21c10 = _0xa88ab0.WordWrap.toLowerCase();
+  $gameSystem.setMessageWindowRows(_0x35038d);
+  $gameSystem.setMessageWindowWidth(_0x1d4fc3);
+  if (["true", 'false'].includes(_0xf21c10)) {
+    $gameSystem.setMessageWindowWordWrap(eval(_0xf21c10));
+  }
+  const _0xea284e = SceneManager._scene._messageWindow;
+  if (_0xea284e) {
+    _0xea284e.resetWordWrap();
+    _0xea284e.updateDimensions();
+    _0xea284e.createContents();
+  }
+});
+PluginManager.registerCommand(pluginData.name, "MessageWindowXyOffsets", _0xcb4a47 => {
+  VisuMZ.ConvertParams(_0xcb4a47, _0xcb4a47);
+  $gameSystem.setMessageWindowXyOffsets(_0xcb4a47.OffsetX, _0xcb4a47.OffsetY);
+  const _0x323998 = SceneManager._scene._messageWindow;
+  if (_0x323998) {
+    _0x323998.resetWordWrap();
+    _0x323998.updateDimensions();
+    _0x323998.createContents();
+  }
+});
+PluginManager.registerCommand(pluginData.name, "SelectWeapon", _0x12fe43 => {
+  VisuMZ.ConvertParams(_0x12fe43, _0x12fe43);
+  $gameMessage.setWeaponChoice(_0x12fe43.VariableID || 0x0, _0x12fe43.WeaponTypeID || 0x0);
+  const _0x295613 = $gameTemp.getLastPluginCommandInterpreter();
+  if (_0x295613) {
+    _0x295613.setWaitMode('message');
+  }
+});
+PluginManager.registerCommand(pluginData.name, "SelectArmor", _0x734788 => {
+  VisuMZ.ConvertParams(_0x734788, _0x734788);
+  $gameMessage.setArmorChoice(_0x734788.VariableID || 0x0, _0x734788.ArmorTypeID || 0x0, _0x734788.EquipTypeID || 0x0);
+  const _0xd72959 = $gameTemp.getLastPluginCommandInterpreter();
+  if (_0xd72959) {
+    _0xd72959.setWaitMode("message");
+  }
+});
+PluginManager.registerCommand(pluginData.name, "SelectSkill", _0x3e3254 => {
+  VisuMZ.ConvertParams(_0x3e3254, _0x3e3254);
+  $gameMessage.setSkillChoice(_0x3e3254.VariableID || 0x0, _0x3e3254.ActorID || 0x0, _0x3e3254.SkillTypeID || 0x0);
+  const _0x32fdab = $gameTemp.getLastPluginCommandInterpreter();
+  if (_0x32fdab) {
+    _0x32fdab.setWaitMode("message");
+  }
+});
+PluginManager.registerCommand(pluginData.name, "PictureTextChange", _0x276b10 => {
+  VisuMZ.ConvertParams(_0x276b10, _0x276b10);
+  const _0x210e5a = _0x276b10.PictureIDs || [];
+  const _0x50ef2f = _0x276b10.Padding || 0x0;
+  const _0x2f7a31 = ["upperleft", 'up', "upperright", 'left', "center", "right", "lowerleft", "down", "lowerright"];
+  for (const _0xeff825 of _0x210e5a) {
+    $gameScreen.setPictureTextBuffer(_0xeff825, _0x50ef2f);
+    for (const _0x6d3b64 of _0x2f7a31) {
+      if (_0x276b10[_0x6d3b64] === undefined) {
+        continue;
+      }
+      $gameScreen.setPictureText(_0xeff825, _0x276b10[_0x6d3b64], _0x6d3b64);
+    }
+  }
+});
+PluginManager.registerCommand(pluginData.name, "PictureTextErase", _0x44c3c8 => {
+  VisuMZ.ConvertParams(_0x44c3c8, _0x44c3c8);
+  const _0x4108ca = _0x44c3c8.PictureIDs || [];
+  for (const _0x50b350 of _0x4108ca) {
+    $gameScreen.eraseAllPictureTexts(_0x50b350);
+    $gameScreen.erasePictureTextBuffer(_0x50b350);
+  }
+});
+PluginManager.registerCommand(pluginData.name, "PictureTextRefresh", _0xf05140 => {
+  $gameScreen.requestPictureTextRefreshAll();
+});
+VisuMZ.MessageCore.Scene_Boot_onDatabaseLoaded = Scene_Boot.prototype.onDatabaseLoaded;
+Scene_Boot.prototype.onDatabaseLoaded = function () {
+  VisuMZ.MessageCore.Scene_Boot_onDatabaseLoaded.call(this);
+  VisuMZ.MessageCore.CheckCompatibility();
+  this.process_VisuMZ_MessageCore_TextCodes_Action();
+  this.process_VisuMZ_MessageCore_TextCodes_Replace();
+  this.process_VisuMZ_MessageCore_TextMacros();
+  this.process_VisuMZ_MessageCore_AutoColor();
+};
+VisuMZ.MessageCore.CheckCompatibility = function () {
+  if (Imported.VisuMZ_4_ExtraEnemyDrops && VisuMZ.ExtraEnemyDrops.version < 1.08) {
+    let _0x5d6389 = '';
+    _0x5d6389 += "VisuMZ_4_ExtraEnemyDrops needs to be updated ";
+    _0x5d6389 += "in order for VisuMZ_1_MessageCore to work.";
+    alert(_0x5d6389);
+    SceneManager.exit();
+  }
+};
+VisuMZ.MessageCore.SortObjectByKeyLength = function (_0x15087d) {
+  const _0x495b3e = VisuMZ.MessageCore.Settings[_0x15087d];
+  _0x495b3e.sort((_0x21dcc1, _0x14ae1e) => {
+    if (!_0x21dcc1 || !_0x14ae1e) {
+      return -0x1;
+    }
+    return _0x14ae1e.Match.length - _0x21dcc1.Match.length;
+  });
+};
+Scene_Boot.prototype.process_VisuMZ_MessageCore_TextCodes_Action = function () {
+  VisuMZ.MessageCore.SortObjectByKeyLength("TextCodeActions");
+  for (const _0x1345cd of VisuMZ.MessageCore.Settings.TextCodeActions) {
+    _0x1345cd.Match = _0x1345cd.Match.toUpperCase();
+    _0x1345cd.textCodeCheck = new RegExp("" + _0x1345cd.Match, 'gi');
+    _0x1345cd.textCodeResult = "" + _0x1345cd.Match;
+    if (_0x1345cd.Type === '') {
+      _0x1345cd.textCodeResult += "[0]";
+    }
+  }
+};
+Scene_Boot.prototype.process_VisuMZ_MessageCore_TextCodes_Replace = function () {
+  VisuMZ.MessageCore.SortObjectByKeyLength("TextCodeReplace");
+  for (const _0x45efe9 of VisuMZ.MessageCore.Settings.TextCodeReplace) {
+    _0x45efe9.textCodeCheck = new RegExp("" + _0x45efe9.Match + _0x45efe9.Type, 'gi');
+    if (_0x45efe9.TextStr !== '' && _0x45efe9.TextStr !== "Undefined") {
+      _0x45efe9.textCodeResult = new Function("return '" + _0x45efe9.TextStr.replace(/\\/g, "") + "'");
+    } else {
+      _0x45efe9.textCodeResult = _0x45efe9.TextJS;
+    }
+  }
+};
+Scene_Boot.prototype.process_VisuMZ_MessageCore_TextMacros = function () {
+  for (const _0xd3cdd of VisuMZ.MessageCore.Settings.TextMacros) {
+    _0xd3cdd.textCodeCheck = new RegExp("\\[" + _0xd3cdd.Match + "\\]", 'gi');
+    if (_0xd3cdd.TextStr !== '' && _0xd3cdd.TextStr !== "Undefined") {
+      let _0x1531d3 = _0xd3cdd.TextStr;
+      _0x1531d3 = _0x1531d3.replace(/\\/g, "");
+      _0x1531d3 = _0x1531d3.replace("'", "\\'");
+      _0x1531d3 = _0x1531d3.replace("\"", "\\\"");
+      _0xd3cdd.textCodeResult = new Function("return '" + _0x1531d3 + "'");
+    } else {
+      _0xd3cdd.textCodeResult = _0xd3cdd.TextJS;
+    }
+  }
+};
+Scene_Boot.prototype.process_VisuMZ_MessageCore_AutoColor = function () {
+  const _0x279476 = VisuMZ.MessageCore.Settings.AutoColor;
+  if (!VisuMZ.ParseAllNotetags) {
+    VisuMZ.MessageCore.AddAutoColor($dataClasses, _0x279476.Classes);
+    VisuMZ.MessageCore.AddAutoColor($dataSkills, _0x279476.Skills);
+    VisuMZ.MessageCore.AddAutoColor($dataItems, _0x279476.Items);
+    VisuMZ.MessageCore.AddAutoColor($dataWeapons, _0x279476.Weapons);
+    VisuMZ.MessageCore.AddAutoColor($dataArmors, _0x279476.Armors);
+    VisuMZ.MessageCore.AddAutoColor($dataEnemies, _0x279476.Enemies);
+    VisuMZ.MessageCore.AddAutoColor($dataStates, _0x279476.States);
+  }
+  VisuMZ.MessageCore.CreateAutoColorRegExpLists();
+};
+VisuMZ.MessageCore.AutoColorBypassList = ['V', 'N', 'P', 'C', 'I', 'PX', 'PY', 'G', '{', '}', '<', '>', 'FS', "\\", '$', '.', '|', '!', '<', '>', '^', "<B>", "</B>", "<I>", "</I>", "<LEFT>", "</LEFT>", "<CENTER>", "</CENTER>", "<RIGHT>", '</RIGHT>', "<COLORLOCK>", "</COLORLOCK>", "(((", ")))", '<WORDWRAP>', "</WORDWRAP>", '<BR>', "<LINE BREAK>", 'PICTURE', "CENTERPICTURE", 'COMMONEVENT', "WAIT", 'SHOW', "HIDE", 'ENABLE', "DISABLE", "SWITCH", "SWITCHES", 'ALL', "ANY"];
+VisuMZ.MessageCore.AddAutoColor = function (_0xf3a48e, _0x2ba2b4) {
+  if (_0x2ba2b4 <= 0x0) {
+    return;
+  }
+  for (const _0x21ad0b of _0xf3a48e) {
+    if (!_0x21ad0b) {
+      continue;
+    }
+    VisuMZ.MessageCore.CreateAutoColorFor(_0x21ad0b, _0x2ba2b4);
+  }
+};
+VisuMZ.MessageCore.CreateAutoColorRegExpLists = function () {
+  VisuMZ.MessageCore.AutoColorRegExp = [];
+  for (let _0x4796b9 = 0x1; _0x4796b9 <= 0x1f; _0x4796b9++) {
+    const _0xe6425b = "TextColor%1".format(_0x4796b9);
+    const _0x5b38c5 = VisuMZ.MessageCore.Settings.AutoColor[_0xe6425b];
+    _0x5b38c5.sort((_0x12b005, _0xf02049) => {
+      if (!_0x12b005 || !_0xf02049) {
+        return -0x1;
+      }
+      return _0xf02049.length - _0x12b005.length;
+    });
+    this.CreateAutoColorRegExpListEntries(_0x5b38c5, _0x4796b9);
+  }
+};
+VisuMZ.MessageCore.CreateAutoColorRegExpListEntries = function (_0x4239e5, _0x5d0df8) {
+  for (const _0x2e3285 of _0x4239e5) {
+    if (_0x2e3285.length <= 0x0) {
+      continue;
+    }
+    if (/^\d+$/.test(_0x2e3285)) {
+      continue;
+    }
+    let _0x329f3e = VisuMZ.MessageCore.ConvertTextAutoColorRegExpFriendly(_0x2e3285);
+    if (_0x2e3285.match(/[\u3000-\u303F]|[\u3040-\u309F]|[\u30A0-\u30FF]|[\uFF00-\uFFEF]|[\u4E00-\u9FAF]|[\u2605-\u2606]|[\u2190-\u2195]|\u203B/g)) {
+      var _0x253e59 = new RegExp(_0x329f3e, 'i');
+    } else {
+      var _0x253e59 = new RegExp("\\b" + _0x329f3e + "\\b", 'g');
+    }
+    VisuMZ.MessageCore.AutoColorRegExp.push([_0x253e59, "C[%1]%2PREVCOLOR[0]".format(_0x5d0df8, _0x2e3285)]);
+  }
+};
+VisuMZ.MessageCore.ConvertTextAutoColorRegExpFriendly = function (_0x518700) {
+  _0x518700 = _0x518700.replace(/(\W)/gi, (_0xaab0c2, _0x3e8d0b) => "\\%1".format(_0x3e8d0b));
+  return _0x518700;
+};
+VisuMZ.MessageCore.ParseClassNotetags = VisuMZ.ParseClassNotetags;
+VisuMZ.ParseClassNotetags = function (_0x25c892) {
+  VisuMZ.MessageCore.ParseClassNotetags.call(this, _0x25c892);
+  const _0x5d52fc = VisuMZ.MessageCore.Settings.AutoColor;
+  VisuMZ.MessageCore.CreateAutoColorFor(_0x25c892, _0x5d52fc.Classes);
+};
+VisuMZ.MessageCore.ParseSkillNotetags = VisuMZ.ParseSkillNotetags;
+VisuMZ.ParseSkillNotetags = function (_0x2edf17) {
+  VisuMZ.MessageCore.ParseSkillNotetags.call(this, _0x2edf17);
+  const _0x3a34d4 = VisuMZ.MessageCore.Settings.AutoColor;
+  VisuMZ.MessageCore.CreateAutoColorFor(_0x2edf17, _0x3a34d4.Skills);
+};
+0x7;
+VisuMZ.MessageCore.ParseItemNotetags = VisuMZ.ParseItemNotetags;
+VisuMZ.ParseItemNotetags = function (_0x41b122) {
+  VisuMZ.MessageCore.ParseItemNotetags.call(this, _0x41b122);
+  const _0x90042f = VisuMZ.MessageCore.Settings.AutoColor;
+  VisuMZ.MessageCore.CreateAutoColorFor(_0x41b122, _0x90042f.Items);
+};
+VisuMZ.MessageCore.ParseWeaponNotetags = VisuMZ.ParseWeaponNotetags;
+VisuMZ.ParseWeaponNotetags = function (_0x4ab3dd) {
+  VisuMZ.MessageCore.ParseWeaponNotetags.call(this, _0x4ab3dd);
+  const _0xe0267a = VisuMZ.MessageCore.Settings.AutoColor;
+  VisuMZ.MessageCore.CreateAutoColorFor(_0x4ab3dd, _0xe0267a.Weapons);
+};
+VisuMZ.MessageCore.ParseArmorNotetags = VisuMZ.ParseArmorNotetags;
+VisuMZ.ParseArmorNotetags = function (_0x2ac4da) {
+  VisuMZ.MessageCore.ParseArmorNotetags.call(this, _0x2ac4da);
+  const _0x4f32b0 = VisuMZ.MessageCore.Settings.AutoColor;
+  VisuMZ.MessageCore.CreateAutoColorFor(_0x2ac4da, _0x4f32b0.Armors);
+};
+VisuMZ.MessageCore.ParseEnemyNotetags = VisuMZ.ParseEnemyNotetags;
+VisuMZ.ParseEnemyNotetags = function (_0x518825) {
+  VisuMZ.MessageCore.ParseEnemyNotetags.call(this, _0x518825);
+  const _0x3f7252 = VisuMZ.MessageCore.Settings.AutoColor;
+  VisuMZ.MessageCore.CreateAutoColorFor(_0x518825, _0x3f7252.Enemies);
+};
+VisuMZ.MessageCore.ParseStateNotetags = VisuMZ.ParseStateNotetags;
+VisuMZ.ParseStateNotetags = function (_0x16ef0) {
+  VisuMZ.MessageCore.ParseStateNotetags.call(this, _0x16ef0);
+  const _0x2c0913 = VisuMZ.MessageCore.Settings.AutoColor;
+  VisuMZ.MessageCore.CreateAutoColorFor(_0x16ef0, _0x2c0913.States);
+};
+VisuMZ.MessageCore.CreateAutoColorFor = function (_0x139b50, _0x25f625) {
+  if (_0x25f625 <= 0x0) {
+    return;
+  }
+  const _0x487820 = VisuMZ.MessageCore.Settings.AutoColor["TextColor" + _0x25f625];
+  let _0x5ae942 = _0x139b50.name.trim();
+  if (/^\d+$/.test(_0x5ae942)) {
+    return;
+  }
+  if (VisuMZ.MessageCore.AutoColorBypassList.includes(_0x5ae942.toUpperCase())) {
+    return;
+  }
+  _0x5ae942 = _0x5ae942.replace(/\\I\[(\d+)\]/gi, '');
+  _0x5ae942 = _0x5ae942.replace(/\x1bI\[(\d+)\]/gi, '');
+  if (_0x5ae942.length <= 0x0) {
+    return;
+  }
+  if (_0x5ae942.match(/-----/i)) {
+    return;
+  }
+  _0x487820.push(_0x5ae942);
+};
+VisuMZ.MessageCore.Scene_Boot_loadGameFonts = Scene_Boot.prototype.loadGameFonts;
+Scene_Boot.prototype.loadGameFonts = function () {
+  VisuMZ.MessageCore.Scene_Boot_loadGameFonts.call(this);
+  this.loadCustomFontsMessageCore();
+};
+Scene_Boot.prototype.loadCustomFontsMessageCore = function () {
+  const _0x22498e = VisuMZ.MessageCore.Settings.CustomFonts || [];
+  for (const _0xf4dfb8 of _0x22498e) {
+    if (!_0xf4dfb8) {
+      continue;
+    }
+    const _0x3dfce8 = _0xf4dfb8.FontFamily;
+    if (_0x3dfce8.trim() === '') {
+      continue;
+    }
+    if (_0x3dfce8.toLowerCase().trim() === "unnamed") {
+      continue;
+    }
+    const _0x15fbac = _0xf4dfb8.Filename;
+    if (_0x15fbac === 'Unnamed.ttf') {
+      continue;
+    }
+    FontManager.load(_0x3dfce8, _0x15fbac);
+  }
+};
+VisuMZ.MessageCore.LocalizationType = VisuMZ.MessageCore.Settings.Localization.LangFiletype ?? 'tsv';
+VisuMZ.MessageCore.DataManager_loadDatabase = DataManager.loadDatabase;
+DataManager.loadDatabase = function () {
+  VisuMZ.MessageCore.DataManager_loadDatabase.call(this);
+  this.loadLocalization();
+};
+DataManager.loadLocalization = function () {
+  if (!TextManager.isVisuMzLocalizationEnabled()) {
+    return;
+  }
+  const _0x2e48b8 = VisuMZ.MessageCore.Settings.Localization;
+  let _0x4cf4c2 = '';
+  const _0x34d0b9 = VisuMZ.MessageCore.LocalizationType ?? "tsv";
+  if (_0x34d0b9 === 'csv') {
+    _0x4cf4c2 = (_0x2e48b8.CsvFilename ?? 'Languages.csv') || '';
+  }
+  if (_0x34d0b9 === "tsv") {
+    _0x4cf4c2 = (_0x2e48b8.TsvFilename ?? "Languages.tsv") || '';
+  }
+  if (!_0x4cf4c2) {
+    return;
+  }
+  const _0x113e23 = new XMLHttpRequest();
+  const _0x305d90 = "data/" + _0x4cf4c2;
+  window.$dataLocalization = null;
+  _0x113e23.open("GET", _0x305d90);
+  _0x113e23.overrideMimeType("application/%1".format(_0x34d0b9.toLowerCase()));
+  _0x113e23.onload = () => this.onLocalizationXhrLoad(_0x113e23, "$dataLocalization");
+  _0x113e23.onerror = () => this.onLocalizationXhrError();
+  _0x113e23.send();
+};
+DataManager.onLocalizationXhrLoad = function (_0x4fc814, _0x13a8a3) {
+  if (_0x4fc814.status >= 0x190) {
+    return;
+  }
+  const _0x11590f = _0x4fc814.responseText;
+  window[_0x13a8a3] = VisuMZ.MessageCore.ParseLocalizationCsv(_0x11590f);
+};
+VisuMZ.MessageCore.ParseLocalizationCsv = function (_0x502e3b) {
+  const _0x1c9cf9 = VisuMZ.MessageCore.LocalizationType ?? "tsv";
+  const _0x207d22 = _0x1c9cf9 === "csv" ? ';' : "\t";
+  const _0xc67dea = _0x502e3b.split("\n");
+  const _0x1ca5db = _0xc67dea[0x0].split(_0x207d22);
+  const _0x41bccd = {};
+  _0xc67dea.slice(0x1).forEach(_0x43b336 => {
+    let _0x49c624 = [];
+    let _0x578e10 = '';
+    let _0x30f854 = false;
+    for (let _0x595536 = 0x0; _0x595536 < _0x43b336.length; _0x595536++) {
+      let _0x4c9b45 = _0x43b336[_0x595536];
+      if (_0x4c9b45 === "\"") {
+        if (_0x30f854 && _0x43b336[_0x595536 + 0x1] === "\"") {
+          _0x578e10 += _0x4c9b45;
+          _0x595536++;
+        } else {
+          _0x30f854 = !_0x30f854;
+        }
+      } else if (_0x4c9b45 === _0x207d22 && !_0x30f854) {
+        _0x49c624.push(_0x578e10);
+        _0x578e10 = '';
+      } else {
+        _0x578e10 += _0x4c9b45;
+      }
+    }
+    if (_0x578e10) {
+      _0x49c624.push(_0x578e10);
+    }
+    if (!_0x49c624[0x0]) {
+      _0x49c624[0x0] = '';
+    }
+    const _0x36ebab = _0x49c624[0x0].replace(/^"|"$/g, '').toLowerCase().trim();
+    _0x41bccd[_0x36ebab] = _0x1ca5db.slice(0x1).reduce((_0x128bf1, _0x574674, _0x9b0137) => {
+      _0x128bf1[_0x574674.trim()] = (_0x49c624[_0x9b0137 + 0x1] || '').replace(/^"|"$/g, '');
+      return _0x128bf1;
+    }, {});
+  });
+  return _0x41bccd;
+};
+DataManager.onLocalizationXhrError = function () {
+  const _0x48af89 = (VisuMZ.MessageCore.LocalizationType ?? "tsv").toUpperCase();
+  let _0x1adc0a = '';
+  _0x1adc0a += "You do not have a language %1 set up.\n";
+  _0x1adc0a += "Would you like the plugin to create the base %1 file?\n\n";
+  _0x1adc0a = _0x1adc0a.format(_0x48af89);
+  if (confirm(_0x1adc0a)) {
+    if (Utils.isOptionValid("test")) {
+      if (_0x48af89 === "CSV") {
+        _0x1adc0a = "%1 file is now created and stored in data folder.\n";
+        _0x1adc0a = _0x1adc0a.format(_0x48af89);
+        alert(_0x1adc0a);
+        this.createLocalizationCsvFile();
+        this.openLocalizationFolder();
+      } else {
+        return this.checkConvertCsvToTsv();
+      }
+      _0x1adc0a = '';
+    } else {
+      _0x1adc0a = "%1 file cannot be created.\nPlease enter Playtest mode.\n";
+    }
+  } else {
+    _0x1adc0a = "%1 file has not been made.\n";
+  }
+  _0x1adc0a += "Please restart the game.";
+  _0x1adc0a = _0x1adc0a.format(_0x48af89);
+  alert(_0x1adc0a);
+  SceneManager.exit();
+};
+DataManager.checkConvertCsvToTsv = function () {
+  const _0x5d38f1 = VisuMZ.MessageCore.Settings.Localization;
+  const _0x4e4b55 = _0x5d38f1.CsvFilename ?? "Languages.csv";
+  const _0x2758db = new XMLHttpRequest();
+  const _0x4b62ae = "data/" + _0x4e4b55;
+  _0x2758db.open("GET", _0x4b62ae);
+  _0x2758db.overrideMimeType("application/csv");
+  _0x2758db.onload = () => this.confirmConvertCsvToTsv(_0x2758db);
+  _0x2758db.onerror = () => this.createTsvFile();
+  _0x2758db.send();
+};
+DataManager.confirmConvertCsvToTsv = function (_0x2c5e59) {
+  const _0x15a002 = VisuMZ.MessageCore.Settings.Localization;
+  const _0x358093 = _0x15a002.CsvFilename ?? "Languages.csv";
+  let _0x1c588f = "%1 file detected.\n".format(_0x358093);
+  _0x1c588f += "Press OK to convert to TSV.\n";
+  _0x1c588f += "Press Cancel to create new TSV.";
+  if (confirm(_0x1c588f)) {
+    this.convertCsvToTsvFile(_0x2c5e59);
+  } else {
+    this.createTsvFile();
+  }
+};
+DataManager.convertCsvToTsvFile = function (_0x33777a) {
+  if (_0x33777a.status >= 0x190) {
+    return;
+  }
+  const _0x36c219 = _0x33777a.responseText;
+  const _0x257e57 = _0x36c219.replace(/\;/gi, "\t");
+  const _0x1b5d42 = VisuMZ.MessageCore.Settings.Localization;
+  const _0x67cc43 = _0x1b5d42.TsvFilename || "Languages.tsv";
+  const _0x1e2fbb = require("path");
+  const _0x7ccb5e = _0x1e2fbb.dirname(process.mainModule.filename);
+  const _0x18c381 = _0x1e2fbb.join(_0x7ccb5e, "data/");
+  const _0x4e388f = _0x18c381 + _0x67cc43;
+  const _0x4d9652 = require('fs');
+  _0x4d9652.writeFileSync(_0x4e388f, _0x257e57);
+  let _0x5c7117 = "TSV file is now created and stored in data folder.";
+  alert(_0x5c7117);
+  _0x5c7117 = "Please restart the game.";
+  alert(_0x5c7117);
+  SceneManager.exit();
+};
+DataManager.createTsvFile = function () {
+  let _0x11a41b = "TSV file is now created and stored in data folder.";
+  alert(_0x11a41b);
+  this.createLocalizationCsvFile();
+  this.openLocalizationFolder();
+  _0x11a41b = "Please restart the game.";
+  alert(_0x11a41b);
+  SceneManager.exit();
+};
+DataManager.createLocalizationCsvFile = function () {
+  const _0x3cbcdd = ["Key", "English", "Bengali", "Chinese(Simplified)", 'Chinese(Traditional)', "Czech", "Danish", 'Dutch', "Finnish", "French", 'German', "Greek", "Hindi", "Hungarian", "Indonesian", 'Italian', "Japanese", 'Korean', "Norwegian", "Polish", "Portuguese", "Romanian", 'Russian', "Slovak", "Spanish", "Swedish", 'Tamil', "Thai", 'Turkish'];
+  const _0x12aaef = ["Greeting", "Hello", 'হ্যালো', '你好', '你好', 'Ahoj', "Hej", "Hallo", "Hei", "Bonjour", 'Hallo', "Γειά σου", "नमस्ते", "Szia", "Halo", "Ciao", "こんにちは", "안녕하세요", "Hei", "Cześć", 'Olá', "Salut", 'Привет', "Ahoj", "Hola", "Hej", "வணக்கம்", 'สวัสดี', "Merhaba"];
+  const _0x3060da = ["Farewell", "Good-bye", 'বিদায়', '再见', '再見', "Sbohem", "Farvel", "Tot ziens", 'Näkemiin', "Au revoir", "Auf Wiedersehen", "Αντίο", "अलविदा", "Viszontlátásra", "Selamat tinggal", "Arrivederci", "さようなら", "안녕히 가세요", "Ha det", "Do widzenia", "Adeus", "La revedere", "До свидания", 'Zbohom', "Adiós", "Hejdå", "பிரியாவிடை", 'ลาก่อน', "Hoşça kal"];
+  const _0x4e5cbf = ["Wow", "Wow", 'ওহে', '哇', '哇', 'Ó', "Wow", "Wauw", "Vau", 'Waouh', "Wow", "Ουάου", "वाह", "Hűha", 'Wah', "Wow", 'ワオ', '와우', 'Oi', 'O', 'Uau', 'Uau', 'Вау', 'Ó', "Guau", 'Oj', "ஆஹா", "ว้าว", "Vay"];
+  const _0x182c7b = [_0x3cbcdd, _0x12aaef, _0x3060da, _0x4e5cbf];
+  const _0x533035 = VisuMZ.MessageCore.LocalizationType ?? "tsv";
+  const _0x3d458b = _0x533035 === "csv" ? ';' : "\t";
+  const _0x2fec42 = _0x182c7b.map(_0x53d493 => _0x53d493.join(_0x3d458b)).join("\n");
+  const _0x19cdf2 = VisuMZ.MessageCore.Settings.Localization;
+  let _0x1a3abc = '';
+  if (_0x533035 === "csv") {
+    _0x1a3abc = _0x19cdf2.CsvFilename || "Languages.csv";
+  }
+  if (_0x533035 === 'tsv') {
+    _0x1a3abc = _0x19cdf2.TsvFilename || "Languages.tsv";
+  }
+  const _0x446158 = require("path");
+  const _0x1c2eb7 = _0x446158.dirname(process.mainModule.filename);
+  const _0x4ece26 = _0x446158.join(_0x1c2eb7, "data/");
+  const _0x2cf25a = _0x4ece26 + _0x1a3abc;
+  const _0x1a8845 = require('fs');
+  _0x1a8845.writeFileSync(_0x2cf25a, _0x2fec42);
+  return _0x2cf25a;
+};
+DataManager.openLocalizationFolder = function () {
+  const {
+    exec: _0x37ad14
+  } = require('child_process');
+  _0x37ad14("start .\\data");
+  _0x37ad14("open .\\data");
+};
+VisuMZ.MessageCore.ImageManager_loadBitmap = ImageManager.loadBitmap;
+ImageManager.loadBitmap = function (_0x114afe, _0x4488f6) {
+  if (ConfigManager.textLocale !== undefined) {
+    const _0x8f44ff = VisuMZ.MessageCore.Settings.Localization || {};
+    const _0x15cf2f = _0x8f44ff.DefaultLocale || "English";
+    const _0x371154 = VisuMZ.MessageCore.Settings.LanguageImages || {};
+    const _0x27306c = ConfigManager.textLocale || _0x15cf2f;
+    if (_0x27306c === _0x15cf2f && !_0x371154.ConvertDefault) {} else {
+      const _0x509ca8 = _0x371154[_0x27306c] || '[XX]';
+      if (_0x114afe && _0x114afe.match(/\[XX\]/g)) {
+        console.log(_0x114afe, _0x4488f6);
+      }
+      if (_0x4488f6 && _0x4488f6.match(/\[XX\]/g)) {
+        _0x4488f6 = _0x4488f6.replace(/\[XX\]/g, _0x509ca8);
+      }
+    }
+  }
+  return VisuMZ.MessageCore.ImageManager_loadBitmap.call(this, _0x114afe, _0x4488f6);
+};
+SceneManager.isSceneBattle = function () {
+  return this._scene && this._scene.constructor === Scene_Battle;
+};
+SceneManager.isSceneMap = function () {
+  return this._scene && this._scene.constructor === Scene_Map;
+};
+ConfigManager.textLocale = VisuMZ.MessageCore.Settings.Localization.DefaultLocale || "English";
+ConfigManager.textSpeed = VisuMZ.MessageCore.Settings.TextSpeed.Default;
+VisuMZ.MessageCore.ConfigManager_makeData = ConfigManager.makeData;
+ConfigManager.makeData = function () {
+  const _0x4eb020 = VisuMZ.MessageCore.ConfigManager_makeData.call(this);
+  if (TextManager.isVisuMzLocalizationEnabled()) {
+    _0x4eb020.textLocale = this.textLocale;
+  }
+  _0x4eb020.textSpeed = this.textSpeed;
+  return _0x4eb020;
+};
+VisuMZ.MessageCore.ConfigManager_applyData = ConfigManager.applyData;
+ConfigManager.applyData = function (_0x22768e) {
+  VisuMZ.MessageCore.ConfigManager_applyData.call(this, _0x22768e);
+  if (TextManager.isVisuMzLocalizationEnabled()) {
+    if ('textLocale' in _0x22768e) {
+      this.textLocale = String(_0x22768e.textLocale);
+    } else {
+      this.textLocale = VisuMZ.MessageCore.Settings.Localization.DefaultLocale || "English";
+    }
+  }
+  if ("textSpeed" in _0x22768e) {
+    this.textSpeed = Number(_0x22768e.textSpeed).clamp(0x1, 0xb);
+  } else {
+    this.textSpeed = VisuMZ.MessageCore.Settings.TextSpeed.Default;
+  }
+};
+TextManager.messageCoreLocalization = VisuMZ.MessageCore.Settings.Localization.Name;
+TextManager.messageCoreTextSpeed = VisuMZ.MessageCore.Settings.TextSpeed.Name;
+TextManager.instantTextSpeed = VisuMZ.MessageCore.Settings.TextSpeed.Instant;
+VisuMZ.MessageCore.TextManager_message = TextManager.message;
+TextManager.message = function (_0x378e11) {
+  const _0x313721 = ["levelUp", 'emerge', "preemptive", "surprise", "victory", "defeat", 'escapeStart', "obtainExp", 'obtainGold', "obtainItem"];
+  let _0x9e9948 = VisuMZ.MessageCore.TextManager_message.call(this, _0x378e11);
+  if (_0x313721.includes(_0x378e11)) {
+    _0x9e9948 = "</WORDWRAP>" + _0x9e9948;
+  }
+  return _0x9e9948;
+};
+TextManager.isVisuMzLocalizationEnabled = function () {
+  return VisuMZ.MessageCore.Settings.Localization.Enable;
+};
+TextManager.parseLocalizedText = function (_0x238e09) {
+  if (!this.isVisuMzLocalizationEnabled()) {
+    return _0x238e09;
+  }
+  _0x238e09 = String(_0x238e09).replace(/\$(?:\[|\<|\{)(.*?)(?:\]|\>|\})/gi, (_0x3fe540, _0x529bb9) => this.getLocalizedText(String(_0x529bb9)));
+  _0x238e09 = String(_0x238e09).replace(/\\(?:KEY|TL|TRANSLATE|LOC|LOCALIZE|LOCALE)(?:\[|\<|\{)(.*?)(?:\]|\>|\})/gi, (_0x5eef1c, _0x2f943e) => this.getLocalizedText(String(_0x2f943e)));
+  _0x238e09 = String(_0x238e09).replace(/\x1b(?:KEY|TL|TRANSLATE|LOC|LOCALIZE|LOCALE)(?:\[|\<|\{)(.*?)(?:\]|\>|\})/gi, (_0x4073cd, _0x3f11a8) => this.getLocalizedText(String(_0x3f11a8)));
+  return _0x238e09;
+};
+TextManager.getLocalizedText = function (_0x1153ea) {
+  if (!$dataLocalization) {
+    return '';
+  }
+  const _0x12f6cc = $dataLocalization[_0x1153ea.toLowerCase().trim()];
+  if (!_0x12f6cc) {
+    return;
+  }
+  const _0x3a5391 = ConfigManager.textLocale || "English";
+  let _0x35d4b7 = _0x12f6cc[_0x3a5391] || "UNDEFINED!";
+  _0x35d4b7 = _0x35d4b7.replace(/\\/g, "");
+  _0x35d4b7 = _0x35d4b7.replace(/<SEMI(?:|-COLON|COLON)>/gi, ';');
+  return _0x35d4b7;
+};
+TextManager.getLanguageName = function (_0x2d7e14) {
+  return VisuMZ.MessageCore.Settings.Localization[_0x2d7e14] || '';
+};
+TextManager.getCurrentLanguage = function () {
+  const _0xc80823 = ConfigManager.textLocale || "English";
+  return this.getLanguageName(_0xc80823);
+};
+TextManager.getLanguageAt = function (_0x5978f7) {
+  const _0x4a11ef = VisuMZ.MessageCore.Settings.Localization.Languages || [];
+  let _0x5ac9bf = _0x4a11ef.indexOf(ConfigManager.textLocale || 'English');
+  _0x5ac9bf += _0x5978f7;
+  const _0x2d2b84 = _0x4a11ef[_0x5ac9bf] || '';
+  return this.getLanguageName(_0x2d2b84);
+};
+VisuMZ.MessageCore.Game_System_mainFontFace = Game_System.prototype.mainFontFace;
+Game_System.prototype.mainFontFace = function () {
+  let _0x5d9437 = VisuMZ.MessageCore.Game_System_mainFontFace.call(this);
+  if (ConfigManager && ConfigManager.textFont !== undefined && ConfigManager.textFont > 0x0) {
+    return _0x5d9437;
+  } else {
+    const _0x226703 = ConfigManager.textLocale || "English";
+    const _0x3fa42a = VisuMZ.MessageCore.Settings.LanguageFonts;
+    if (_0x3fa42a[_0x226703] !== undefined) {
+      _0x5d9437 = _0x3fa42a[_0x226703] + ", " + $dataSystem.advanced.fallbackFonts;
+    }
+    return _0x5d9437;
+  }
+};
+VisuMZ.MessageCore.Window_Command_addCommand = Window_Command.prototype.addCommand;
+Window_Command.prototype.addCommand = function (_0x48988b, _0x27f62b, _0x39c792, _0x3f29a9) {
+  if (TextManager.parseLocalizedText && TextManager.isVisuMzLocalizationEnabled()) {
+    const _0x5134cb = String(_0x48988b).toLowerCase().trim();
+    if ($dataLocalization[_0x5134cb] && _0x5134cb.length > 0x0) {
+      const _0x104204 = ConfigManager.textLocale || 'English';
+      _0x48988b = $dataLocalization[_0x5134cb][_0x104204] || "UNDEFINED!";
+    }
+  }
+  VisuMZ.MessageCore.Window_Command_addCommand.call(this, _0x48988b, _0x27f62b, _0x39c792, _0x3f29a9);
+};
+Window_StatusBase.prototype.actorSlotName = function (_0x418c84, _0x420ef8) {
+  const _0x774c1d = _0x418c84.equipSlots();
+  let _0x4a4264 = $dataSystem.equipTypes[_0x774c1d[_0x420ef8]];
+  if (TextManager.parseLocalizedText) {
+    const _0x4d7d50 = String(_0x4a4264).toLowerCase().trim();
+    if (TextManager.isVisuMzLocalizationEnabled() && $dataLocalization[_0x4d7d50]) {
+      const _0x1cdd69 = ConfigManager.textLocale || 'English';
+      _0x4a4264 = $dataLocalization[_0x4d7d50][_0x1cdd69] || "UNDEFINED!";
+    }
+  }
+  return _0x4a4264;
+};
+Game_Temp.prototype.setLastPluginCommandInterpreter = function (_0xcb94f0) {
+  this._lastPluginCommandInterpreter = _0xcb94f0;
+};
+Game_Temp.prototype.getLastPluginCommandInterpreter = function () {
+  return this._lastPluginCommandInterpreter;
+};
+VisuMZ.MessageCore.Game_Interpreter_PluginCommand = Game_Interpreter.prototype.command357;
+Game_Interpreter.prototype.command357 = function (_0x2206e4) {
+  $gameTemp.setLastPluginCommandInterpreter(this);
+  return VisuMZ.MessageCore.Game_Interpreter_PluginCommand.call(this, _0x2206e4);
+};
+VisuMZ.MessageCore.Game_System_initialize = Game_System.prototype.initialize;
+Game_System.prototype.initialize = function () {
+  VisuMZ.MessageCore.Game_System_initialize.call(this);
+  this.initMessageCore();
+};
+Game_System.prototype.initMessageCore = function () {
+  const _0x518d88 = VisuMZ.MessageCore.Settings.General;
+  const _0x30ba6e = VisuMZ.MessageCore.Settings.WordWrap;
+  this._MessageCoreSettings = {
+    'messageRows': _0x518d88.MessageRows,
+    'messageWidth': _0x518d88.MessageWidth,
+    'messageWordWrap': _0x30ba6e.MessageWindow,
+    'helpWordWrap': _0x30ba6e.HelpWindow,
+    'choiceLineHeight': _0x518d88.ChoiceWindowLineHeight,
+    'choiceMinWidth': _0x518d88.ChoiceWindowMinWidth ?? 0x60,
+    'choiceRows': _0x518d88.ChoiceWindowMaxRows,
+    'choiceCols': _0x518d88.ChoiceWindowMaxCols,
+    'choiceTextAlign': _0x518d88.ChoiceWindowTextAlign,
+    'choiceDistance': 0x0
+  };
+  if (this._messageOffsetX === undefined) {
+    this._messageOffsetX = _0x518d88.MsgWindowOffsetX;
+    this._messageOffsetY = _0x518d88.MsgWindowOffsetY;
+  }
+};
+Game_System.prototype.getMessageWindowRows = function () {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  if (this._MessageCoreSettings.messageRows === undefined) {
+    this.initMessageCore();
+  }
+  return this._MessageCoreSettings.messageRows;
+};
+Game_System.prototype.setMessageWindowRows = function (_0x46f735) {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  if (this._MessageCoreSettings.messageRows === undefined) {
+    this.initMessageCore();
+  }
+  this._MessageCoreSettings.messageRows = _0x46f735 || 0x1;
+};
+Game_System.prototype.getMessageWindowWidth = function () {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  if (this._MessageCoreSettings.messageWidth === undefined) {
+    this.initMessageCore();
+  }
+  return this._MessageCoreSettings.messageWidth;
+};
+Game_System.prototype.setMessageWindowWidth = function (_0x73dd44) {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  if (this._MessageCoreSettings.messageWidth === undefined) {
+    this.initMessageCore();
+  }
+  _0x73dd44 = Math.ceil(_0x73dd44);
+  if (_0x73dd44 % 0x2 !== 0x0) {
+    _0x73dd44 += 0x1;
+  }
+  this._MessageCoreSettings.messageWidth = _0x73dd44 || 0x2;
+};
+Game_System.prototype.isMessageWindowWordWrap = function () {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  if (this._MessageCoreSettings.messageWordWrap === undefined) {
+    this.initMessageCore();
+  }
+  return this._MessageCoreSettings.messageWordWrap;
+};
+Game_System.prototype.setMessageWindowWordWrap = function (_0x2bf5e5) {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  if (this._MessageCoreSettings.messageWordWrap === undefined) {
+    this.initMessageCore();
+  }
+  this._MessageCoreSettings.messageWordWrap = _0x2bf5e5;
+};
+Game_System.prototype.getMessageWindowXyOffsets = function () {
+  if (this._messageOffsetX === undefined) {
+    const _0x4068b8 = VisuMZ.MessageCore.Settings.General;
+    this._messageOffsetX = _0x4068b8.MsgWindowOffsetX;
+    this._messageOffsetY = _0x4068b8.MsgWindowOffsetY;
+  }
+  return {
+    'x': this._messageOffsetX || 0x0,
+    'y': this._messageOffsetY || 0x0
+  };
+};
+Game_System.prototype.setMessageWindowXyOffsets = function (_0x50a073, _0x38abf8) {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  this._messageOffsetX = _0x50a073;
+  this._messageOffsetY = _0x38abf8;
+};
+Game_System.prototype.isHelpWindowWordWrap = function () {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  if (this._MessageCoreSettings.helpWordWrap === undefined) {
+    this.initMessageCore();
+  }
+  return this._MessageCoreSettings.helpWordWrap;
+};
+Game_System.prototype.setHelpWindowWordWrap = function (_0x2fb921) {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  if (this._MessageCoreSettings.helpWordWrap === undefined) {
+    this.initMessageCore();
+  }
+  this._MessageCoreSettings.helpWordWrap = _0x2fb921;
+};
+Game_System.prototype.getChoiceListLineHeight = function () {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  if (this._MessageCoreSettings.choiceLineHeight === undefined) {
+    this.initMessageCore();
+  }
+  return this._MessageCoreSettings.choiceLineHeight;
+};
+Game_System.prototype.setChoiceListLineHeight = function (_0x16a7a6) {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  if (this._MessageCoreSettings.choiceLineHeight === undefined) {
+    this.initMessageCore();
+  }
+  this._MessageCoreSettings.choiceLineHeight = _0x16a7a6 || 0x1;
+};
+Game_System.prototype.getChoiceListMinChoiceWidth = function () {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  return this._MessageCoreSettings.choiceMinWidth ?? 0x60;
+};
+Game_System.prototype.setChoiceListMinChoiceWidth = function (_0x497e9a) {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  this._MessageCoreSettings.choiceMinWidth = _0x497e9a || 0x0;
+};
+Game_System.prototype.getChoiceListMaxRows = function () {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  if (this._MessageCoreSettings.choiceRows === undefined) {
+    this.initMessageCore();
+  }
+  return this._MessageCoreSettings.choiceRows;
+};
+Game_System.prototype.setChoiceListMaxRows = function (_0x45cb39) {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  if (this._MessageCoreSettings.choiceRows === undefined) {
+    this.initMessageCore();
+  }
+  this._MessageCoreSettings.choiceRows = _0x45cb39 || 0x1;
+};
+Game_System.prototype.getChoiceListMaxColumns = function () {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  if (this._MessageCoreSettings.choiceCols === undefined) {
+    this.initMessageCore();
+  }
+  return this._MessageCoreSettings.choiceCols;
+};
+Game_System.prototype.setChoiceListMaxColumns = function (_0x4130d3) {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  if (this._MessageCoreSettings.choiceCols === undefined) {
+    this.initMessageCore();
+  }
+  this._MessageCoreSettings.choiceCols = _0x4130d3 || 0x1;
+};
+Game_System.prototype.getChoiceListTextAlign = function () {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  if (this._MessageCoreSettings.choiceTextAlign === undefined) {
+    this.initMessageCore();
+  }
+  return this._MessageCoreSettings.choiceTextAlign;
+};
+Game_System.prototype.setChoiceListTextAlign = function (_0xf3de2a) {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  if (this._MessageCoreSettings.choiceTextAlign === undefined) {
+    this.initMessageCore();
+  }
+  this._MessageCoreSettings.choiceTextAlign = _0xf3de2a.toLowerCase();
+};
+Game_System.prototype.getChoiceMessageDistance = function () {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  return this._MessageCoreSettings.choiceDistance || 0x0;
+};
+Game_System.prototype.setChoiceMessageDistance = function (_0x3e8c13) {
+  if (this._MessageCoreSettings === undefined) {
+    this.initMessageCore();
+  }
+  this._MessageCoreSettings.choiceDistance = _0x3e8c13 || 0x0;
+};
+Game_Message.prototype.setWeaponChoice = function (_0x3dcd71, _0x4fc15c) {
+  this._itemChoiceVariableId = _0x3dcd71;
+  this._itemChoiceItypeId = "weapon";
+  this._itemChoiceWtypeId = _0x4fc15c;
+  this._itemChoiceEtypeId = 0x0;
+};
+Game_Message.prototype.itemChoiceWtypeId = function () {
+  return this._itemChoiceWtypeId || 0x0;
+};
+Game_Message.prototype.setArmorChoice = function (_0x3ea3ef, _0x1f9e3b, _0x4e9075) {
+  this._itemChoiceVariableId = _0x3ea3ef;
+  this._itemChoiceItypeId = "armor";
+  this._itemChoiceAtypeId = _0x1f9e3b;
+  this._itemChoiceEtypeId = _0x4e9075;
+};
+Game_Message.prototype.itemChoiceAtypeId = function () {
+  return this._itemChoiceAtypeId || 0x0;
+};
+Game_Message.prototype.itemChoiceEtypeId = function () {
+  return this._itemChoiceEtypeId || 0x0;
+};
+Game_Message.prototype.setSkillChoice = function (_0x34fb6f, _0x2b39f2, _0x450c91) {
+  this._itemChoiceVariableId = _0x34fb6f;
+  this._itemChoiceItypeId = 'skill';
+  this._itemChoiceActorId = _0x2b39f2;
+  this._itemChoiceStypeId = _0x450c91;
+};
+Game_Message.prototype.itemChoiceActorId = function () {
+  return this._itemChoiceActorId || 0x0;
+};
+Game_Message.prototype.itemChoiceActor = function () {
+  return $gameActors.actor(this.itemChoiceActorId()) || $gameParty.leader() || null;
+};
+Game_Message.prototype.itemChoiceStypeId = function () {
+  return this._itemChoiceStypeId || 0x0;
+};
+VisuMZ.MessageCore.Game_Message_setChoices = Game_Message.prototype.setChoices;
+Game_Message.prototype.setChoices = function (_0x380e13, _0x3d6757, _0x253c90) {
+  this._scriptCall = true;
+  VisuMZ.MessageCore.Game_Message_setChoices.call(this, _0x380e13, _0x3d6757, _0x253c90);
+};
+Game_Message.prototype.setupShuffleChoices = function () {
+  this._scriptCall = false;
+  this._choiceIndexArray = [];
+  const _0x9c382c = this._choices.length;
+  this._maxShuffleChoices = _0x9c382c;
+  let _0x145182 = false;
+  for (let _0x1ceea7 = 0x0; _0x1ceea7 < _0x9c382c; _0x1ceea7++) {
+    let _0x2877d2 = this._choices[_0x1ceea7];
+    if (_0x2877d2.match(/<SHUFFLE>/gi)) {
+      _0x145182 = true;
+      _0x2877d2 = _0x2877d2.replace(/<SHUFFLE>/gi, '');
+    }
+    if (_0x2877d2.match(/<SHUFFLE:[ ](\d+)>/gi)) {
+      _0x145182 = true;
+      this._maxShuffleChoices = Math.min(Number(RegExp.$1), this._maxShuffleChoices);
+      _0x2877d2 = _0x2877d2.replace(/<SHUFFLE:[ ](\d+)>/gi, '');
+    }
+    if (_0x2877d2.match(/<SHUFFLE: VAR[ ](\d+)>/gi)) {
+      _0x145182 = true;
+      this._maxShuffleChoices = Math.min($gameVariables.value(Number(RegExp.$1)) || 0x1, this._maxShuffleChoices);
+      _0x2877d2 = _0x2877d2.replace(/<SHUFFLE:[ ]VAR (\d+)>/gi, '');
+    }
+    this._choiceIndexArray.push(_0x1ceea7);
+    this._choices[_0x1ceea7] = _0x2877d2;
+  }
+  if (_0x145182) {
+    this._choiceIndexArray = VisuMZ.MessageCore.ShuffleArray(this._choiceIndexArray);
+    if (this.choiceCancelType() !== -0x2) {
+      this._choiceCancelType = -0x1;
+    }
+  }
+};
+VisuMZ.MessageCore.ShuffleArray = function (_0x2fc702) {
+  var _0x28cebe;
+  var _0x40a96b;
+  var _0x2edb57;
+  for (_0x2edb57 = _0x2fc702.length - 0x1; _0x2edb57 > 0x0; _0x2edb57--) {
+    _0x28cebe = Math.floor(Math.random() * (_0x2edb57 + 0x1));
+    _0x40a96b = _0x2fc702[_0x2edb57];
+    _0x2fc702[_0x2edb57] = _0x2fc702[_0x28cebe];
+    _0x2fc702[_0x28cebe] = _0x40a96b;
+  }
+  return _0x2fc702;
+};
+Game_Message.prototype.choiceIndexArray = function () {
+  if (!this._choiceIndexArray) {
+    this.setupShuffleChoices();
+  }
+  return this._choiceIndexArray;
+};
+Game_Message.prototype.maxShuffleChoices = function () {
+  if (this._maxShuffleChoices === undefined) {
+    this.setupShuffleChoices();
+  }
+  return this._maxShuffleChoices;
+};
+VisuMZ.MessageCore.Game_Screen_clearPictures = Game_Screen.prototype.clearPictures;
+Game_Screen.prototype.clearPictures = function () {
+  VisuMZ.MessageCore.Game_Screen_clearPictures.call(this);
+  this.clearAllPictureTexts();
+};
+Game_Screen.prototype.clearAllPictureTexts = function () {
+  this._pictureText = [];
+  this._pictureTextBuffer = [];
+  this._pictureTextRefresh = [];
+};
+Game_Screen.prototype.getPictureTextData = function (_0x15f1bf) {
+  if (this._pictureText === undefined) {
+    this.clearAllPictureTexts();
+  }
+  const _0x566025 = this.realPictureId(_0x15f1bf);
+  this._pictureText[_0x566025] = this._pictureText[_0x566025] || {};
+  return this._pictureText[_0x566025];
+};
+Game_Screen.prototype.getPictureText = function (_0x426f9f, _0x359819) {
+  _0x359819 = _0x359819.toLowerCase().trim();
+  return this.getPictureTextData(_0x426f9f)[_0x359819] || '';
+};
+Game_Screen.prototype.setPictureText = function (_0x4ee4b9, _0x12dc9b, _0x12a477) {
+  _0x12a477 = _0x12a477.toLowerCase().trim();
+  this.getPictureTextData(_0x4ee4b9)[_0x12a477] = _0x12dc9b || '';
+  this.requestPictureTextRefresh(_0x4ee4b9, true);
+};
+Game_Screen.prototype.eraseAllPictureTexts = function (_0x181471) {
+  if (this._pictureText === undefined) {
+    this.clearAllPictureTexts();
+  }
+  const _0xaaef3 = this.realPictureId(_0x181471);
+  this._pictureText[_0xaaef3] = null;
+  this.requestPictureTextRefresh(_0x181471, true);
+};
+Game_Screen.prototype.getPictureTextBuffer = function (_0x38e341) {
+  if (this._pictureText === undefined) {
+    this.clearAllPictureTexts();
+  }
+  const _0x87388d = this.realPictureId(_0x38e341);
+  return this._pictureTextBuffer[_0x87388d] || 0x0;
+};
+Game_Screen.prototype.setPictureTextBuffer = function (_0x31d782, _0x48ca17) {
+  if (this._pictureText === undefined) {
+    this.clearAllPictureTexts();
+  }
+  const _0x50124d = this.realPictureId(_0x31d782);
+  this._pictureTextBuffer[_0x50124d] = Math.max(0x0, _0x48ca17);
+};
+Game_Screen.prototype.erasePictureTextBuffer = function (_0x4d9a37) {
+  if (this._pictureText === undefined) {
+    this.clearAllPictureTexts();
+  }
+  const _0x2c0d94 = this.realPictureId(_0x4d9a37);
+  this._pictureTextBuffer[_0x2c0d94] = undefined;
+};
+VisuMZ.MessageCore.Game_Screen_erasePicture = Game_Screen.prototype.erasePicture;
+Game_Screen.prototype.erasePicture = function (_0xa76cc) {
+  VisuMZ.MessageCore.Game_Screen_erasePicture.call(this, _0xa76cc);
+  this.eraseAllPictureTexts(_0xa76cc);
+  this.erasePictureTextBuffer(_0xa76cc);
+  this.requestPictureTextRefresh(_0xa76cc, true);
+};
+Game_Screen.prototype.requestPictureTextRefreshAll = function () {
+  for (const _0x111e42 of this._pictures) {
+    if (_0x111e42) {
+      let _0x2632fc = this._pictures.indexOf(_0x111e42);
+      this.requestPictureTextRefresh(_0x2632fc);
+    }
+  }
+};
+Game_Screen.prototype.requestPictureTextRefresh = function (_0x4cb291, _0x247bb0) {
+  this._pictureTextRefresh = this._pictureTextRefresh || [];
+  if (this.hasPictureText(_0x4cb291) || _0x247bb0) {
+    this._pictureTextRefresh.push(_0x4cb291);
+  }
+};
+Game_Screen.prototype.needsPictureTextRefresh = function (_0x517e94) {
+  this._pictureTextRefresh = this._pictureTextRefresh || [];
+  return this._pictureTextRefresh.includes(_0x517e94);
+};
+Game_Screen.prototype.clearPictureTextRefresh = function (_0x33c04e) {
+  this._pictureTextRefresh = this._pictureTextRefresh || [];
+  this._pictureTextRefresh.remove(_0x33c04e);
+};
+Game_Screen.prototype.hasPictureText = function (_0x136f97) {
+  const _0x5d66fe = ['upperleft', 'up', 'upperright', "left", 'center', "right", "lowerleft", "down", "lowerright"];
+  return _0x5d66fe.some(_0x4f677f => this.getPictureText(_0x136f97, _0x4f677f) !== '');
+};
+VisuMZ.MessageCore.Game_Party_initialize = Game_Party.prototype.initialize;
+Game_Party.prototype.initialize = function () {
+  VisuMZ.MessageCore.Game_Party_initialize.call(this);
+  this.initMessageCore();
+};
+Game_Party.prototype.initMessageCore = function () {
+  this._lastGainedItemData = {
+    'type': 0x0,
+    'id': 0x0,
+    'quantity': 0x0
+  };
+};
+Game_Party.prototype.getLastGainedItemData = function () {
+  if (this._lastGainedItemData === undefined) {
+    this.initMessageCore();
+  }
+  return this._lastGainedItemData;
+};
+Game_Party.prototype.setLastGainedItemData = function (_0xb78cdc, _0x554f60) {
+  if (this._lastGainedItemData === undefined) {
+    this.initMessageCore();
+  }
+  if (!_0xb78cdc) {
+    return;
+  }
+  if (DataManager.isItem(_0xb78cdc)) {
+    this._lastGainedItemData.type = 0x0;
+  } else {
+    if (DataManager.isWeapon(_0xb78cdc)) {
+      this._lastGainedItemData.type = 0x1;
+    } else if (DataManager.isArmor(_0xb78cdc)) {
+      this._lastGainedItemData.type = 0x2;
+    }
+  }
+  this._lastGainedItemData.id = _0xb78cdc.id;
+  this._lastGainedItemData.quantity = _0x554f60;
+};
+VisuMZ.MessageCore.Game_Party_gainItem = Game_Party.prototype.gainItem;
+Game_Party.prototype.gainItem = function (_0x5938d0, _0x4836e2, _0x4dcfb1) {
+  VisuMZ.MessageCore.Game_Party_gainItem.call(this, _0x5938d0, _0x4836e2, _0x4dcfb1);
+  if (_0x4836e2 > 0x0) {
+    this.setLastGainedItemData(_0x5938d0, _0x4836e2);
+  }
+};
+VisuMZ.MessageCore.Game_Map_initialize = Game_Map.prototype.initialize;
+Game_Map.prototype.initialize = function () {
+  VisuMZ.MessageCore.Game_Map_initialize.call(this);
+  this._messageCommonEvents = [];
+};
+VisuMZ.MessageCore.Game_Map_setupEvents = Game_Map.prototype.setupEvents;
+Game_Map.prototype.setupEvents = function () {
+  VisuMZ.MessageCore.Game_Map_setupEvents.call(this);
+  this._messageCommonEvents = [];
+};
+VisuMZ.MessageCore.Game_Map_updateEvents = Game_Map.prototype.updateEvents;
+Game_Map.prototype.updateEvents = function () {
+  VisuMZ.MessageCore.Game_Map_updateEvents.call(this);
+  this.updateMessageCommonEvents();
+};
+Game_Map.prototype.addMessageCommonEvent = function (_0x3cf4cd) {
+  if (!$dataCommonEvents[_0x3cf4cd]) {
+    return;
+  }
+  this._messageCommonEvents = this._messageCommonEvents || [];
+  const _0x44e85b = this._interpreter._eventId;
+  const _0x38386b = new Game_MessageCommonEvent(_0x3cf4cd, _0x44e85b);
+  this._messageCommonEvents.push(_0x38386b);
+};
+Game_Map.prototype.updateMessageCommonEvents = function () {
+  this._messageCommonEvents = this._messageCommonEvents || [];
+  for (const _0x36ea14 of this._messageCommonEvents) {
+    if (!_0x36ea14._interpreter) {
+      this._messageCommonEvents.remove(_0x36ea14);
+    } else {
+      _0x36ea14.update();
+    }
+  }
+};
+VisuMZ.MessageCore.Game_Map_refresh = Game_Map.prototype.refresh;
+Game_Map.prototype.refresh = function () {
+  VisuMZ.MessageCore.Game_Map_refresh.call(this);
+  $gameScreen.requestPictureTextRefreshAll();
+};
+Game_Interpreter.MESSAGE_CORE_PLUGIN_NAME = pluginData.name;
+Game_Interpreter.prototype.command101 = function (_0xa9d4bd) {
+  if ($gameMessage.isBusy()) {
+    return false;
+  }
+  this.prepareShowTextCommand(_0xa9d4bd);
+  this.addContinuousShowTextCommands(_0xa9d4bd);
+  this.prepareShowTextFollowups(_0xa9d4bd);
+  this.setWaitMode("message");
+  return true;
+};
+Game_Interpreter.prototype.prepareShowTextCommand = function (_0x5fa11a) {
+  $gameMessage.setFaceImage(_0x5fa11a[0x0], _0x5fa11a[0x1]);
+  $gameMessage.setBackground(_0x5fa11a[0x2]);
+  $gameMessage.setPositionType(_0x5fa11a[0x3]);
+  $gameMessage.setSpeakerName(_0x5fa11a[0x4]);
+};
+Game_Interpreter.prototype.addContinuousShowTextCommands = function (_0x11168b) {
+  while (this.isContinuePrepareShowTextCommands()) {
+    this._index++;
+    if (this.currentCommand().code === 0x191) {
+      let _0x7afe3d = this.currentCommand().parameters[0x0];
+      _0x7afe3d = VisuMZ.MessageCore.ParseAddedText(_0x7afe3d);
+      $gameMessage.add(_0x7afe3d);
+    }
+    if (this.isBreakShowTextCommands()) {
+      break;
+    }
+  }
+};
+Game_Interpreter.prototype.isContinuePrepareShowTextCommands = function () {
+  return this.nextEventCode() === 0x65 && $gameSystem.getMessageWindowRows() > 0x4 ? true : this.nextEventCode() === 0x191;
+};
+VisuMZ.MessageCore.ParseAddedText = function (_0x5419e0) {
+  const _0x31800b = VisuMZ.MessageCore.Settings.General;
+  _0x5419e0 = (_0x31800b.EachMessageStart || '') + _0x5419e0 + (_0x31800b.EachMessageEnd || '');
+  _0x5419e0 = _0x5419e0.replace(/<(?:NEXT PAGE|NEXTPAGE)>/gi, '');
+  _0x5419e0 = _0x5419e0.replace(/<(?:RNG|RAND|RANDOM)>(.*?)<\/(?:RNG|RAND|RANDOM)>/gi, (_0x118561, _0xd6ac8e) => this.getRandomTextFromPool(_0xd6ac8e));
+  return _0x5419e0;
+};
+VisuMZ.MessageCore.getRandomTextFromPool = function (_0x29f9c2) {
+  const _0xdded64 = _0x29f9c2.split('|').map(_0x1b19fc => _0x1b19fc.trim()).remove('').remove(null);
+  return _0xdded64[Math.randomInt(_0xdded64.length)];
+};
+Game_Interpreter.prototype.isBreakShowTextCommands = function () {
+  if (this.currentCommand() && this.currentCommand().parameters[0x0].match(/<(?:NEXT PAGE|NEXTPAGE)>/gi)) {
+    return true;
+  }
+  return $gameMessage._texts.length >= $gameSystem.getMessageWindowRows() && this.nextEventCode() !== 0x191;
+};
+Game_Interpreter.prototype.prepareShowTextFollowups = function (_0x2edb73) {
+  switch (this.nextEventCode()) {
+    case 0x66:
+      this._index++;
+      this.setupChoices(this.currentCommand().parameters);
+      break;
+    case 0x67:
+      this._index++;
+      this.setupNumInput(this.currentCommand().parameters);
+      break;
+    case 0x68:
+      this._index++;
+      this.setupItemChoice(this.currentCommand().parameters);
+      break;
+    case 0x165:
+      const _0x2dd457 = this._list[this._index + 0x1];
+      const _0x5de5e2 = _0x2dd457.parameters;
+      if (_0x5de5e2[0x0] === Game_Interpreter.MESSAGE_CORE_PLUGIN_NAME) {
+        this.prepareShowTextPluginCommandFollowups(_0x5de5e2);
+      }
+      break;
+  }
+};
+VisuMZ.MessageCore.Game_Interpreter_setupChoices = Game_Interpreter.prototype.setupChoices;
+Game_Interpreter.prototype.setupChoices = function (_0x54721d) {
+  _0x54721d = this.addContinuousShowChoices();
+  VisuMZ.MessageCore.Game_Interpreter_setupChoices.call(this, _0x54721d);
+  $gameMessage.setupShuffleChoices();
+};
+Game_Interpreter.prototype.addContinuousShowChoices = function () {
+  const _0x7e1096 = this._index;
+  let _0x5aefd9 = 0x0;
+  this._index++;
+  while (this._index < this._list.length) {
+    if (this.currentCommand().indent === this._indent) {
+      if (this.currentCommand().code === 0x194 && this.nextEventCode() !== 0x66) {
+        break;
+      } else {
+        if (this.currentCommand().code === 0x66) {
+          this.adjustShowChoiceExtension(_0x5aefd9, this.currentCommand(), _0x7e1096);
+          this._index -= 0x2;
+        } else if (this.currentCommand().code === 0x192) {
+          this.currentCommand().parameters[0x0] = _0x5aefd9;
+          _0x5aefd9++;
+        }
+      }
+    }
+    this._index++;
+  }
+  this._index = _0x7e1096;
+  return this.currentCommand().parameters;
+};
+Game_Interpreter.prototype.adjustShowChoiceExtension = function (_0x1ab196, _0x25afb1, _0x25e5ac) {
+  this.adjustShowChoiceDefault(_0x1ab196, _0x25afb1, _0x25e5ac);
+  this.adjustShowChoiceCancel(_0x1ab196, _0x25afb1, _0x25e5ac);
+  this.addExtraShowChoices(_0x25afb1, _0x25e5ac);
+};
+Game_Interpreter.prototype.adjustShowChoiceDefault = function (_0x141c40, _0x5cf10c, _0x3136fc) {
+  if (_0x5cf10c.parameters[0x2] < 0x0) {
+    return;
+  }
+  const _0x541d53 = _0x5cf10c.parameters[0x2] + _0x141c40;
+  this._list[_0x3136fc].parameters[0x2] = _0x541d53;
+};
+Game_Interpreter.prototype.adjustShowChoiceCancel = function (_0x4d511c, _0x58c439, _0x4211aa) {
+  if (_0x58c439.parameters[0x1] >= 0x0) {
+    var _0x3a2ac0 = _0x58c439.parameters[0x1] + _0x4d511c;
+    this._list[_0x4211aa].parameters[0x1] = _0x3a2ac0;
+  } else if (_0x58c439.parameters[0x1] === -0x2) {
+    this._list[_0x4211aa].parameters[0x1] = _0x58c439.parameters[0x1];
+  }
+};
+Game_Interpreter.prototype.addExtraShowChoices = function (_0x540212, _0x30ea12) {
+  for (const _0xf692d6 of _0x540212.parameters[0x0]) {
+    this._list[_0x30ea12].parameters[0x0].push(_0xf692d6);
+  }
+  this._list.splice(this._index - 0x1, 0x2);
+};
+Game_Interpreter.prototype.prepareShowTextPluginCommandFollowups = function (_0x4d8f47) {
+  const _0x517d8b = _0x4d8f47[0x1];
+  if (_0x517d8b === "SelectWeapon") {
+    this._index++;
+    this.setWeaponChoice(_0x4d8f47);
+  } else {
+    if (_0x517d8b === "SelectArmor") {
+      this._index++;
+      this.setArmorChoice(_0x4d8f47);
+    } else if (_0x517d8b === "SelectSkill" && Imported.VisuMZ_1_SkillsStatesCore) {
+      this._index++;
+      this.setSkillChoice(_0x4d8f47);
+    }
+  }
+};
+Game_Interpreter.prototype.setWeaponChoice = function (_0xcf6025) {
+  const _0x32e33a = JSON.parse(JSON.stringify(_0xcf6025[0x3]));
+  VisuMZ.ConvertParams(_0x32e33a, _0x32e33a);
+  $gameMessage.setWeaponChoice(_0x32e33a.VariableID || 0x0, _0x32e33a.WeaponTypeID || 0x0);
+};
+Game_Interpreter.prototype.setArmorChoice = function (_0x452d33) {
+  const _0x1d3013 = JSON.parse(JSON.stringify(_0x452d33[0x3]));
+  VisuMZ.ConvertParams(_0x1d3013, _0x1d3013);
+  $gameMessage.setArmorChoice(_0x1d3013.VariableID || 0x0, _0x1d3013.ArmorTypeID || 0x0, _0x1d3013.EquipTypeID || 0x0);
+};
+Game_Interpreter.prototype.setSkillChoice = function (_0x40cec8) {
+  const _0x370690 = JSON.parse(JSON.stringify(_0x40cec8[0x3]));
+  VisuMZ.ConvertParams(_0x370690, _0x370690);
+  $gameMessage.setSkillChoice(_0x370690.VariableID || 0x0, _0x370690.ActorID || 0x0, _0x370690.SkillTypeID || 0x0);
+};
+function Game_MessageCommonEvent() {
+  this.initialize(...arguments);
+}
+Game_MessageCommonEvent.prototype.initialize = function (_0x18ddce, _0x288f5c) {
+  this._commonEventId = _0x18ddce;
+  this._eventId = _0x288f5c || 0x0;
+  this.refresh();
+};
+Game_MessageCommonEvent.prototype.event = function () {
+  return $dataCommonEvents[this._commonEventId];
+};
+Game_MessageCommonEvent.prototype.list = function () {
+  return this.event().list;
+};
+Game_MessageCommonEvent.prototype.refresh = function () {
+  this._interpreter = new Game_Interpreter();
+  this._interpreter.setup(this.list(), this._eventId);
+};
+Game_MessageCommonEvent.prototype.update = function () {
+  if (this._interpreter) {
+    if (this._interpreter.isRunning()) {
+      this._interpreter.update();
+    } else {
+      this.clear();
+    }
+  }
+};
+Game_MessageCommonEvent.prototype.clear = function () {
+  this._interpreter = null;
+};
+Scene_Message.prototype.messageWindowRect = function () {
+  const _0x36f7e7 = Math.min(Graphics.width, $gameSystem.getMessageWindowWidth());
+  const _0x73c569 = $gameSystem.getMessageWindowRows();
+  const _0x3330fd = this.calcWindowHeight(_0x73c569, false);
+  const _0x33c67d = (Graphics.boxWidth - _0x36f7e7) / 0x2;
+  return new Rectangle(_0x33c67d, 0x0, _0x36f7e7, _0x3330fd);
+};
+VisuMZ.MessageCore.Scene_Message_createChoiceListWindow = Scene_Message.prototype.createChoiceListWindow;
+Scene_Message.prototype.createChoiceListWindow = function () {
+  VisuMZ.MessageCore.Scene_Message_createChoiceListWindow.call(this);
+  this.createChoiceListHelpWindow();
+};
+Scene_Message.prototype.createChoiceListHelpWindow = function () {
+  const _0x3141bb = this.choiceListHelpWindowRect();
+  const _0x9843c7 = new Window_Help(_0x3141bb);
+  _0x9843c7.hide();
+  this._choiceListWindow.setHelpWindow(_0x9843c7);
+  this._messageWindow.setChoiceListHelpWindow(_0x9843c7);
+  this.addWindow(_0x9843c7);
+  this._choiceListHelpWindow = _0x9843c7;
+};
+Scene_Message.prototype.choiceListHelpWindowRect = function () {
+  const _0x43c9d7 = Graphics.boxWidth;
+  const _0x2d222b = this.calcWindowHeight(0x2, false);
+  return new Rectangle(0x0, 0x0, _0x43c9d7, _0x2d222b);
+};
+Window_Message.prototype.setChoiceListHelpWindow = function (_0x1587fe) {
+  this._choiceListHelpWindow = _0x1587fe;
+};
+Window_Message.prototype.updateChoiceListHelpWindowPlacement = function () {
+  if (!this._choiceListHelpWindow) {
+    return;
+  }
+  const _0x51cb9c = this._choiceListHelpWindow;
+  if (_0x51cb9c) {
+    _0x51cb9c.y = this.y > 0x0 ? 0x0 : Graphics.boxHeight - _0x51cb9c.height;
+  }
+};
+VisuMZ.MessageCore.Scene_Options_maxCommands = Scene_Options.prototype.maxCommands;
+Scene_Options.prototype.maxCommands = function () {
+  let _0x104671 = VisuMZ.MessageCore.Scene_Options_maxCommands.call(this);
+  const _0x411c34 = VisuMZ.MessageCore.Settings;
+  if (_0x411c34.TextSpeed.AdjustRect) {
+    if (_0x411c34.Localization.AddOption && TextManager.isVisuMzLocalizationEnabled()) {
+      _0x104671++;
+    }
+    if (_0x411c34.TextSpeed.AddOption) {
+      _0x104671++;
+    }
+  }
+  return _0x104671;
+};
+VisuMZ.MessageCore.Sprite_Picture_updateBitmap = Sprite_Picture.prototype.updateBitmap;
+Sprite_Picture.prototype.updateBitmap = function () {
+  VisuMZ.MessageCore.Sprite_Picture_updateBitmap.call(this);
+  this.createPictureText();
+};
+VisuMZ.MessageCore.Sprite_Picture_update = Sprite_Picture.prototype.update;
+Sprite_Picture.prototype.update = function () {
+  VisuMZ.MessageCore.Sprite_Picture_update.call(this);
+  this.updatePictureText();
+};
+Sprite_Picture.prototype.updatePictureText = function () {
+  if (!this.visible) {
+    return;
+  }
+  this.resizePictureText();
+  this.anchorPictureText();
+  this.drawPictureText();
+  this.attachPictureText();
+};
+Sprite_Picture.prototype.createPictureText = function () {
+  if (this._pictureTextWindow) {
+    return;
+  }
+  if (this._pictureTextSprite) {
+    return;
+  }
+  const _0x300bfa = new Rectangle(0x0, 0x0, 0x0, 0x0);
+  this._pictureTextWindow = new Window_Base(_0x300bfa);
+  this._pictureTextWindow.padding = 0x0;
+  this._pictureTextSprite = new Sprite();
+  this.addChildAt(this._pictureTextSprite, 0x0);
+  this._pictureTextWidth = 0x0;
+  this._pictureTextHeight = 0x0;
+  this._pictureTextCache = {};
+};
+Sprite_Picture.prototype.resizePictureText = function () {
+  if (!this._pictureTextWindow) {
+    return;
+  }
+  if (this._pictureTextWidth === this.width && this._pictureTextHeight === this.height) {
+    return;
+  }
+  this._pictureTextWidth = this.width;
+  this._pictureTextHeight = this.height;
+  this._pictureTextCache = {};
+  this._pictureTextWindow.move(0x0, 0x0, this.width, this.height);
+};
+Sprite_Picture.prototype.anchorPictureText = function () {
+  if (!this._pictureTextSprite) {
+    return;
+  }
+  this._pictureTextSprite.anchor.x = this.anchor.x;
+  this._pictureTextSprite.anchor.y = this.anchor.y;
+};
+Sprite_Picture.prototype.drawPictureText = function () {
+  if (!this._pictureTextWindow) {
+    return;
+  }
+  if (!this.anyPictureTextChanges()) {
+    return;
+  }
+  const _0x1ac8b3 = ["upperleft", 'up', "upperright", "left", 'center', "right", "lowerleft", "down", 'lowerright'];
+  this._pictureTextWindow.createContents();
+  for (const _0x305d6a of _0x1ac8b3) {
+    this.drawPictureTextZone(_0x305d6a);
+  }
+};
+Sprite_Picture.prototype.anyPictureTextChanges = function () {
+  if ($gameScreen.needsPictureTextRefresh(this._pictureId)) {
+    return true;
+  }
+  const _0x133dfa = ["upperleft", 'up', "upperright", 'left', 'center', "right", "lowerleft", "down", "lowerright"];
+  for (const _0x4b2faf of _0x133dfa) {
+    const _0x137cda = $gameScreen.getPictureText(this._pictureId, _0x4b2faf);
+    if (this._pictureTextCache[_0x4b2faf] === _0x137cda) {
+      continue;
+    }
+    return true;
+  }
+  return false;
+};
+Sprite_Picture.prototype.drawPictureTextZone = function (_0x5d7201) {
+  $gameScreen.clearPictureTextRefresh(this._pictureId);
+  const _0x5bbfbf = $gameScreen.getPictureText(this._pictureId, _0x5d7201);
+  this._pictureTextCache[_0x5d7201] = _0x5bbfbf;
+  const _0x50c155 = this._pictureTextWindow.textSizeEx(_0x5bbfbf);
+  let _0xd2ae14 = $gameScreen.getPictureTextBuffer(this._pictureId);
+  let _0x2c2349 = _0xd2ae14;
+  let _0x56ccd1 = _0xd2ae14;
+  if (['up', "center", "down"].includes(_0x5d7201)) {
+    _0x2c2349 = Math.floor((this.width - _0x50c155.width) / 0x2);
+  } else if (["upperright", 'right', "lowerright"].includes(_0x5d7201)) {
+    _0x2c2349 = Math.floor(this.width - _0x50c155.width - _0xd2ae14);
+  }
+  if (["left", 'center', 'right'].includes(_0x5d7201)) {
+    _0x56ccd1 = Math.floor((this.height - _0x50c155.height) / 0x2);
+  } else if (["lowerleft", "down", "lowerright"].includes(_0x5d7201)) {
+    _0x56ccd1 = Math.floor(this.height - _0x50c155.height - _0xd2ae14);
+  }
+  this._pictureTextWindow.drawTextEx(_0x5bbfbf, _0x2c2349, _0x56ccd1);
+};
+Sprite_Picture.prototype.attachPictureText = function () {
+  if (!this._pictureTextWindow) {
+    return;
+  }
+  if (!this._pictureTextSprite) {
+    return;
+  }
+  this._pictureTextSprite.bitmap = this._pictureTextWindow.contents;
+};
+VisuMZ.MessageCore.Window_Base_initialize = Window_Base.prototype.initialize;
+Window_Base.prototype.initialize = function (_0x159fcf) {
+  this.initMessageCore(_0x159fcf);
+  VisuMZ.MessageCore.Window_Base_initialize.call(this, _0x159fcf);
+};
+Window_Base.prototype.initMessageCore = function (_0x4e9148) {
+  this.initTextAlignement();
+  this.resetWordWrap();
+  this.registerResetRect(_0x4e9148);
+};
+Window_Base.prototype.initTextAlignement = function () {
+  this.setTextAlignment('default');
+};
+Window_Base.prototype.setTextAlignment = function (_0x2149c8) {
+  this._textAlignment = _0x2149c8;
+};
+Window_Base.prototype.getTextAlignment = function () {
+  return this._textAlignment;
+};
+VisuMZ.MessageCore.Window_Base_textSizeEx = Window_Base.prototype.textSizeEx;
+Window_Base.prototype.textSizeEx = function (_0x2af978) {
+  this.resetWordWrap();
+  return VisuMZ.MessageCore.Window_Base_textSizeEx.call(this, _0x2af978);
+};
+Window_Base.prototype.textSizeExRaw = function (_0x1a0b2c) {
+  return VisuMZ.MessageCore.Window_Base_textSizeEx.call(this, _0x1a0b2c);
+};
+VisuMZ.MessageCore.Window_Base_processAllText = Window_Base.prototype.processAllText;
+Window_Base.prototype.processAllText = function (_0x4e761b) {
+  VisuMZ.MessageCore.Window_Base_processAllText.call(this, _0x4e761b);
+  if (_0x4e761b.drawing) {
+    this.setTextAlignment("default");
+  }
+};
+Window_Base.prototype.resetWordWrap = function () {
+  this.setWordWrap(false);
+};
+Window_Base.prototype.isWordWrapEnabled = function () {
+  return this._wordWrap;
+};
+Window_Base.prototype.setWordWrap = function (_0x452ac4) {
+  this._wordWrap = _0x452ac4;
+  return '';
+};
+Window_Base.prototype.registerResetRect = function (_0x408a13) {
+  this._resetRect = JsonEx.makeDeepCopy(_0x408a13);
+};
+Window_Base.prototype.resetFontSettings = function () {
+  this.contents.fontFace = $gameSystem.mainFontFace();
+  this.contents.fontSize = $gameSystem.mainFontSize();
+  this.contents.fontBold = false;
+  this.contents.fontItalic = false;
+  this._textCasing = 0x0;
+  this._textCasingUpperState = true;
+  this.resetTextColor();
+};
+Window_Base.prototype.resetTextColor = function () {
+  this.changeTextColor(ColorManager.normalColor());
+  this.changeOutlineColor(ColorManager.outlineColor());
+  const _0x1415c5 = VisuMZ.MessageCore.Settings.General;
+  if (_0x1415c5.DefaultOutlineWidth === undefined) {
+    _0x1415c5.DefaultOutlineWidth = 0x3;
+  }
+  this.contents.outlineWidth = _0x1415c5.DefaultOutlineWidth;
+  this.setColorLock(false);
+};
+Window_Base.prototype.setColorLock = function (_0x234e7b) {
+  this._colorLock = _0x234e7b;
+};
+Window_Base.prototype.isColorLocked = function () {
+  return this._colorLock;
+};
+Window_Base.prototype.isAutoColorAffected = function () {
+  return false;
+};
+Window_Base.prototype.getPreservedFontSettings = function () {
+  const _0x7afd24 = ["fontFace", "fontSize", 'fontBold', "fontItalic", "textColor", 'outLineColor', "outlineWidth", "paintOpacity"];
+  let _0x8f2368 = {};
+  for (const _0x4e1754 of _0x7afd24) {
+    _0x8f2368[_0x4e1754] = this.contents[_0x4e1754];
+  }
+  return _0x8f2368;
+};
+Window_Base.prototype.returnPreservedFontSettings = function (_0x38b530) {
+  for (const _0x4e276c in _0x38b530) {
+    this.contents[_0x4e276c] = _0x38b530[_0x4e276c];
+  }
+};
+VisuMZ.MessageCore.Window_Base_update = Window_Base.prototype.update;
+Window_Base.prototype.update = function () {
+  VisuMZ.MessageCore.Window_Base_update.call(this);
+  this.updateMove();
+};
+Window_Base.prototype.canMove = function () {
+  return false;
+};
+Window_Base.prototype.updateMove = function () {
+  if (this._moveDuration > 0x0) {
+    if (this.canMove()) {
+      this.x = this.applyMoveEasing(this.x, this._moveTargetX);
+      this.y = this.applyMoveEasing(this.y, this._moveTargetY);
+      this.width = this.applyMoveEasing(this.width, this._moveTargetWidth);
+      this.height = this.applyMoveEasing(this.height, this._moveTargetHeight);
+      this.clampPlacementPosition();
+    }
+    this._moveDuration--;
+  }
+};
+Window_Base.prototype.clampPlacementPosition = function (_0x59f4dd, _0x31e9f6) {
+  if (!_0x59f4dd) {
+    this.width = Math.min(this.width, Graphics.width);
+    this.height = Math.min(this.height, Graphics.height);
+  }
+  if (!_0x31e9f6) {
+    const _0x2030c4 = -(Math.floor(Graphics.width - Graphics.boxWidth) / 0x2);
+    const _0x2cf409 = _0x2030c4 + Graphics.width - this.width;
+    const _0x2b22d5 = -(Math.floor(Graphics.height - Graphics.boxHeight) / 0x2);
+    const _0x553e81 = _0x2b22d5 + Graphics.height - this.height;
+    this.x = this.x.clamp(_0x2030c4, _0x2cf409);
+    this.y = this.y.clamp(_0x2b22d5, _0x553e81);
+  }
+};
+Window_Base.prototype.applyMoveEasing = function (_0x3e0761, _0x1e043e) {
+  const _0x4c1554 = this._moveDuration;
+  const _0xc0dd50 = this._wholeMoveDuration;
+  const _0x2c74d6 = this.calcMoveEasing((_0xc0dd50 - _0x4c1554) / _0xc0dd50);
+  const _0x248daa = this.calcMoveEasing((_0xc0dd50 - _0x4c1554 + 0x1) / _0xc0dd50);
+  const _0x58624a = (_0x3e0761 - _0x1e043e * _0x2c74d6) / (0x1 - _0x2c74d6);
+  return _0x58624a + (_0x1e043e - _0x58624a) * _0x248daa;
+};
+Window_Base.prototype.calcMoveEasing = function (_0x302779) {
+  switch (this._moveEasingType) {
+    case 0x0:
+      return _0x302779;
+    case 0x1:
+      return this.easeIn(_0x302779, 0x2);
+    case 0x2:
+      return this.easeOut(_0x302779, 0x2);
+    case 0x3:
+      return this.easeInOut(_0x302779, 0x2);
+    default:
+      return Imported.VisuMZ_0_CoreEngine ? VisuMZ.applyMoveEasing(_0x302779, this._moveEasingType) : _0x302779;
+  }
+};
+Window_Base.prototype.moveTo = function (_0x4cfef0, _0x3121eb, _0xad7258, _0x2af080, _0x331c1f, _0x54cdcc) {
+  this._moveTargetX = _0x4cfef0;
+  this._moveTargetY = _0x3121eb;
+  this._moveTargetWidth = _0xad7258 || this.width;
+  this._moveTargetHeight = _0x2af080 || this.height;
+  this._moveDuration = _0x331c1f || 0x1;
+  if (this._moveDuration <= 0x0) {
+    this._moveDuration = 0x1;
+  }
+  this._wholeMoveDuration = this._moveDuration;
+  this._moveEasingType = _0x54cdcc || 0x0;
+  if (_0x331c1f <= 0x0) {
+    this.updateMove();
+  }
+};
+Window_Base.prototype.moveBy = function (_0x1e4b76, _0x1c0acf, _0x121802, _0x2425c9, _0xf22640, _0x182c6e) {
+  this._moveTargetX = this.x + _0x1e4b76;
+  this._moveTargetY = this.y + _0x1c0acf;
+  this._moveTargetWidth = this.width + (_0x121802 || 0x0);
+  this._moveTargetHeight = this.height + (_0x2425c9 || 0x0);
+  this._moveDuration = _0xf22640 || 0x1;
+  if (this._moveDuration <= 0x0) {
+    this._moveDuration = 0x1;
+  }
+  this._wholeMoveDuration = this._moveDuration;
+  this._moveEasingType = _0x182c6e || 0x0;
+  if (_0xf22640 <= 0x0) {
+    this.updateMove();
+  }
+};
+Window_Base.prototype.resetRect = function (_0x59f644, _0x459712) {
+  this.moveTo(this._resetRect.x, this._resetRect.y, this._resetRect.width, this._resetRect.height, _0x59f644, _0x459712);
+};
+VisuMZ.MessageCore.Window_Base_changeTextColor = Window_Base.prototype.changeTextColor;
+Window_Base.prototype.changeTextColor = function (_0x2479ca) {
+  if (this.isColorLocked()) {
+    return;
+  }
+  _0x2479ca = _0x2479ca.replace(/\,/g, '');
+  this._textColorStack = this._textColorStack || [];
+  this._textColorStack.unshift(this.contents.textColor);
+  VisuMZ.MessageCore.Window_Base_changeTextColor.call(this, _0x2479ca);
+};
+Window_Base.prototype.processPreviousColor = function (_0x4dbebf) {
+  this.obtainEscapeParam(_0x4dbebf);
+  if (this.isColorLocked()) {
+    return;
+  }
+  if (_0x4dbebf.drawing) {
+    this._textColorStack = this._textColorStack || [];
+    this.contents.textColor = this._textColorStack.shift() || ColorManager.normalColor();
+  }
+};
+Window_Base.prototype.convertEscapeCharacters = function (_0x4e4f77) {
+  _0x4e4f77 = this.convertTextMacros(_0x4e4f77);
+  _0x4e4f77 = this.convertBackslashCharacters(_0x4e4f77);
+  _0x4e4f77 = this.convertVariableEscapeCharacters(_0x4e4f77);
+  _0x4e4f77 = this.convertButtonAssistEscapeCharacters(_0x4e4f77);
+  _0x4e4f77 = this.preConvertEscapeCharacters(_0x4e4f77);
+  _0x4e4f77 = this.convertShowChoiceEscapeCodes(_0x4e4f77);
+  _0x4e4f77 = this.convertFontSettingsEscapeCharacters(_0x4e4f77);
+  _0x4e4f77 = this.convertTextAlignmentEscapeCharacters(_0x4e4f77);
+  _0x4e4f77 = this.convertLockColorsEscapeCharacters(_0x4e4f77);
+  _0x4e4f77 = this.convertCasingEscapeCharacters(_0x4e4f77);
+  _0x4e4f77 = this.convertBaseEscapeCharacters(_0x4e4f77);
+  _0x4e4f77 = this.convertHardcodedEscapeReplacements(_0x4e4f77);
+  _0x4e4f77 = this.convertMessageCoreEscapeActions(_0x4e4f77);
+  _0x4e4f77 = this.convertMessageCoreEscapeReplacements(_0x4e4f77);
+  _0x4e4f77 = this.postConvertEscapeCharacters(_0x4e4f77);
+  _0x4e4f77 = this.convertVariableEscapeCharacters(_0x4e4f77);
+  _0x4e4f77 = this.processAutoColorWords(_0x4e4f77);
+  _0x4e4f77 = this.prepareWordWrapEscapeCharacters(_0x4e4f77);
+  return _0x4e4f77;
+};
+Window_Base.prototype.convertTextMacros = function (_0x2796cf) {
+  this._textMacroFound = false;
+  for (const _0x363885 of VisuMZ.MessageCore.Settings.TextMacros) {
+    if (_0x2796cf && _0x2796cf.match(_0x363885.textCodeCheck)) {
+      this._textMacroFound = true;
+      _0x2796cf = _0x2796cf.replace(_0x363885.textCodeCheck, _0x363885.textCodeResult.bind(this));
+    }
+  }
+  return _0x2796cf || '';
+};
+Window_Base.prototype.convertBackslashCharacters = function (_0xcbfea4) {
+  _0xcbfea4 = _0xcbfea4.replace(/\\/g, "");
+  _0xcbfea4 = _0xcbfea4.replace(/\x1b\x1b/g, "\\");
+  return _0xcbfea4;
+};
+Window_Base.prototype.convertVariableEscapeCharacters = function (_0x4a692e) {
+  for (;;) {
+    if (_0x4a692e.match(/\\V\[(\d+)\]/gi)) {
+      _0x4a692e = _0x4a692e.replace(/\\V\[(\d+)\]/gi, (_0x163e56, _0x4f0bc1) => this.convertBackslashCharacters(String($gameVariables.value(parseInt(_0x4f0bc1)))));
+    } else {
+      if (_0x4a692e.match(/\x1bV\[(\d+)\]/gi)) {
+        _0x4a692e = _0x4a692e.replace(/\x1bV\[(\d+)\]/gi, (_0x4e0cdb, _0x1fe389) => this.convertBackslashCharacters(String($gameVariables.value(parseInt(_0x1fe389)))));
+      } else {
+        break;
+      }
+    }
+  }
+  return _0x4a692e;
+};
+Window_Base.prototype.convertButtonAssistEscapeCharacters = function (_0x3b5a67) {
+  if (Imported.VisuMZ_0_CoreEngine) {
+    _0x3b5a67 = _0x3b5a67.replace(/<Up (?:KEY|BUTTON)>/gi, this.convertButtonAssistText('up'));
+    _0x3b5a67 = _0x3b5a67.replace(/<Left (?:KEY|BUTTON)>/gi, this.convertButtonAssistText("left"));
+    _0x3b5a67 = _0x3b5a67.replace(/<Right (?:KEY|BUTTON)>/gi, this.convertButtonAssistText("right"));
+    _0x3b5a67 = _0x3b5a67.replace(/<Down (?:KEY|BUTTON)>/gi, this.convertButtonAssistText("down"));
+    _0x3b5a67 = _0x3b5a67.replace(/<Ok (?:KEY|BUTTON)>/gi, this.convertButtonAssistText('ok'));
+    _0x3b5a67 = _0x3b5a67.replace(/<Cancel (?:KEY|BUTTON)>/gi, this.convertButtonAssistText('cancel'));
+    _0x3b5a67 = _0x3b5a67.replace(/<Menu (?:KEY|BUTTON)>/gi, this.convertButtonAssistText('menu'));
+    _0x3b5a67 = _0x3b5a67.replace(/<Shift (?:KEY|BUTTON)>/gi, this.convertButtonAssistText("shift"));
+    _0x3b5a67 = _0x3b5a67.replace(/<(?:PAGEUP|PAGE UP) (?:KEY|BUTTON)>/gi, this.convertButtonAssistText("pageup"));
+    _0x3b5a67 = _0x3b5a67.replace(/<(?:PAGEDOWN|PAGEDN|PAGE DOWN) (?:KEY|BUTTON)>/gi, this.convertButtonAssistText("pagedown"));
+  }
+  return _0x3b5a67;
+};
+Window_Base.prototype.convertButtonAssistText = function (_0x5863e3) {
+  let _0x2f2f0a = TextManager.getInputButtonString(_0x5863e3) || '';
+  _0x2f2f0a = this.convertBackslashCharacters(_0x2f2f0a);
+  _0x2f2f0a = this.convertVariableEscapeCharacters(_0x2f2f0a);
+  return _0x2f2f0a.trim();
+};
+Window_Base.prototype.preConvertEscapeCharacters = function (_0x3bd8ec) {
+  _0x3bd8ec = this.switchOutTextForLocalization(_0x3bd8ec);
+  this.registerActorNameAutoColorChanges();
+  return _0x3bd8ec;
+};
+Window_Base.prototype.switchOutTextForLocalization = function (_0x12ee59) {
+  _0x12ee59 = TextManager.parseLocalizedText(_0x12ee59);
+  return _0x12ee59;
+};
+VisuMZ.MessageCore.String_format = String.prototype.format;
+String.prototype.format = function () {
+  let _0x56f3d2 = this;
+  _0x56f3d2 = TextManager.parseLocalizedText(_0x56f3d2);
+  return VisuMZ.MessageCore.String_format.apply(_0x56f3d2, arguments);
+};
+VisuMZ.MessageCore.Bitmap_drawText = Bitmap.prototype.drawText;
+Bitmap.prototype.drawText = function (_0x2d2e45, _0x4d71f2, _0xcdddc2, _0x28402c, _0x27c13c, _0x335ca7) {
+  _0x2d2e45 = TextManager.parseLocalizedText(_0x2d2e45);
+  VisuMZ.MessageCore.Bitmap_drawText.call(this, _0x2d2e45, _0x4d71f2, _0xcdddc2, _0x28402c, _0x27c13c, _0x335ca7);
+};
+VisuMZ.MessageCore.Bitmap_drawTextTopAligned = Bitmap.prototype.drawTextTopAligned;
+Bitmap.prototype.drawTextTopAligned = function (_0x3ab6b9, _0x13a352, _0x403933, _0x52ad06, _0x5829cc, _0x595771) {
+  _0x3ab6b9 = TextManager.parseLocalizedText(_0x3ab6b9);
+  VisuMZ.MessageCore.Bitmap_drawTextTopAligned.call(this, _0x3ab6b9, _0x13a352, _0x403933, _0x52ad06, _0x5829cc, _0x595771);
+};
+Window_Base.prototype.postConvertEscapeCharacters = function (_0x136a0d) {
+  return _0x136a0d;
+};
+Window_Base.prototype.convertShowChoiceEscapeCodes = function (_0x3d2718) {
+  if (this.isChoiceWindow()) {
+    _0x3d2718 = _0x3d2718.replace(/<(?:SHOW|HIDE|DISABLE|ENABLE)>/gi, '');
+    _0x3d2718 = _0x3d2718.replace(/<(?:SHOW|HIDE|DISABLE|ENABLE)[ ](?:SWITCH|SWITCHES):[ ](.*?)>/gi, '');
+    _0x3d2718 = _0x3d2718.replace(/<(?:SHOW|HIDE|DISABLE|ENABLE)[ ](?:ALL|ANY)[ ](?:SWITCH|SWITCHES):[ ](.*?)>/gi, '');
+    _0x3d2718 = _0x3d2718.replace(/<CHOICE WIDTH:[ ](\d+)>/gi, '');
+    _0x3d2718 = _0x3d2718.replace(/<CHOICE INDENT:[ ](\d+)>/gi, '');
+    _0x3d2718 = _0x3d2718.replace(/<(?:BGCOLOR|BG COLOR):[ ](.*?)>/gi, '');
+    _0x3d2718 = _0x3d2718.replace(/<(?:FG|BG)(?:| )(?:IMG|IMAGE|PIC|PICTURE):[ ](.*?)>/gi, '');
+    _0x3d2718 = _0x3d2718.replace(/<(?:FG|BG)(?:IMG|IMAGE|PIC|PICTURE)[ ]*(.*?):[ ](.*?)>/gi, '');
+  }
+  return _0x3d2718;
+};
+Window_Base.prototype.isChoiceWindow = function () {
+  const _0x5e3d7f = ["Window_ChoiceList", "Window_MessageLog"];
+  return _0x5e3d7f.includes(this.constructor.name);
+};
+Window_Base.prototype.convertFontSettingsEscapeCharacters = function (_0x2b61da) {
+  _0x2b61da = _0x2b61da.replace(/<B>/gi, "BOLD[1]");
+  _0x2b61da = _0x2b61da.replace(/<\/B>/gi, "BOLD[0]");
+  _0x2b61da = _0x2b61da.replace(/<I>/gi, "ITALIC[1]");
+  _0x2b61da = _0x2b61da.replace(/<\/I>/gi, "ITALIC[0]");
+  return _0x2b61da;
+};
+Window_Base.prototype.convertTextAlignmentEscapeCharacters = function (_0x2a3c30) {
+  _0x2a3c30 = _0x2a3c30.replace(/<LEFT>/gi, "TEXTALIGNMENT[1]");
+  _0x2a3c30 = _0x2a3c30.replace(/<\/LEFT>/gi, "TEXTALIGNMENT[0]");
+  _0x2a3c30 = _0x2a3c30.replace(/<CENTER>/gi, "TEXTALIGNMENT[2]");
+  _0x2a3c30 = _0x2a3c30.replace(/<\/CENTER>/gi, "TEXTALIGNMENT[0]");
+  _0x2a3c30 = _0x2a3c30.replace(/<RIGHT>/gi, "TEXTALIGNMENT[3]");
+  _0x2a3c30 = _0x2a3c30.replace(/<\/RIGHT>/gi, "TEXTALIGNMENT[0]");
+  return _0x2a3c30;
+};
+Window_Base.prototype.convertLockColorsEscapeCharacters = function (_0x2cf2b7) {
+  _0x2cf2b7 = _0x2cf2b7.replace(/<COLORLOCK>/gi, "COLORLOCK[1]");
+  _0x2cf2b7 = _0x2cf2b7.replace(/<\/COLORLOCK>/gi, "COLORLOCK[0]");
+  _0x2cf2b7 = _0x2cf2b7.replace(/\(\(\(/gi, "COLORLOCK[1]");
+  _0x2cf2b7 = _0x2cf2b7.replace(/\)\)\)/gi, "COLORLOCK[0]");
+  return _0x2cf2b7;
+};
+Window_Base.prototype.convertCasingEscapeCharacters = function (_0x455abd) {
+  _0x455abd = _0x455abd.replace(/<(?:LC|LOWERCASE|LOWER CASE|LOWER)>/gi, "CASING[1]");
+  _0x455abd = _0x455abd.replace(/<\/(?:LC|LOWERCASE|LOWER CASE|LOWER)>/gi, "CASING[0]");
+  _0x455abd = _0x455abd.replace(/<(?:UC|UPPERCASE|UPPER CASE|UPPER)>/gi, "CASING[2]");
+  _0x455abd = _0x455abd.replace(/<\/(?:UC|UPPERCASE|UPPER CASE|UPPER)>/gi, "CASING[0]");
+  _0x455abd = _0x455abd.replace(/<(?:CAPS|CAPSLOCK|CAPS LOCK|CAP)>/gi, "CASING[3]");
+  _0x455abd = _0x455abd.replace(/<\/(?:CAPS|CAPSLOCK|CAPS LOCK|CAP)>/gi, "CASING[0]");
+  _0x455abd = _0x455abd.replace(/<(?:ALT|ALTERNATE|ALT CASE)>/gi, "CASING[4]");
+  _0x455abd = _0x455abd.replace(/<\/(?:ALT|ALTERNATE|ALT CASE)>/gi, "CASING[0]");
+  _0x455abd = _0x455abd.replace(/<(?:CHAOS|CHAOSCASE|CHAOS CASE)>/gi, "CASING[5]");
+  _0x455abd = _0x455abd.replace(/<\/(?:CHAOS|CHAOSCASE|CHAOS CASE)>/gi, "CASING[0]");
+  return _0x455abd;
+};
+Window_Base.prototype.convertBaseEscapeCharacters = function (_0x3d7400) {
+  _0x3d7400 = _0x3d7400.replace(/\x1bN\[(\d+)\]/gi, (_0x846cc2, _0x5a50c1) => this.actorName(parseInt(_0x5a50c1)));
+  _0x3d7400 = _0x3d7400.replace(/\x1bP\[(\d+)\]/gi, (_0x10d44a, _0x29d0f1) => this.partyMemberName(parseInt(_0x29d0f1)));
+  _0x3d7400 = _0x3d7400.replace(/\x1bG/gi, TextManager.currencyUnit);
+  return _0x3d7400;
+};
+Window_Base.prototype.convertHardcodedEscapeReplacements = function (_0x5a106a) {
+  _0x5a106a = _0x5a106a.replace(/\<(?:BATTLE|CURRENT BATTLE) TARGET\>/gi, this.battleTargetName());
+  _0x5a106a = _0x5a106a.replace(/\<(?:BATTLE|CURRENT BATTLE) (?:USER|SUBJECT)\>/gi, this.battleUserName());
+  _0x5a106a = _0x5a106a.replace(/\<(?:BATTLE|CURRENT BATTLE) (?:ITEM|SKILL|ACTION)\>/gi, this.battleActionName(true));
+  _0x5a106a = _0x5a106a.replace(/\<(?:BATTLE|CURRENT BATTLE) (?:ITEM|SKILL|ACTION) NAME\>/gi, this.battleActionName(false));
+  return _0x5a106a;
+};
+Window_Base.prototype.battleTargetName = function () {
+  if (!SceneManager.isSceneBattle()) {
+    return '';
+  }
+  if (BattleManager._target) {
+    return BattleManager._target.name();
+  }
+  if (BattleManager._targets[0x0]) {
+    return BattleManager._targets[0x0].name();
+  }
+  return '';
+};
+Window_Base.prototype.battleUserName = function () {
+  if (!SceneManager.isSceneBattle()) {
+    return '';
+  }
+  let _0x1024e2 = null;
+  _0x1024e2 = BattleManager._subject;
+  if (!_0x1024e2 && BattleManager.isInputting()) {
+    _0x1024e2 = BattleManager.actor();
+  }
+  return _0x1024e2 ? _0x1024e2.name() : '';
+};
+Window_Base.prototype.battleActionName = function (_0x34fdf1) {
+  if (!SceneManager.isSceneBattle()) {
+    return '';
+  }
+  let _0x546b54 = BattleManager._action || null;
+  if (!_0x546b54 && BattleManager.isInputting()) {
+    _0x546b54 = BattleManager.inputtingAction();
+  }
+  if (_0x546b54 && _0x546b54.item()) {
+    let _0x2678ec = '';
+    if (_0x34fdf1) {
+      _0x2678ec += "I[%1]".format(_0x546b54.item().iconIndex);
+    }
+    _0x2678ec += _0x546b54.item().name;
+    return _0x2678ec;
+  }
+  return '';
+};
+Window_Base.prototype.convertMessageCoreEscapeActions = function (_0x29235a) {
+  for (const _0x2806fb of VisuMZ.MessageCore.Settings.TextCodeActions) {
+    if (_0x29235a.match(_0x2806fb.textCodeCheck)) {
+      _0x29235a = _0x29235a.replace(_0x2806fb.textCodeCheck, _0x2806fb.textCodeResult);
+      _0x29235a = this.convertVariableEscapeCharacters(_0x29235a);
+    }
+  }
+  return _0x29235a;
+};
+Window_Base.prototype.convertMessageCoreEscapeReplacements = function (_0x2c3db4) {
+  for (const _0x3ca1a7 of VisuMZ.MessageCore.Settings.TextCodeReplace) {
+    if (_0x2c3db4.match(_0x3ca1a7.textCodeCheck)) {
+      _0x2c3db4 = _0x2c3db4.replace(_0x3ca1a7.textCodeCheck, _0x3ca1a7.textCodeResult.bind(this));
+      _0x2c3db4 = this.convertVariableEscapeCharacters(_0x2c3db4);
+    }
+  }
+  return _0x2c3db4;
+};
+Window_Base.prototype.actorName = function (_0x2dcd66) {
+  const _0x30a39a = _0x2dcd66 >= 0x1 ? $gameActors.actor(_0x2dcd66) : null;
+  const _0x30fa59 = _0x30a39a ? _0x30a39a.name() : '';
+  const _0x383466 = Number(VisuMZ.MessageCore.Settings.AutoColor.Actors);
+  return this.isAutoColorAffected() && _0x383466 !== 0x0 ? "C[%1]%2PREVCOLOR[0]".format(_0x383466, _0x30fa59) : _0x30fa59;
+};
+Window_Base.prototype.partyMemberName = function (_0x16c94a) {
+  const _0x22f965 = _0x16c94a >= 0x1 ? $gameParty.members()[_0x16c94a - 0x1] : null;
+  const _0x5b4f58 = _0x22f965 ? _0x22f965.name() : '';
+  const _0x1e82fd = Number(VisuMZ.MessageCore.Settings.AutoColor.Actors);
+  return this.isAutoColorAffected() && _0x1e82fd !== 0x0 ? "C[%1]%2PREVCOLOR[0]".format(_0x1e82fd, _0x5b4f58) : _0x5b4f58;
+};
+Window_Base.prototype.processAutoColorWords = function (_0x5b5850) {
+  if (this.isAutoColorAffected()) {
+    _0x5b5850 = this.processStoredAutoColorChanges(_0x5b5850);
+    _0x5b5850 = this.processActorNameAutoColorChanges(_0x5b5850);
+  }
+  return _0x5b5850;
+};
+Window_Base.prototype.processStoredAutoColorChanges = function (_0x4fc61c) {
+  for (autoColor of VisuMZ.MessageCore.AutoColorRegExp) {
+    _0x4fc61c = _0x4fc61c.replace(autoColor[0x0], autoColor[0x1]);
+  }
+  return _0x4fc61c;
+};
+Window_Base.prototype.clearActorNameAutoColor = function () {
+  this._autoColorActorNames = [];
+};
+Window_Base.prototype.registerActorNameAutoColorChanges = function () {
+  this.clearActorNameAutoColor();
+  const _0x1e077c = VisuMZ.MessageCore.Settings.AutoColor;
+  const _0xe4d476 = _0x1e077c.Actors;
+  if (_0xe4d476 <= 0x0) {
+    return;
+  }
+  for (const _0x18855d of $gameActors._data) {
+    if (!_0x18855d) {
+      continue;
+    }
+    const _0x325c36 = _0x18855d.name();
+    if (_0x325c36.trim().length <= 0x0) {
+      continue;
+    }
+    if (/^\d+$/.test(_0x325c36)) {
+      continue;
+    }
+    if (_0x325c36.match(/-----/i)) {
+      continue;
+    }
+    let _0x26f2b3 = VisuMZ.MessageCore.ConvertTextAutoColorRegExpFriendly(_0x325c36);
+    const _0x4ef2ef = new RegExp("\\b" + _0x26f2b3 + "\\b", 'g');
+    const _0x56978c = "C[%1]%2PREVCOLOR[0]".format(_0xe4d476, _0x325c36);
+    this._autoColorActorNames.push([_0x4ef2ef, _0x56978c]);
+  }
+};
+Window_Base.prototype.processActorNameAutoColorChanges = function (_0x2b8452) {
+  if (this._autoColorActorNames === undefined) {
+    this.registerActorNameAutoColorChanges();
+  }
+  for (autoColor of this._autoColorActorNames) {
+    _0x2b8452 = _0x2b8452.replace(autoColor[0x0], autoColor[0x1]);
+  }
+  return _0x2b8452;
+};
+Window_Base.prototype.databaseObjectName = function (_0x3e6306, _0x45ead2, _0x3d1c5a) {
+  if (!_0x3e6306) {
+    return '';
+  }
+  const _0x333eba = _0x3e6306[_0x45ead2];
+  let _0x456d20 = '';
+  if (_0x333eba && _0x3d1c5a && _0x333eba.iconIndex) {
+    _0x456d20 = "i[%1]%2".format(_0x333eba.iconIndex, _0x333eba.name);
+  } else if (_0x333eba) {
+    _0x456d20 = _0x333eba.name;
+  } else {
+    _0x456d20 = '';
+  }
+  _0x456d20 = TextManager.parseLocalizedText(_0x456d20);
+  if (this.isAutoColorAffected()) {
+    _0x456d20 = this.applyDatabaseAutoColor(_0x456d20, _0x3e6306);
+  }
+  return _0x456d20;
+};
+Window_Base.prototype.lastGainedObjectIcon = function () {
+  const _0x29857c = $gameParty.getLastGainedItemData();
+  if (_0x29857c.id < 0x0) {
+    return '';
+  }
+  let _0x2f854a = null;
+  if (_0x29857c.type === 0x0) {
+    _0x2f854a = $dataItems[_0x29857c.id];
+  }
+  if (_0x29857c.type === 0x1) {
+    _0x2f854a = $dataWeapons[_0x29857c.id];
+  }
+  if (_0x29857c.type === 0x2) {
+    _0x2f854a = $dataArmors[_0x29857c.id];
+  }
+  if (!_0x2f854a) {
+    return '';
+  }
+  return "i[%1]".format(_0x2f854a.iconIndex);
+};
+Window_Base.prototype.lastGainedObjectName = function (_0x255d1f) {
+  const _0x2cde6c = $gameParty.getLastGainedItemData();
+  if (_0x2cde6c.id < 0x0) {
+    return '';
+  }
+  let _0x343382 = null;
+  if (_0x2cde6c.type === 0x0) {
+    _0x343382 = $dataItems[_0x2cde6c.id];
+  }
+  if (_0x2cde6c.type === 0x1) {
+    _0x343382 = $dataWeapons[_0x2cde6c.id];
+  }
+  if (_0x2cde6c.type === 0x2) {
+    _0x343382 = $dataArmors[_0x2cde6c.id];
+  }
+  if (!_0x343382) {
+    return '';
+  }
+  let _0x3b5a3c = _0x343382.name || '';
+  if (TextManager.isVisuMzLocalizationEnabled()) {
+    _0x3b5a3c = TextManager.parseLocalizedText(_0x3b5a3c);
+  }
+  return _0x255d1f ? "i[%1]%2".format(_0x343382.iconIndex, _0x3b5a3c) : _0x3b5a3c;
+};
+Window_Base.prototype.lastGainedObjectQuantity = function () {
+  const _0x2e78d9 = $gameParty.getLastGainedItemData();
+  if (_0x2e78d9.id <= 0x0) {
+    return '';
+  }
+  return _0x2e78d9.quantity;
+};
+Window_Base.prototype.applyDatabaseAutoColor = function (_0x764ace, _0x28c8a8) {
+  const _0xe9250e = VisuMZ.MessageCore.Settings.AutoColor;
+  let _0x38b382 = 0x0;
+  if (_0x28c8a8 === $dataActors) {
+    _0x38b382 = _0xe9250e.Actors;
+  }
+  if (_0x28c8a8 === $dataClasses) {
+    _0x38b382 = _0xe9250e.Classes;
+  }
+  if (_0x28c8a8 === $dataSkills) {
+    _0x38b382 = _0xe9250e.Skills;
+  }
+  if (_0x28c8a8 === $dataItems) {
+    _0x38b382 = _0xe9250e.Items;
+  }
+  if (_0x28c8a8 === $dataWeapons) {
+    _0x38b382 = _0xe9250e.Weapons;
+  }
+  if (_0x28c8a8 === $dataArmors) {
+    _0x38b382 = _0xe9250e.Armors;
+  }
+  if (_0x28c8a8 === $dataEnemies) {
+    _0x38b382 = _0xe9250e.Enemies;
+  }
+  if (_0x28c8a8 === $dataStates) {
+    _0x38b382 = _0xe9250e.States;
+  }
+  if (_0x38b382 > 0x0) {
+    _0x764ace = "C[%1]%2PREVCOLOR[0]".format(_0x38b382, _0x764ace);
+  }
+  return _0x764ace;
+};
+Window_Base.prototype.prepareWordWrapEscapeCharacters = function (_0x4db054) {
+  if (_0x4db054.includes("TEXTALIGNMENT")) {
+    this.setWordWrap(false);
+    _0x4db054 = _0x4db054.replace(/<(?:BR|LINEBREAK)>/gi, " \n");
+    _0x4db054 = _0x4db054.replace(/<(?:WORDWRAP|WORD WRAP)>/gi, '');
+    _0x4db054 = _0x4db054.replace(/<(?:NOWORDWRAP|NO WORD WRAP)>/gi, '');
+    _0x4db054 = _0x4db054.replace(/<\/(?:NOWORDWRAP|NO WORD WRAP)>/gi, '');
+    return _0x4db054;
+  }
+  _0x4db054 = _0x4db054.replace(/<(?:WORDWRAP|WORD WRAP)>/gi, (_0x5963ac, _0x47ab78) => this.setWordWrap(true));
+  _0x4db054 = _0x4db054.replace(/<(?:NOWORDWRAP|NO WORD WRAP)>/gi, (_0x160449, _0x5cff9c) => this.setWordWrap(false));
+  _0x4db054 = _0x4db054.replace(/<\/(?:WORDWRAP|WORD WRAP)>/gi, (_0x21b6c9, _0x2ffb96) => this.setWordWrap(false));
+  if (_0x4db054.match(Window_Message._autoSizeRegexp)) {
+    this.setWordWrap(false);
+  } else if (_0x4db054.match(Window_Message._autoPosRegExp)) {
+    this.setWordWrap(false);
+  }
+  if (!this.isWordWrapEnabled()) {
+    _0x4db054 = _0x4db054.replace(/<(?:BR|LINEBREAK)>/gi, " \n");
+    return _0x4db054;
+  }
+  if (_0x4db054.length <= 0x0) {
+    return _0x4db054;
+  }
+  if (_0x4db054.match(/[\u3040-\u30FF\u4E00-\u9FFF]/g)) {
+    _0x4db054 = VisuMZ.MessageCore.SplitJpCnCharacters(_0x4db054).join('');
+  }
+  if (VisuMZ.MessageCore.Settings.WordWrap.LineBreakSpace) {
+    _0x4db054 = _0x4db054.replace(/[\n\r]+/g, " ");
+    _0x4db054 = _0x4db054.replace(/<(?:BR|LINEBREAK)>/gi, " \n");
+  } else {
+    _0x4db054 = _0x4db054.replace(/[\n\r]+/g, '');
+    _0x4db054 = _0x4db054.replace(/<(?:BR|LINEBREAK)>/gi, "\n");
+  }
+  _0x4db054 = this.addWrapBreakAfterPunctuation(_0x4db054);
+  _0x4db054 = _0x4db054.split(" ").join("WrapBreak[0]");
+  _0x4db054 = _0x4db054.replace(/<(?:BR|LINEBREAK)>/gi, "\n");
+  _0x4db054 = _0x4db054.replace(/<LINE\x1bWrapBreak[0]BREAK>/gi, "\n");
+  return _0x4db054;
+};
+VisuMZ.MessageCore.SplitJpCnCharacters = function (_0x572a05) {
+  let _0x5361d2 = [];
+  let _0x4d3e35 = '';
+  while (_0x572a05.length > 0x0) {
+    const _0x35c89a = _0x572a05.charAt(0x0);
+    _0x572a05 = _0x572a05.slice(0x1);
+    if (_0x35c89a.match(/[\u3040-\u30FF\u4E00-\u9FFF]/g)) {
+      if (_0x4d3e35.length > 0x0) {
+        _0x5361d2.push(_0x4d3e35);
+        _0x4d3e35 = '';
+      }
+      _0x5361d2.push(_0x35c89a + "WrapJpBreak[0]");
+    } else {
+      _0x4d3e35 += _0x35c89a;
+    }
+  }
+  if (_0x4d3e35.length > 0x0) {
+    _0x5361d2.push(_0x4d3e35);
+    _0x4d3e35 = '';
+  }
+  return _0x5361d2;
+};
+Window_Base.prototype.addWrapBreakAfterPunctuation = function (_0x11b782) {
+  return _0x11b782;
+};
+VisuMZ.MessageCore.Window_Base_processNewLine = Window_Base.prototype.processNewLine;
+Window_Base.prototype.processNewLine = function (_0x154322) {
+  VisuMZ.MessageCore.Window_Base_processNewLine.call(this, _0x154322);
+  this.processTextAlignmentX(_0x154322);
+};
+Window_Base.prototype.processCharacter = function (_0x2918b2) {
+  let _0x22a497 = _0x2918b2.text[_0x2918b2.index++];
+  if (_0x22a497.charCodeAt(0x0) < 0x20) {
+    this.flushTextState(_0x2918b2);
+    this.processControlCharacter(_0x2918b2, _0x22a497);
+  } else {
+    if (this._textCasing === 0x1) {
+      _0x22a497 = _0x22a497.toLowerCase();
+    }
+    if (this._textCasing === 0x2) {
+      if (this._textCasingUpperState) {
+        _0x22a497 = _0x22a497.toUpperCase();
+      }
+      this._textCasingUpperState = /\s/.test(_0x22a497);
+    }
+    if (this._textCasing === 0x3) {
+      _0x22a497 = _0x22a497.toUpperCase();
+    }
+    if (this._textCasing === 0x4) {
+      _0x22a497 = this._lastAltCase ? _0x22a497.toUpperCase() : _0x22a497.toLowerCase();
+      this._lastAltCase = !this._lastAltCase;
+    }
+    if (this._textCasing === 0x5) {
+      _0x22a497 = Math.random() < 0.5 ? _0x22a497.toUpperCase() : _0x22a497.toLowerCase();
+    }
+    _0x2918b2.buffer += _0x22a497;
+  }
+};
+VisuMZ.MessageCore.Window_Base_processControlCharacter = Window_Base.prototype.processControlCharacter;
+Window_Base.prototype.processControlCharacter = function (_0x5b0ceb, _0x31d73a) {
+  VisuMZ.MessageCore.Window_Base_processControlCharacter.call(this, _0x5b0ceb, _0x31d73a);
+  if (_0x31d73a === "WrapBreak[0]") {
+    this.processWrapBreak(_0x5b0ceb);
+  } else if (_0x31d73a === "WrapJpBreak[0]") {
+    this.processWrapBreak(_0x5b0ceb, true);
+  }
+};
+Window_Base.prototype.obtainEscapeString = function (_0x433015) {
+  var _0x54dc61 = /^\<(.*?)\>/.exec(_0x433015.text.slice(_0x433015.index));
+  return _0x54dc61 ? (_0x433015.index += _0x54dc61[0x0].length, String(_0x54dc61[0x0].slice(0x1, _0x54dc61[0x0].length - 0x1))) : '';
+};
+VisuMZ.MessageCore.Window_Base_processEscapeCharacter = Window_Base.prototype.processEscapeCharacter;
+Window_Base.prototype.processEscapeCharacter = function (_0x46da94, _0x46676f) {
+  switch (_0x46da94) {
+    case 'C':
+      if (_0x46676f.drawing) {
+        VisuMZ.MessageCore.Window_Base_processEscapeCharacter.call(this, _0x46da94, _0x46676f);
+      } else {
+        this.obtainEscapeParam(_0x46676f);
+      }
+      break;
+    case 'I':
+    case '{':
+    case '}':
+      VisuMZ.MessageCore.Window_Base_processEscapeCharacter.call(this, _0x46da94, _0x46676f);
+      break;
+    case 'FS':
+      this.processFsTextCode(_0x46676f);
+      break;
+    case 'PX':
+      this.processPxTextCode(_0x46676f);
+      break;
+    case 'PY':
+      this.processPyTextCode(_0x46676f);
+      break;
+    case 'BOLD':
+      this.processFontChangeBold(this.obtainEscapeParam(_0x46676f));
+      break;
+    case "CASING":
+      this.processTextCasing(_0x46676f);
+      break;
+    case "CENTERPICTURE":
+      this.processDrawCenteredPicture(_0x46676f);
+      break;
+    case "COLORLOCK":
+      this.processColorLock(_0x46676f);
+      break;
+    case 'COMMONEVENT':
+      this.processCommonEvent(_0x46676f);
+      break;
+    case "ITALIC":
+      this.processFontChangeItalic(this.obtainEscapeParam(_0x46676f));
+      break;
+    case "PICTURE":
+      this.processDrawPicture(_0x46676f);
+      break;
+    case 'PREVCOLOR':
+      this.processPreviousColor(_0x46676f);
+      break;
+    case "TEXTALIGNMENT":
+      this.processTextAlignmentChange(_0x46676f);
+      break;
+    case "WAIT":
+      this.processCustomWait(_0x46676f);
+      break;
+    case "WRAPBREAK":
+      this.processWrapBreak(_0x46676f);
+      break;
+    case "WRAPJPBREAK":
+      this.processWrapBreak(_0x46676f, true);
+      break;
+    default:
+      this.processMessageCoreEscapeActions(_0x46da94, _0x46676f);
+  }
+};
+Window_Base.prototype.processMessageCoreEscapeActions = function (_0x499289, _0x57e371) {
+  for (const _0x33e324 of VisuMZ.MessageCore.Settings.TextCodeActions) {
+    if (_0x33e324.Match === _0x499289) {
+      if (_0x33e324.Type === '') {
+        this.obtainEscapeParam(_0x57e371);
+      }
+      _0x33e324.ActionJS.call(this, _0x57e371);
+      if (this.constructor === Window_Message) {
+        const _0x23440e = _0x33e324.CommonEvent || 0x0;
+        if (_0x23440e > 0x0) {
+          this.launchMessageCommonEvent(_0x23440e);
+        }
+      }
+    }
+  }
+};
+Window_Base.prototype.makeFontBigger = function () {
+  this.contents.fontSize += VisuMZ.MessageCore.Settings.General.FontChangeValue;
+  this.contents.fontSize = Math.min(this.contents.fontSize, VisuMZ.MessageCore.Settings.General.FontBiggerCap);
+};
+Window_Base.prototype.makeFontSmaller = function () {
+  this.contents.fontSize -= VisuMZ.MessageCore.Settings.General.FontChangeValue;
+  this.contents.fontSize = Math.max(this.contents.fontSize, VisuMZ.MessageCore.Settings.General.FontSmallerCap);
+};
+Window_Base.prototype.processFsTextCode = function (_0x4e331f) {
+  const _0x5a0a7b = this.obtainEscapeParam(_0x4e331f);
+  this.contents.fontSize = _0x5a0a7b.clamp(VisuMZ.MessageCore.Settings.General.FontSmallerCap, VisuMZ.MessageCore.Settings.General.FontBiggerCap);
+};
+Window_Base.prototype.maxFontSizeInLine = function (_0x318f1a) {
+  let _0x56da57 = this.contents.fontSize;
+  const _0x3e6064 = /\x1b({|}|FS)(\[(\d+)])?/gi;
+  for (;;) {
+    const _0x100a57 = _0x3e6064.exec(_0x318f1a);
+    if (!_0x100a57) {
+      break;
+    }
+    const _0x1db438 = String(_0x100a57[0x1]).toUpperCase();
+    if (_0x1db438 === '{') {
+      this.makeFontBigger();
+    } else {
+      if (_0x1db438 === '}') {
+        this.makeFontSmaller();
+      } else if (_0x1db438 === 'FS') {
+        this.contents.fontSize = parseInt(_0x100a57[0x3]).clamp(VisuMZ.MessageCore.Settings.General.FontSmallerCap, VisuMZ.MessageCore.Settings.General.FontBiggerCap);
+      }
+    }
+    if (this.contents.fontSize > _0x56da57) {
+      _0x56da57 = this.contents.fontSize;
+    }
+  }
+  return _0x56da57;
+};
+Window_Base.prototype.processPxTextCode = function (_0x5e3759) {
+  _0x5e3759.x = this.obtainEscapeParam(_0x5e3759);
+  if (VisuMZ.MessageCore.Settings.General.RelativePXPY) {
+    _0x5e3759.x += _0x5e3759.startX;
+  }
+};
+Window_Base.prototype.processPyTextCode = function (_0x28f773) {
+  _0x28f773.y = this.obtainEscapeParam(_0x28f773);
+  if (VisuMZ.MessageCore.Settings.General.RelativePXPY) {
+    _0x28f773.y += _0x28f773.startY;
+  }
+};
+Window_Base.prototype.processFontChangeBold = function (_0x13a4d4) {
+  this.contents.fontBold = !!_0x13a4d4;
+};
+Window_Base.prototype.processFontChangeItalic = function (_0x2e892c) {
+  this.contents.fontItalic = !!_0x2e892c;
+};
+Window_Base.prototype.processTextAlignmentChange = function (_0x3be7aa) {
+  const _0x20ee99 = this.obtainEscapeParam(_0x3be7aa);
+  if (!_0x3be7aa.drawing) {
+    return;
+  }
+  switch (_0x20ee99) {
+    case 0x0:
+      this.setTextAlignment("default");
+      return;
+    case 0x1:
+      this.setTextAlignment('left');
+      break;
+    case 0x2:
+      this.setTextAlignment('center');
+      break;
+    case 0x3:
+      this.setTextAlignment("right");
+      break;
+  }
+  this.processTextAlignmentX(_0x3be7aa);
+};
+Window_Base.prototype.processTextAlignmentX = function (_0x46d9da) {
+  if (!_0x46d9da.drawing) {
+    return;
+  }
+  if (_0x46d9da.rtl) {
+    return;
+  }
+  if (this.getTextAlignment() === "default") {
+    return;
+  }
+  let _0x523cda = _0x46d9da.text.indexOf("TEXTALIGNMENT", _0x46d9da.index + 0x1);
+  let _0xbe63b5 = _0x46d9da.text.indexOf("\n", _0x46d9da.index + 0x1);
+  if (_0x523cda < 0x0) {
+    _0x523cda = _0x46d9da.text.length + 0x1;
+  }
+  if (_0xbe63b5 > 0x0) {
+    _0x523cda = Math.min(_0x523cda, _0xbe63b5);
+  }
+  const _0x4a0c50 = _0x46d9da.text.substring(_0x46d9da.index, _0x523cda);
+  const _0x1c92c0 = this.textSizeExTextAlignment(_0x4a0c50).width;
+  const _0x4ed853 = _0x46d9da.width || this.innerWidth - 0x8;
+  const _0x4c0fdd = this.constructor === Window_Message && $gameMessage.faceName() !== '';
+  switch (this.getTextAlignment()) {
+    case "left":
+      _0x46d9da.x = _0x46d9da.startX;
+      break;
+    case "center":
+      _0x46d9da.x = _0x46d9da.startX;
+      _0x46d9da.x += Math.floor((_0x4ed853 - _0x1c92c0) / 0x2);
+      if (_0x4c0fdd) {
+        _0x46d9da.x -= _0x46d9da.startX / 0x2;
+      }
+      break;
+    case "right":
+      _0x46d9da.x = _0x4ed853 - _0x1c92c0 + _0x46d9da.startX;
+      if (_0x4c0fdd) {
+        _0x46d9da.x -= _0x46d9da.startX;
+      }
+      break;
+  }
+};
+Window_Base.prototype.textSizeExTextAlignment = function (_0x2e5f25) {
+  _0x2e5f25 = _0x2e5f25.replace(/\x1b!/g, '');
+  _0x2e5f25 = _0x2e5f25.replace(/\x1b\|/g, '');
+  _0x2e5f25 = _0x2e5f25.replace(/\x1b\./g, '');
+  const _0x487372 = this.createTextState(_0x2e5f25, 0x0, 0x0, 0x0);
+  const _0x1fc898 = this.getPreservedFontSettings();
+  _0x487372.drawing = false;
+  this.processAllText(_0x487372);
+  this.returnPreservedFontSettings(_0x1fc898);
+  return {
+    'width': _0x487372.outputWidth,
+    'height': _0x487372.outputHeight
+  };
+};
+Window_Base.WORD_WRAP_PADDING = VisuMZ.MessageCore.Settings.WordWrap.EndPadding || 0x0;
+Window_Base.prototype.processWrapBreak = function (_0x1c3302, _0x106f8d) {
+  const _0x2ecdc5 = (_0x1c3302.rtl ? -0x1 : 0x1) * this.textWidth(" ");
+  if (!_0x106f8d) {
+    _0x1c3302.x += _0x2ecdc5;
+  }
+  if (this.obtainEscapeParam(_0x1c3302) > 0x0 && !_0x106f8d) {
+    _0x1c3302.x += _0x2ecdc5;
+  }
+  if (_0x1c3302.rtl) {
+    return;
+  }
+  let _0x574c8d;
+  if (_0x106f8d) {
+    _0x574c8d = _0x1c3302.text.indexOf("WrapJpBreak[0]", _0x1c3302.index + 0x1);
+  } else {
+    _0x574c8d = _0x1c3302.text.indexOf("WrapBreak[0]", _0x1c3302.index + 0x1);
+  }
+  let _0x42cd33 = _0x1c3302.text.indexOf("\n", _0x1c3302.index + 0x1);
+  if (_0x574c8d < 0x0) {
+    _0x574c8d = _0x1c3302.text.length + 0x1;
+  }
+  if (_0x42cd33 > 0x0) {
+    _0x574c8d = Math.min(_0x574c8d, _0x42cd33);
+  }
+  const _0x54489b = _0x1c3302.text.substring(_0x1c3302.index, _0x574c8d);
+  const _0x5c84e3 = this.textSizeExWordWrap(_0x54489b).width;
+  let _0x181152 = _0x1c3302.width || this.innerWidth;
+  _0x181152 -= Window_Base.WORD_WRAP_PADDING;
+  if (this.constructor === Window_Message) {
+    const _0x421931 = $gameMessage.faceName() === '' ? 0x0 : ImageManager.faceWidth + 0x14;
+    _0x181152 -= _0x421931;
+    if (VisuMZ.MessageCore.Settings.WordWrap.TightWrap) {
+      _0x181152 -= _0x421931;
+    }
+  }
+  let _0x2409e8 = false;
+  if (_0x1c3302.x + _0x5c84e3 > _0x1c3302.startX + _0x181152) {
+    _0x2409e8 = true;
+  }
+  if (_0x5c84e3 === 0x0) {
+    _0x2409e8 = false;
+  }
+  if (_0x2409e8) {
+    _0x1c3302.text = _0x1c3302.text.slice(0x0, _0x1c3302.index) + "\n" + _0x1c3302.text.substr(_0x1c3302.index);
+  }
+};
+Window_Base.prototype.textSizeExWordWrap = function (_0xe94594) {
+  const _0x29036a = this.createTextState(_0xe94594, 0x0, 0x0, 0x0);
+  const _0xbfba55 = this.getPreservedFontSettings();
+  _0x29036a.drawing = false;
+  this.setWordWrap(false);
+  this.processAllText(_0x29036a);
+  this.setWordWrap(true);
+  this.returnPreservedFontSettings(_0xbfba55);
+  return {
+    'width': _0x29036a.outputWidth,
+    'height': _0x29036a.outputHeight
+  };
+};
+Window_Base.prototype.processCommonEvent = function (_0x948de) {
+  return this.obtainEscapeParam(_0x948de);
+};
+Window_Base.prototype.processDrawPicture = function (_0x3157b9) {
+  const _0x3d4d13 = this.obtainEscapeString(_0x3157b9).split(',');
+  if (!_0x3157b9.drawing) {
+    return;
+  }
+  const _0x9e0f5f = _0x3d4d13[0x0].trim();
+  const _0x7054e7 = _0x3d4d13[0x1] || 0x0;
+  const _0x52bb81 = _0x3d4d13[0x2] || 0x0;
+  const _0x3d5e41 = ImageManager.loadPicture(_0x9e0f5f);
+  const _0x5b30aa = this.contents.paintOpacity;
+  _0x3d5e41.addLoadListener(this.drawBackPicture.bind(this, _0x3d5e41, _0x3157b9.x, _0x3157b9.y, _0x7054e7, _0x52bb81, _0x5b30aa));
+};
+Window_Base.prototype.drawBackPicture = function (_0xc4b1af, _0x1aa69b, _0x2ae0ab, _0x129fd5, _0x3211e4, _0x413ca4) {
+  _0x129fd5 = _0x129fd5 || _0xc4b1af.width;
+  _0x3211e4 = _0x3211e4 || _0xc4b1af.height;
+  this.contentsBack.paintOpacity = _0x413ca4;
+  this.contentsBack.blt(_0xc4b1af, 0x0, 0x0, _0xc4b1af.width, _0xc4b1af.height, _0x1aa69b, _0x2ae0ab, _0x129fd5, _0x3211e4);
+  this.contentsBack.paintOpacity = 0xff;
+};
+Window_Base.prototype.processDrawCenteredPicture = function (_0x5c3ee2) {
+  const _0x14078c = this.obtainEscapeString(_0x5c3ee2).split(',');
+  if (!_0x5c3ee2.drawing) {
+    return;
+  }
+  const _0x3bcc02 = _0x14078c[0x0].trim();
+  const _0x1c7f98 = ImageManager.loadPicture(_0x3bcc02);
+  const _0x5d1e10 = JsonEx.makeDeepCopy(_0x5c3ee2);
+  const _0x477d6c = this.contents.paintOpacity;
+  _0x1c7f98.addLoadListener(this.drawBackCenteredPicture.bind(this, _0x1c7f98, _0x5d1e10, _0x477d6c));
+};
+Window_Base.prototype.drawBackCenteredPicture = function (_0x4931d7, _0x4fd99b, _0x578872) {
+  const _0x1954c7 = _0x4fd99b.width || this.innerWidth;
+  const _0xe51c0b = this._index !== undefined ? this.itemHeight() : this.innerHeight;
+  const _0x1ad3af = _0x1954c7 / _0x4931d7.width;
+  const _0xfed5b2 = _0xe51c0b / _0x4931d7.height;
+  const _0x3e4aad = Math.min(_0x1ad3af, _0xfed5b2, 0x1);
+  const _0x2b43b5 = this._index !== undefined ? (this.itemRectWithPadding(0x0).height - this.lineHeight()) / 0x2 : 0x0;
+  const _0x342de4 = _0x4931d7.width * _0x3e4aad;
+  const _0x503d61 = _0x4931d7.height * _0x3e4aad;
+  const _0x37b4a7 = Math.floor((_0x1954c7 - _0x342de4) / 0x2) + _0x4fd99b.startX;
+  const _0x1a1ac = Math.floor((_0xe51c0b - _0x503d61) / 0x2) + _0x4fd99b.startY - _0x2b43b5 * 0x2;
+  this.contentsBack.paintOpacity = _0x578872;
+  this.contentsBack.blt(_0x4931d7, 0x0, 0x0, _0x4931d7.width, _0x4931d7.height, _0x37b4a7, _0x1a1ac, _0x342de4, _0x503d61);
+  this.contentsBack.paintOpacity = 0xff;
+};
+Window_Base.prototype.processColorLock = function (_0x1320b2) {
+  const _0x300925 = this.obtainEscapeParam(_0x1320b2);
+  if (_0x1320b2.drawing) {
+    this.setColorLock(_0x300925 > 0x0);
+  }
+};
+Window_Base.prototype.processCustomWait = function (_0x21a2bf) {
+  const _0xc0a17e = this.obtainEscapeParam(_0x21a2bf);
+  if (this.constructor === Window_Message && _0x21a2bf.drawing) {
+    this.startWait(_0xc0a17e);
+  }
+};
+Window_Base.prototype.processTextCasing = function (_0x4c2ef8) {
+  this._textCasing = this.obtainEscapeParam(_0x4c2ef8);
+  this._textCasingUpperState = true;
+  this._lastAltCase = true;
+};
+VisuMZ.MessageCore.NonSupportedTextCodes = function (_0x2e3c2f) {
+  if ($gameTemp.isPlaytest()) {
+    let _0x259046 = "%1, does not support attempted text code usage.".format(_0x2e3c2f.constructor.name);
+    alert(_0x259046);
+    SceneManager.exit();
+  }
+};
+Window_Base.prototype.loadMessageFace = function () {
+  VisuMZ.MessageCore.NonSupportedTextCodes(this);
+};
+Window_Base.prototype.drawMessageFace = function () {
+  VisuMZ.MessageCore.NonSupportedTextCodes(this);
+};
+Window_Base.prototype.setTextDelay = function () {
+  VisuMZ.MessageCore.NonSupportedTextCodes(this);
+};
+Window_Help.prototype.resetWordWrap = function () {
+  this.setWordWrap($gameSystem.isHelpWindowWordWrap());
+};
+Window_Help.prototype.isAutoColorAffected = function () {
+  return true;
+};
+VisuMZ.MessageCore.Window_Help_refresh = Window_Help.prototype.refresh;
+Window_Help.prototype.refresh = function () {
+  this.clearActorNameAutoColor();
+  if (this.contentsBack) {
+    this.contentsBack.clear();
+  }
+  VisuMZ.MessageCore.Window_Help_refresh.call(this);
+  this.resetWordWrap();
+};
+VisuMZ.MessageCore.Window_Options_addGeneralOptions = Window_Options.prototype.addGeneralOptions;
+Window_Options.prototype.addGeneralOptions = function () {
+  VisuMZ.MessageCore.Window_Options_addGeneralOptions.call(this);
+  this.addMessageCoreCommands();
+};
+Window_Options.prototype.addMessageCoreCommands = function () {
+  if (VisuMZ.MessageCore.Settings.Localization.AddOption && TextManager.isVisuMzLocalizationEnabled()) {
+    this.addMessageCoreLocalizationCommand();
+  }
+  if (VisuMZ.MessageCore.Settings.TextSpeed.AddOption) {
+    this.addMessageCoreTextSpeedCommand();
+  }
+};
+Window_Options.prototype.addMessageCoreLocalizationCommand = function () {
+  const _0x403d2d = TextManager.messageCoreLocalization;
+  this.addCommand(_0x403d2d, "textLocale");
+};
+Window_Options.prototype.addMessageCoreTextSpeedCommand = function () {
+  const _0x3d4d60 = TextManager.messageCoreTextSpeed;
+  this.addCommand(_0x3d4d60, "textSpeed");
+};
+VisuMZ.MessageCore.Window_Options_statusText = Window_Options.prototype.statusText;
+Window_Options.prototype.statusText = function (_0x13b454) {
+  const _0xb6c25d = this.commandSymbol(_0x13b454);
+  if (_0xb6c25d === "textLocale") {
+    return this.visuMzTextLocaleStatusText();
+  }
+  if (_0xb6c25d === "textSpeed") {
+    return this.textSpeedStatusText();
+  }
+  return VisuMZ.MessageCore.Window_Options_statusText.call(this, _0x13b454);
+};
+Window_Options.prototype.visuMzTextLocaleStatusText = function () {
+  const _0x38f0c7 = ConfigManager.textLocale;
+  return TextManager.getLanguageName(_0x38f0c7);
+};
+Window_Options.prototype.textSpeedStatusText = function () {
+  const _0x17a597 = this.getConfigValue("textSpeed");
+  return _0x17a597 > 0xa ? TextManager.instantTextSpeed : _0x17a597;
+};
+VisuMZ.MessageCore.Window_Options_isVolumeSymbol = Window_Options.prototype.isVolumeSymbol;
+Window_Options.prototype.isVolumeSymbol = function (_0x40ee0e) {
+  if (_0x40ee0e === 'textLocale') {
+    return true;
+  }
+  if (_0x40ee0e === 'textSpeed') {
+    return true;
+  }
+  return VisuMZ.MessageCore.Window_Options_isVolumeSymbol.call(this, _0x40ee0e);
+};
+VisuMZ.MessageCore.Window_Options_changeVolume = Window_Options.prototype.changeVolume;
+Window_Options.prototype.changeVolume = function (_0x29f8b9, _0x1a0a2c, _0x50a6c6) {
+  if (_0x29f8b9 === 'textLocale') {
+    return this.changeVisuMzTextLocale(_0x1a0a2c, _0x50a6c6);
+  }
+  if (_0x29f8b9 === "textSpeed") {
+    return this.changeTextSpeed(_0x29f8b9, _0x1a0a2c, _0x50a6c6);
+  }
+  VisuMZ.MessageCore.Window_Options_changeVolume.call(this, _0x29f8b9, _0x1a0a2c, _0x50a6c6);
+};
+Window_Options.prototype.changeVisuMzTextLocale = function (_0x2a48be, _0x3dbe70) {
+  const _0x4ac28c = VisuMZ.MessageCore.Settings.Localization.Languages || [];
+  const _0x1980b8 = ConfigManager.textLocale;
+  let _0x2347bf = _0x4ac28c.indexOf(_0x1980b8);
+  _0x2347bf += _0x2a48be ? 0x1 : -0x1;
+  if (_0x2347bf >= _0x4ac28c.length) {
+    _0x2347bf = _0x3dbe70 ? 0x0 : _0x4ac28c.length - 0x1;
+  }
+  if (_0x2347bf < 0x0) {
+    _0x2347bf = _0x3dbe70 ? _0x4ac28c.length - 0x1 : 0x0;
+  }
+  this.changeValue("textLocale", _0x4ac28c[_0x2347bf]);
+};
+Window_Options.prototype.changeTextSpeed = function (_0x324718, _0x192b46, _0x2137e7) {
+  const _0x2df08f = this.getConfigValue(_0x324718);
+  const _0x33d12a = _0x2df08f + (_0x192b46 ? 0x1 : -0x1);
+  if (_0x33d12a > 0xb && _0x2137e7) {
+    this.changeValue(_0x324718, 0x1);
+  } else {
+    this.changeValue(_0x324718, _0x33d12a.clamp(0x1, 0xb));
+  }
+};
+Window_Message.prototype.contentsHeight = function () {
+  let _0x281aa6 = Window_Base.prototype.contentsHeight.call(this);
+  _0x281aa6 -= this.addedHeight();
+  return _0x281aa6;
+};
+Window_Message.prototype.refreshDimmerBitmap = function () {
+  Window_Base.prototype.refreshDimmerBitmap.call(this);
+  if (VisuMZ.MessageCore.Settings.General.StretchDimmedBg) {
+    this.stretchDimmerSprite();
+  }
+};
+Window_Message.prototype.stretchDimmerSprite = function () {
+  this._dimmerSprite.x = Math.round(this.width / 0x2);
+  this._dimmerSprite.anchor.x = 0.5;
+  this._dimmerSprite.scale.x = Graphics.width;
+};
+VisuMZ.MessageCore.Window_Message_clearFlags = Window_Message.prototype.clearFlags;
+Window_Message.prototype.clearFlags = function () {
+  VisuMZ.MessageCore.Window_Message_clearFlags.call(this);
+  this.clearActorNameAutoColor();
+  this.resetWordWrap();
+  this.setColorLock(false);
+  this.setTextAlignment("default");
+  this.setTextDelay(VisuMZ.MessageCore.Settings.General.MessageTextDelay);
+};
+Window_Message.prototype.resetWordWrap = function () {
+  this.setWordWrap($gameSystem.isMessageWindowWordWrap());
+};
+Window_Message.prototype.isAutoColorAffected = function () {
+  return true;
+};
+Window_Message.prototype.setTextDelay = function (_0x1f33dd) {
+  const _0x4dd736 = 0xb - ConfigManager.textSpeed;
+  _0x1f33dd = Math.round(_0x1f33dd * _0x4dd736);
+  this._textDelayCount = _0x1f33dd;
+  this._textDelay = _0x1f33dd;
+};
+VisuMZ.MessageCore.Window_Message_isTriggered = Window_Message.prototype.isTriggered;
+Window_Message.prototype.isTriggered = function () {
+  return VisuMZ.MessageCore.Window_Message_isTriggered.call(this) || Input.isPressed(VisuMZ.MessageCore.Settings.General.FastForwardKey);
+};
+VisuMZ.MessageCore.Window_Message_updatePlacement = Window_Message.prototype.updatePlacement;
+Window_Message.prototype.updatePlacement = function () {
+  let _0x43dabc = this.y;
+  this.x = Math.round((Graphics.boxWidth - this.width) / 0x2);
+  VisuMZ.MessageCore.Window_Message_updatePlacement.call(this);
+  if (this._autoPositionTarget) {
+    this.y = _0x43dabc;
+  }
+  this.updateXyOffsets();
+  this.updateForcedPlacement();
+  this.clampPlacementPosition();
+  this.updateChoiceListHelpWindowPlacement();
+};
+VisuMZ.MessageCore.Window_Message_newPage = Window_Message.prototype.newPage;
+Window_Message.prototype.newPage = function (_0x45bb5a) {
+  this.convertNewPageTextStateMacros(_0x45bb5a);
+  this.onNewPageMessageCore(_0x45bb5a);
+  VisuMZ.MessageCore.Window_Message_newPage.call(this, _0x45bb5a);
+  this.createContents();
+};
+Window_Message.prototype.convertNewPageTextStateMacros = function (_0x1a956e) {
+  if (!_0x1a956e) {
+    return;
+  }
+  this._macroBypassWordWrap = false;
+  _0x1a956e.text = this.convertTextMacros(_0x1a956e.text);
+  if (this._textMacroFound) {
+    _0x1a956e.text = this.prepareWordWrapEscapeCharacters(_0x1a956e.text);
+    this._macroBypassWordWrap = true;
+  }
+};
+Window_Message.prototype.prepareWordWrapEscapeCharacters = function (_0x3b12cb) {
+  if (this._macroBypassWordWrap) {
+    return _0x3b12cb;
+  }
+  return Window_Base.prototype.prepareWordWrapEscapeCharacters.call(this, _0x3b12cb);
+};
+Window_Message.prototype.onNewPageMessageCore = function (_0xf6b158) {
+  this.prepareForcedPositionEscapeCharacters(_0xf6b158);
+  this.prepareAutoSizeEscapeCharacters(_0xf6b158);
+  this.updateDimensions();
+};
+VisuMZ.MessageCore.Window_Message_terminateMessage = Window_Message.prototype.terminateMessage;
+Window_Message.prototype.terminateMessage = function () {
+  VisuMZ.MessageCore.Window_Message_terminateMessage.call(this);
+  this.clearFlags();
+  if (this._messagePositionReset) {
+    this.messagePositionReset();
+  }
+};
+Window_Message.prototype.updateDimensions = function () {
+  this.width = $gameSystem.getMessageWindowWidth() + this.addedWidth();
+  ;
+  this.width = Math.min(Graphics.width, this.width);
+  const _0x3837df = $gameSystem.getMessageWindowRows();
+  this.height = SceneManager._scene.calcWindowHeight(_0x3837df, false) + this.addedHeight();
+  this.height = Math.min(Graphics.height, this.height);
+  if ($gameTemp._centerMessageWindow) {
+    this.resetPositionX();
+  }
+};
+Window_Message.prototype.addedWidth = function () {
+  return 0x0;
+};
+Window_Message.prototype.addedHeight = function () {
+  return 0x0;
+};
+Window_Message.prototype.resetPositionX = function () {
+  this.x = (Graphics.boxWidth - this.width) / 0x2;
+  $gameTemp._centerMessageWindow = undefined;
+  this.clampPlacementPosition();
+};
+Window_Message.prototype.updateMove = function () {
+  const _0x30351c = {
+    'x': this.x,
+    'y': this.y
+  };
+  Window_Base.prototype.updateMove.call(this);
+  this.updateNameBoxMove(_0x30351c);
+};
+Window_Message.prototype.canMove = function () {
+  return true;
+};
+Window_Message.prototype.updateNameBoxMove = function (_0x3a294e) {
+  if (this._nameBoxWindow) {
+    this._nameBoxWindow.x += this.x - _0x3a294e.x;
+    this._nameBoxWindow.y += this.y - _0x3a294e.y;
+  }
+};
+Window_Message.prototype.resetRect = function (_0x4c48a6, _0x4f1a6f) {
+  this.moveTo(this._resetRect.x, this._positionType * (Graphics.boxHeight - this.height) / 0x2, this._resetRect.width, this._resetRect.height, _0x4c48a6, _0x4f1a6f);
+};
+Window_Message.prototype.processCommonEvent = function (_0x13741f) {
+  const _0x1deaea = Window_Base.prototype.processCommonEvent.call(this, _0x13741f);
+  if (_0x13741f.drawing) {
+    this.launchMessageCommonEvent(_0x1deaea);
+  }
+};
+Window_Message.prototype.launchMessageCommonEvent = function (_0x47c6a3) {
+  if ($gameParty.inBattle()) {} else {
+    $gameMap.addMessageCommonEvent(_0x47c6a3);
+  }
+};
+Window_Message.prototype.processCharacter = function (_0x4fa38d) {
+  this._textDelayCount--;
+  if (this._textDelayCount <= 0x0) {
+    this.onProcessCharacter(_0x4fa38d);
+    Window_Base.prototype.processCharacter.call(this, _0x4fa38d);
+  }
+};
+Window_Message.prototype.onProcessCharacter = function (_0x1757e7) {
+  this._textDelayCount = this._textDelay;
+  if (this._textDelay <= 0x0) {
+    this._showFast = true;
+  }
+};
+VisuMZ.MessageCore.Window_Message_processEscapeCharacter = Window_Message.prototype.processEscapeCharacter;
+Window_Message.prototype.processEscapeCharacter = function (_0x49fbed, _0x107801) {
+  if (!_0x107801.drawing) {
+    Window_Base.prototype.processEscapeCharacter.call(this, _0x49fbed, _0x107801);
+  } else {
+    VisuMZ.MessageCore.Window_Message_processEscapeCharacter.call(this, _0x49fbed, _0x107801);
+  }
+};
+VisuMZ.MessageCore.Window_Message_needsNewPage = Window_Message.prototype.needsNewPage;
+Window_Message.prototype.needsNewPage = function (_0xf4cda9) {
+  if (this._currentAutoSize) {
+    return false;
+  }
+  return VisuMZ.MessageCore.Window_Message_needsNewPage.call(this, _0xf4cda9);
+};
+Window_Message.prototype.prepareForcedPositionEscapeCharacters = function (_0x22d8f8) {
+  let _0xd14174 = _0x22d8f8.text;
+  this._forcedPosition = {};
+  if (this.isWordWrapEnabled()) {
+    return _0xd14174;
+  }
+  _0xd14174 = _0xd14174.replace(/<POSITION:[ ]*(.*?)>/gi, (_0xd4e746, _0x2c0ffa) => {
+    const _0x27b76b = _0x2c0ffa.split(',').map(_0x56d576 => Number(_0x56d576) || 0x0);
+    if (_0x27b76b[0x0] !== undefined) {
+      this._forcedPosition.x = Number(_0x27b76b[0x0]);
+    }
+    if (_0x27b76b[0x1] !== undefined) {
+      this._forcedPosition.y = Number(_0x27b76b[0x1]);
+    }
+    if (_0x27b76b[0x2] !== undefined) {
+      this._forcedPosition.width = Number(_0x27b76b[0x2]);
+    }
+    if (_0x27b76b[0x3] !== undefined) {
+      this._forcedPosition.height = Number(_0x27b76b[0x3]);
+    }
+    return '';
+  });
+  _0xd14174 = _0xd14174.replace(/<COORDINATES:[ ]*(.*?)>/gi, (_0x3c00ea, _0x5d53e4) => {
+    const _0xfd091a = _0x5d53e4.split(',').map(_0x49132e => Number(_0x49132e) || 0x0);
+    if (_0xfd091a[0x0] !== undefined) {
+      this._forcedPosition.x = Number(_0xfd091a[0x0]);
+    }
+    if (_0xfd091a[0x1] !== undefined) {
+      this._forcedPosition.y = Number(_0xfd091a[0x1]);
+    }
+    return '';
+  });
+  _0xd14174 = _0xd14174.replace(/<DIMENSIONS:[ ]*(.*?)>/gi, (_0x1beaca, _0x40fdc2) => {
+    const _0x5ddd50 = _0x40fdc2.split(',').map(_0x3a447f => Number(_0x3a447f) || 0x0);
+    if (_0x5ddd50[0x0] !== undefined) {
+      this._forcedPosition.width = Number(_0x5ddd50[0x2]);
+    }
+    if (_0x5ddd50[0x1] !== undefined) {
+      this._forcedPosition.height = Number(_0x5ddd50[0x3]);
+    }
+    return '';
+  });
+  _0xd14174 = _0xd14174.replace(/<OFFSET:[ ]*(.*?)>/gi, (_0x31475f, _0x1b83ca) => {
+    const _0x50845a = _0x1b83ca.split(',').map(_0x22a070 => Number(_0x22a070) || 0x0);
+    let _0x2464ce = _0x50845a[0x0] || 0x0;
+    let _0x2ec29b = _0x50845a[0x1] || 0x0;
+    $gameSystem.setMessageWindowXyOffsets(_0x2464ce, _0x2ec29b);
+    return '';
+  });
+  _0x22d8f8.text = _0xd14174;
+};
+Window_Message.prototype.updateXyOffsets = function () {
+  const _0x488100 = $gameSystem.getMessageWindowXyOffsets();
+  this.x += _0x488100.x;
+  this.y += _0x488100.y;
+};
+Window_Message.prototype.updateForcedPlacement = function () {
+  this._forcedPosition = this._forcedPosition || {};
+  const _0x12100e = ['x', 'y', "width", "height"];
+  for (const _0x4c596b of _0x12100e) {
+    if (this._forcedPosition[_0x4c596b] !== undefined) {
+      this[_0x4c596b] = Number(this._forcedPosition[_0x4c596b]);
+    }
+  }
+};
+Window_Message.prototype.prepareAutoSizeEscapeCharacters = function (_0x587cc0) {
+  this._currentAutoSize = false;
+  let _0x2c65f1 = _0x587cc0.text;
+  _0x2c65f1 = _0x2c65f1.replace(/<(?:AUTO|AUTOSIZE|AUTO SIZE)>/gi, () => {
+    this.processAutoSize(_0x2c65f1, true, true);
+    this.processAutoPosition('none');
+    return '';
+  });
+  _0x2c65f1 = _0x2c65f1.replace(/<(?:AUTOWIDTH|AUTO WIDTH)>/gi, () => {
+    this.processAutoSize(_0x2c65f1, true, false);
+    this.processAutoPosition("none");
+    return '';
+  });
+  _0x2c65f1 = _0x2c65f1.replace(/<(?:AUTOHEIGHT|AUTO HEIGHT)>/gi, () => {
+    this.processAutoSize(_0x2c65f1, false, true);
+    this.processAutoPosition("none");
+    return '';
+  });
+  if (SceneManager.isSceneBattle()) {
+    _0x2c65f1 = _0x2c65f1.replace(/<(?:AUTOACTOR|AUTO ACTOR):[ ](.*?)>/gi, (_0x287741, _0x293ba0) => {
+      this.processAutoSize(_0x2c65f1, true, true);
+      this.processAutoPosition("battle actor", Number(_0x293ba0) || 0x1);
+      return '';
+    });
+    _0x2c65f1 = _0x2c65f1.replace(/<(?:AUTOPARTY|AUTO PARTY):[ ](.*?)>/gi, (_0xf0198e, _0x2c3c4d) => {
+      this.processAutoSize(_0x2c65f1, true, true);
+      this.processAutoPosition("battle party", Number(_0x2c3c4d) || 0x0);
+      return '';
+    });
+    _0x2c65f1 = _0x2c65f1.replace(/<(?:AUTOENEMY|AUTO ENEMY):[ ](.*?)>/gi, (_0x37b077, _0x30cd71) => {
+      this.processAutoSize(_0x2c65f1, true, true);
+      this.processAutoPosition("battle enemy", Number(_0x30cd71) || 0x0);
+      return '';
+    });
+  } else if (SceneManager.isSceneMap()) {
+    _0x2c65f1 = _0x2c65f1.replace(/<(?:AUTOPLAYER|AUTO PLAYER)>/gi, (_0x208132, _0xf3a5d9) => {
+      this.processAutoSize(_0x2c65f1, true, true);
+      this.processAutoPosition("map player", 0x0);
+      return '';
+    });
+    _0x2c65f1 = _0x2c65f1.replace(/<(?:AUTOACTOR|AUTO ACTOR):[ ](.*?)>/gi, (_0x2cc5b9, _0x38b1b7) => {
+      this.processAutoSize(_0x2c65f1, true, true);
+      this.processAutoPosition("map actor", Number(_0x38b1b7) || 0x1);
+      return '';
+    });
+    _0x2c65f1 = _0x2c65f1.replace(/<(?:AUTOPARTY|AUTO PARTY):[ ](.*?)>/gi, (_0x316cca, _0x41ee2d) => {
+      this.processAutoSize(_0x2c65f1, true, true);
+      this.processAutoPosition("map party", Number(_0x41ee2d) || 0x0);
+      return '';
+    });
+    _0x2c65f1 = _0x2c65f1.replace(/<(?:AUTOEVENT|AUTO EVENT):[ ](.*?)>/gi, (_0x16db42, _0x32cf2d) => {
+      this.processAutoSize(_0x2c65f1, true, true);
+      this.processAutoPosition("map event", Number(_0x32cf2d) || 0x0);
+      return '';
+    });
+  }
+  _0x587cc0.text = _0x2c65f1;
+};
+Window_Message._autoSizeRegexp = /<(?:AUTO|AUTOSIZE|AUTO SIZE|AUTOWIDTH|AUTO WIDTH|AUTOHEIGHT|AUTO HEIGHT|AUTOPLAYER|AUTO PLAYER)>/gi;
+Window_Message._autoPosRegExp = /<(?:AUTOPARTY|AUTO PARTY|AUTOPLAYER|AUTO PLAYER|AUTOEVENT|AUTO EVENT|AUTOENEMY|AUTO ENEMY|AUTOACTOR|AUTO ACTOR):[ ](.*?)>/gi;
+Window_Message.prototype.processAutoSize = function (_0x57fac6, _0x111775, _0xc2185) {
+  _0x57fac6 = _0x57fac6.replace(Window_Message._autoSizeRegexp, '');
+  _0x57fac6 = _0x57fac6.replace(Window_Message._autoPosRegExp, '');
+  this._autoSizeCheck = true;
+  this._currentAutoSize = true;
+  this.setWordWrap(false);
+  const _0xd92ee2 = this.textSizeExRaw(_0x57fac6);
+  if (_0x111775) {
+    let _0x2bf6bc = _0xd92ee2.width + $gameSystem.windowPadding() * 0x2 + 0x6;
+    const _0x2c4917 = $gameMessage.faceName() !== '';
+    const _0x54259c = ImageManager.faceWidth;
+    _0x2bf6bc += _0x2c4917 ? _0x54259c + 0x14 : 0x4;
+    if (_0x2bf6bc % 0x2 !== 0x0) {
+      _0x2bf6bc += 0x1;
+    }
+    $gameSystem.setMessageWindowWidth(_0x2bf6bc);
+  }
+  if (_0xc2185) {
+    let _0x128a8e = Math.ceil(_0xd92ee2.height / this.lineHeight());
+    $gameSystem.setMessageWindowRows(_0x128a8e);
+  }
+  this.updateAutoSizePosition();
+  this._refreshPauseSign();
+  this._autoSizeCheck = false;
+  this._messagePositionReset = true;
+};
+Window_Message.prototype.updateAutoSizePosition = function () {
+  this.updateDimensions();
+  this.updatePlacement();
+  this.resetPositionX();
+  this.updateTransform();
+  this.contents.clear();
+  this.createContents();
+};
+Window_Message.prototype.processAutoPosition = function (_0x369e23, _0x860759) {
+  switch (_0x369e23.toLowerCase().trim()) {
+    case "battle actor":
+      this._autoPositionTarget = $gameActors.actor(_0x860759);
+      break;
+    case "battle party":
+      this._autoPositionTarget = $gameParty.members()[_0x860759 - 0x1];
+      break;
+    case "battle enemy":
+      this._autoPositionTarget = $gameTroop.members()[_0x860759 - 0x1];
+      break;
+    case "map player":
+      this._autoPositionTarget = $gamePlayer;
+      break;
+    case "map actor":
+      const _0x497ad4 = $gameActors.actor(_0x860759).index();
+      if (_0x497ad4 === 0x0) {
+        this._autoPositionTarget = $gamePlayer;
+      } else {
+        this._autoPositionTarget = $gamePlayer.followers().follower(_0x497ad4 - 0x1);
+      }
+      break;
+    case "map party":
+      if (_0x860759 === 0x1) {
+        this._autoPositionTarget = $gamePlayer;
+      } else {
+        this._autoPositionTarget = $gamePlayer.followers().follower(_0x860759 - 0x2);
+      }
+      break;
+    case "map event":
+      this._autoPositionTarget = $gameMap.event(_0x860759);
+      break;
+  }
+  if (this._autoPositionTarget) {
+    this.updateAutoPosition();
+  }
+};
+VisuMZ.MessageCore.Window_Message_synchronizeNameBox = Window_Message.prototype.synchronizeNameBox;
+Window_Message.prototype.synchronizeNameBox = function () {
+  this.updateAutoPosition();
+  VisuMZ.MessageCore.Window_Message_synchronizeNameBox.call(this);
+};
+Window_Message.prototype.updateAutoPosition = function () {
+  if (!this._autoPositionTarget) {
+    return;
+  }
+  const _0x323a03 = SceneManager._scene;
+  if (!_0x323a03) {
+    return;
+  }
+  const _0x4a30e8 = _0x323a03._spriteset;
+  if (!_0x4a30e8) {
+    return;
+  }
+  const _0x2b8668 = _0x4a30e8.findTargetSprite(this._autoPositionTarget);
+  if (!_0x2b8668) {
+    return;
+  }
+  let _0x702949 = _0x2b8668.x;
+  if (SceneManager.isSceneMap()) {
+    _0x702949 *= $gameScreen.zoomScale();
+  } else {
+    if (SceneManager.isSceneBattle() && Imported.VisuMZ_3_ActSeqCamera) {
+      let _0x2fdaf2 = _0x2b8668.x - Graphics.boxWidth * _0x4a30e8.anchor.x;
+      _0x702949 += _0x2fdaf2 * (_0x4a30e8.scale.x - 0x1);
+    }
+  }
+  _0x702949 -= this.width / 0x2;
+  _0x702949 -= (Graphics.width - Graphics.boxWidth) / 0x2;
+  _0x702949 += this.autoPositionOffsetX();
+  let _0x118d3e = _0x2b8668.y;
+  if (SceneManager.isSceneMap()) {
+    _0x118d3e -= _0x2b8668.height + 0x8;
+    _0x118d3e *= $gameScreen.zoomScale();
+    _0x118d3e -= this.height * $gameScreen.zoomScale();
+  } else {
+    if (SceneManager.isSceneBattle() && Imported.VisuMZ_3_ActSeqCamera) {
+      let _0x4b5f1c = _0x2b8668.height * _0x4a30e8.scale.y;
+      _0x118d3e -= this.height * _0x4a30e8.scale.y + _0x4b5f1c + 0x8;
+      let _0x49a12f = _0x2b8668.y - Graphics.boxHeight * _0x4a30e8.anchor.y;
+      _0x118d3e += _0x49a12f * (_0x4a30e8.scale.y - 0x1);
+    } else {
+      _0x118d3e -= _0x2b8668.height + 0x8;
+      _0x118d3e -= this.height;
+    }
+  }
+  _0x118d3e -= (Graphics.height - Graphics.boxHeight) / 0x2;
+  _0x118d3e += this.autoPositionOffsetY();
+  const _0x558859 = $gameSystem.getMessageWindowXyOffsets();
+  _0x702949 += _0x558859.x;
+  _0x118d3e += _0x558859.y;
+  this.x = Math.round(_0x702949);
+  this.y = Math.round(_0x118d3e);
+  this.clampPlacementPosition(true, false);
+  this._forcedPosition = this._forcedPosition || {};
+  this._forcedPosition.x = this.x;
+  this._forcedPosition.y = this.y;
+  this._forcedPosition.width = this.width;
+  this._forcedPosition.height = this.height;
+  this._nameBoxWindow.updatePlacement();
+};
+Window_Message.prototype.autoPositionOffsetX = function () {
+  return 0x0;
+};
+Window_Message.prototype.autoPositionOffsetY = function () {
+  return 0x0;
+};
+Window_Message.prototype.messagePositionReset = function () {
+  this._messagePositionReset = false;
+  this._autoPositionTarget = undefined;
+  $gameSystem.initMessageCore();
+  this.updateAutoSizePosition();
+  this.openness = 0x0;
+};
+Window_Message.prototype.preConvertEscapeCharacters = function (_0x21fede) {
+  return Window_Base.prototype.preConvertEscapeCharacters.call(this, _0x21fede);
+};
+Window_Message.prototype.postConvertEscapeCharacters = function (_0x310f94) {
+  return Window_Base.prototype.postConvertEscapeCharacters.call(this, _0x310f94);
+};
+Window_Message.prototype.flushTextState = function (_0x50f3f1) {
+  this.preFlushTextState(_0x50f3f1);
+  Window_Base.prototype.flushTextState.call(this, _0x50f3f1);
+  this.postFlushTextState(_0x50f3f1);
+};
+Window_Message.prototype.preFlushTextState = function (_0x20727e) {};
+Window_Message.prototype.postFlushTextState = function (_0x11f78c) {};
+Window_NameBox.prototype.isAutoColorAffected = function () {
+  return false;
+};
+Window_NameBox.prototype.resetTextColor = function () {
+  Window_Base.prototype.resetTextColor.call(this);
+  this.changeTextColor(this.defaultColor());
+};
+Window_NameBox.prototype.defaultColor = function () {
+  const _0x1dfc45 = VisuMZ.MessageCore.Settings.General.NameBoxWindowDefaultColor;
+  return ColorManager.textColor(_0x1dfc45);
+};
+VisuMZ.MessageCore.Window_NameBox_updatePlacement = Window_NameBox.prototype.updatePlacement;
+Window_NameBox.prototype.updatePlacement = function () {
+  VisuMZ.MessageCore.Window_NameBox_updatePlacement.call(this);
+  this.updateRelativePosition();
+  this.updateOffsetPosition();
+  this.clampPlacementPosition();
+  this.updateOverlappingY();
+};
+Window_NameBox.prototype.preConvertEscapeCharacters = function (_0x46ce75) {
+  _0x46ce75 = _0x46ce75.replace(/<LEFT>/gi, this.setRelativePosition.bind(this, 0x0));
+  _0x46ce75 = _0x46ce75.replace(/<CENTER>/gi, this.setRelativePosition.bind(this, 0x5));
+  _0x46ce75 = _0x46ce75.replace(/<RIGHT>/gi, this.setRelativePosition.bind(this, 0xa));
+  _0x46ce75 = _0x46ce75.replace(/<POSITION:[ ](\d+)>/gi, (_0xbf83fd, _0x6d9a3b) => this.setRelativePosition(parseInt(_0x6d9a3b)));
+  _0x46ce75 = _0x46ce75.replace(/<\/LEFT>/gi, '');
+  _0x46ce75 = _0x46ce75.replace(/<\/CENTER>/gi, '');
+  _0x46ce75 = _0x46ce75.replace(/<\/RIGHT>/gi, '');
+  _0x46ce75 = _0x46ce75.trim();
+  return Window_Base.prototype.preConvertEscapeCharacters.call(this, _0x46ce75);
+};
+Window_NameBox.prototype.setRelativePosition = function (_0x2e744f) {
+  this._relativePosition = _0x2e744f;
+  return '';
+};
+Window_NameBox.prototype.updateRelativePosition = function () {
+  if ($gameMessage.isRTL()) {
+    return;
+  }
+  this._relativePosition = this._relativePosition || 0x0;
+  const _0x2d7763 = this._messageWindow;
+  const _0x128c9c = Math.floor(_0x2d7763.width * this._relativePosition / 0xa);
+  this.x = _0x2d7763.x + _0x128c9c - Math.floor(this.width / 0x2);
+  this.x = this.x.clamp(_0x2d7763.x, _0x2d7763.x + _0x2d7763.width - this.width);
+};
+Window_NameBox.prototype.updateOffsetPosition = function () {
+  if ($gameMessage.isRTL()) {
+    return;
+  }
+  this._relativePosition = this._relativePosition || 0x0;
+  const _0x5478d0 = VisuMZ.MessageCore.Settings.General.NameBoxWindowOffsetX;
+  const _0xfddc2c = VisuMZ.MessageCore.Settings.General.NameBoxWindowOffsetY;
+  const _0xf746b0 = (0x5 - this._relativePosition) / 0x5;
+  this.x += Math.floor(_0x5478d0 * _0xf746b0);
+  this.y += _0xfddc2c;
+};
+Window_NameBox.prototype.updateOverlappingY = function () {
+  const _0x210c0d = this._messageWindow;
+  const _0x206851 = _0x210c0d.y;
+  const _0xffee31 = VisuMZ.MessageCore.Settings.General.NameBoxWindowOffsetY;
+  if (_0x206851 > this.y && _0x206851 < this.y + this.height - _0xffee31) {
+    this.y = _0x210c0d.y + _0x210c0d.height;
+  }
+};
+VisuMZ.MessageCore.Window_NameBox_refresh = Window_NameBox.prototype.refresh;
+Window_NameBox.prototype.refresh = function () {
+  this._relativePosition = 0x0;
+  VisuMZ.MessageCore.Window_NameBox_refresh.call(this);
+};
+Window_ChoiceList.prototype.isWordWrapEnabled = function () {
+  return false;
+};
+Window_ChoiceList.prototype.isAutoColorAffected = function () {
+  return true;
+};
+Window_ChoiceList.prototype.itemHeight = function () {
+  return $gameSystem.getChoiceListLineHeight() + 0x8;
+};
+Window_ChoiceList.prototype.maxCols = function () {
+  return $gameSystem.getChoiceListMaxColumns();
+};
+Window_ChoiceList.prototype.start = function () {
+  this.refresh();
+  this.selectDefault();
+  this.open();
+  this.activate();
+  this.processFailsafeChoice();
+};
+Window_ChoiceList.prototype.callOkHandler = function () {
+  $gameMessage.onChoice(this.currentExt());
+  this._messageWindow.terminateMessage();
+  this.close();
+  if (this._helpWindow) {
+    this._helpWindow.clear();
+    this._helpWindow.hide();
+  }
+};
+VisuMZ.MessageCore.Window_ChoiceList_callCancelHandler = Window_ChoiceList.prototype.callCancelHandler;
+Window_ChoiceList.prototype.callCancelHandler = function () {
+  VisuMZ.MessageCore.Window_ChoiceList_callCancelHandler.call(this);
+  if (this._helpWindow) {
+    this._helpWindow.clear();
+    this._helpWindow.hide();
+  }
+};
+Window_ChoiceList.prototype.refresh = function () {
+  this.clearCommandList();
+  this.makeCommandList();
+  if (this._messageWindow) {
+    this.updatePlacement();
+    this.placeCancelButton();
+  }
+  this.createContents();
+  this.updateBackground();
+  this.refreshDimmerBitmap();
+  Window_Selectable.prototype.refresh.call(this);
+};
+Window_ChoiceList.prototype.makeCommandList = function () {
+  if ($gameMessage._scriptCall) {
+    this.makeCommandListScriptCall();
+  } else {
+    this.makeCommandListShuffle();
+  }
+  this.clearChoiceHelpDescriptions();
+  this.applyChoiceHelpDescriptions();
+};
+Window_ChoiceList.prototype.makeCommandListScriptCall = function () {
+  const _0x4840dc = $gameMessage.choices();
+  let _0xdcecb0 = 0x0;
+  for (let _0x5a6c77 of _0x4840dc) {
+    _0x5a6c77 = this.convertChoiceMacros(_0x5a6c77);
+    if (this.isChoiceVisible(_0x5a6c77)) {
+      const _0x1af587 = this.parseChoiceText(_0x5a6c77);
+      const _0x14d534 = this.isChoiceEnabled(_0x5a6c77);
+      this.addCommand(_0x1af587, "choice", _0x14d534, _0xdcecb0);
+    }
+    _0xdcecb0++;
+  }
+};
+Window_ChoiceList.prototype.makeCommandListShuffle = function () {
+  const _0x39b335 = $gameMessage.choices();
+  const _0x575a23 = $gameMessage.choiceIndexArray();
+  const _0x288252 = $gameMessage.maxShuffleChoices();
+  const _0x250658 = _0x39b335.length;
+  let _0x10c08e = 0x0;
+  for (let _0x15cfc8 = 0x0; _0x15cfc8 < _0x250658; _0x15cfc8++) {
+    if (this._list.length >= _0x288252) {
+      break;
+    }
+    const _0x1ed7ec = _0x575a23[_0x15cfc8];
+    let _0x2db3f2 = _0x39b335[_0x1ed7ec];
+    if (_0x2db3f2 === undefined) {
+      continue;
+    }
+    _0x2db3f2 = this.convertChoiceMacros(_0x2db3f2);
+    if (this.isChoiceVisible(_0x2db3f2)) {
+      const _0x49e9e0 = this.parseChoiceText(_0x2db3f2);
+      const _0x1a486c = this.isChoiceEnabled(_0x2db3f2);
+      this.addCommand(_0x49e9e0, "choice", _0x1a486c, _0x1ed7ec);
+    }
+    _0x10c08e++;
+  }
+};
+Window_ChoiceList.prototype.convertChoiceMacros = function (_0x39528f) {
+  return Window_Base.prototype.convertTextMacros.call(this, _0x39528f);
+};
+Window_ChoiceList.prototype.isChoiceVisible = function (_0x168692) {
+  if (Imported.VisuMZ_1_EventsMoveCore) {
+    $gameMessage.registerSelfEvent();
+  }
+  if (_0x168692.match(/<HIDE>/i)) {
+    return false;
+  }
+  if (_0x168692.match(/<SHOW>/i)) {
+    return true;
+  }
+  if (_0x168692.match(/<SHOW[ ](?:|ALL )(?:SW|SWITCH|SWITCHES):[ ](.*?)>/i)) {
+    const _0x587223 = RegExp.$1.split(',').map(_0x234cb5 => Number(_0x234cb5) || 0x0);
+    if (_0x587223.some(_0x1ab44b => !$gameSwitches.value(_0x1ab44b))) {
+      return false;
+    }
+  }
+  if (_0x168692.match(/<SHOW ANY[ ](?:SW|SWITCH|SWITCHES):[ ](.*?)>/i)) {
+    const _0x223091 = RegExp.$1.split(',').map(_0x3fcda3 => Number(_0x3fcda3) || 0x0);
+    if (_0x223091.every(_0x2a75cf => !$gameSwitches.value(_0x2a75cf))) {
+      return false;
+    }
+  }
+  if (_0x168692.match(/<HIDE[ ](?:|ALL )(?:SW|SWITCH|SWITCHES):[ ](.*?)>/i)) {
+    const _0x133a96 = RegExp.$1.split(',').map(_0x3ea49c => Number(_0x3ea49c) || 0x0);
+    if (_0x133a96.every(_0x52dd1a => $gameSwitches.value(_0x52dd1a))) {
+      return false;
+    }
+  }
+  if (_0x168692.match(/<HIDE ANY[ ](?:SW|SWITCH|SWITCHES):[ ](.*?)>/i)) {
+    const _0x2ac6e0 = RegExp.$1.split(',').map(_0x998920 => Number(_0x998920) || 0x0);
+    if (_0x2ac6e0.some(_0x3e2688 => $gameSwitches.value(_0x3e2688))) {
+      return false;
+    }
+  }
+  return true;
+};
+Window_ChoiceList.prototype.parseChoiceText = function (_0x2c2039) {
+  let _0xd0262c = _0x2c2039;
+  _0xd0262c = _0xd0262c.replace(/<(?:BR|LINEBREAK)>/gi, "\n");
+  _0xd0262c = _0xd0262c.replace(/<LINE\x1bWrapBreak[0]BREAK>/gi, "\n");
+  return _0xd0262c;
+};
+Window_ChoiceList.prototype.isChoiceEnabled = function (_0x27d196) {
+  if (Imported.VisuMZ_1_EventsMoveCore) {
+    $gameMessage.registerSelfEvent();
+  }
+  if (_0x27d196.match(/<DISABLE>/i)) {
+    return false;
+  }
+  if (_0x27d196.match(/<ENABLE>/i)) {
+    return true;
+  }
+  if (_0x27d196.match(/<ENABLE[ ](?:|ALL )(?:SWITCH|SWITCHES):[ ](.*?)>/i)) {
+    const _0x102910 = RegExp.$1.split(',').map(_0x2a26ab => Number(_0x2a26ab) || 0x0);
+    if (_0x102910.some(_0x4ace41 => !$gameSwitches.value(_0x4ace41))) {
+      return false;
+    }
+  }
+  if (_0x27d196.match(/<ENABLE ANY[ ](?:SWITCH|SWITCHES):[ ](.*?)>/i)) {
+    const _0x57e029 = RegExp.$1.split(',').map(_0x4a2363 => Number(_0x4a2363) || 0x0);
+    if (_0x57e029.every(_0x586448 => !$gameSwitches.value(_0x586448))) {
+      return false;
+    }
+  }
+  if (_0x27d196.match(/<DISABLE[ ](?:|ALL )(?:SWITCH|SWITCHES):[ ](.*?)>/i)) {
+    const _0x57b3f5 = RegExp.$1.split(',').map(_0x45c8bd => Number(_0x45c8bd) || 0x0);
+    if (_0x57b3f5.every(_0x378eb2 => $gameSwitches.value(_0x378eb2))) {
+      return false;
+    }
+  }
+  if (_0x27d196.match(/<DISABLE ANY[ ](?:SWITCH|SWITCHES):[ ](.*?)>/i)) {
+    const _0x357d66 = RegExp.$1.split(',').map(_0x3fa213 => Number(_0x3fa213) || 0x0);
+    if (_0x357d66.some(_0x539d7b => $gameSwitches.value(_0x539d7b))) {
+      return false;
+    }
+  }
+  return true;
+};
+Window_ChoiceList.prototype.clearChoiceHelpDescriptions = function () {
+  this._choiceHelpDescriptions = {};
+  if (this._helpWindow) {
+    this._helpWindow.clear();
+    this._helpWindow.hide();
+  }
+};
+Window_ChoiceList.prototype.applyChoiceHelpDescriptions = function () {
+  const _0x334b57 = /<(?:HELP|HELP DESCRIPTION|DESCRIPTION)>\s*([\s\S]*)\s*<\/(?:HELP|HELP DESCRIPTION|DESCRIPTION)>/i;
+  for (const _0xa3f215 of this._list) {
+    if (!_0xa3f215) {
+      continue;
+    }
+    const _0x3c1fd2 = this._list.indexOf(_0xa3f215);
+    if (_0xa3f215.name.match(_0x334b57)) {
+      const _0x2da558 = String(RegExp.$1);
+      this._choiceHelpDescriptions[_0x3c1fd2] = _0x2da558.trim();
+      _0xa3f215.name = _0xa3f215.name.replace(_0x334b57, '').trim();
+    } else {
+      this._choiceHelpDescriptions[_0x3c1fd2] = '';
+    }
+  }
+};
+Window_ChoiceList.prototype.processFailsafeChoice = function () {
+  if (this._list.some(_0x3c2eb3 => _0x3c2eb3.enabled)) {
+    return;
+  }
+  this.deactivate();
+  this.close();
+  $gameMessage._choices = [];
+  if (this._messageWindow.isOpen()) {
+    this._messageWindow.startPause();
+  }
+};
+VisuMZ.MessageCore.Window_ChoiceList_updatePlacement = Window_ChoiceList.prototype.updatePlacement;
+Window_ChoiceList.prototype.updatePlacement = function () {
+  VisuMZ.MessageCore.Window_ChoiceList_updatePlacement.call(this);
+  this.addChoiceDistance();
+  this.clampPlacementPosition();
+};
+Window_ChoiceList.prototype.placeCancelButton = function () {
+  if (!this._cancelButton) {
+    return;
+  }
+  const _0x5a13bb = this._cancelButton;
+  const _0x18331b = this.x + this.width;
+  const _0x60f319 = Math.floor((Graphics.width - Graphics.boxWidth) / 0x2);
+  if (_0x18331b >= Graphics.boxWidth + _0x60f319 - _0x5a13bb.width + 0x8) {
+    _0x5a13bb.x = -_0x5a13bb.width - 0x8;
+  } else {
+    _0x5a13bb.x = this.width + 0x8;
+  }
+  _0x5a13bb.y = this.height / 0x2 - _0x5a13bb.height / 0x2;
+};
+VisuMZ.MessageCore.Window_ChoiceList_windowX = Window_ChoiceList.prototype.windowX;
+Window_ChoiceList.prototype.windowX = function () {
+  return this._messageWindow ? this.messageCoreWindowX() : VisuMZ.MessageCore.Window_ChoiceList_windowX.call(this);
+};
+Window_ChoiceList.prototype.messageCoreWindowX = function () {
+  const _0x2691c1 = $gameMessage.choicePositionType();
+  if (_0x2691c1 === 0x1) {
+    return (Graphics.boxWidth - this.windowWidth()) / 0x2;
+  } else {
+    return _0x2691c1 === 0x2 ? this._messageWindow.x + this._messageWindow.width - this.windowWidth() : this._messageWindow.x;
+  }
+};
+Window_ChoiceList.prototype.windowWidth = function () {
+  const _0x23561f = (this.maxChoiceWidth() + this.colSpacing()) * this.maxCols() + this.padding * 0x2;
+  return Math.min(_0x23561f, Graphics.width);
+};
+Window_ChoiceList.prototype.numVisibleRows = function () {
+  const _0x341b49 = $gameMessage.choices().map(_0x430cc9 => this.convertChoiceMacros(_0x430cc9)).filter(_0x39effe => this.isChoiceVisible(_0x39effe));
+  let _0x35b790 = Math.ceil(_0x341b49.length / this.maxCols());
+  if (!$gameMessage._scriptCall) {
+    const _0x4f2c13 = $gameMessage.maxShuffleChoices();
+    _0x35b790 = Math.ceil(Math.min(_0x4f2c13, _0x341b49.length) / this.maxCols());
+  }
+  return Math.max(0x1, Math.min(_0x35b790, this.maxLines()));
+};
+Window_ChoiceList.prototype.maxLines = function () {
+  const _0x9c2be5 = this._messageWindow;
+  const _0x8c421a = _0x9c2be5 ? _0x9c2be5.y : 0x0;
+  const _0x537e67 = _0x9c2be5 ? _0x9c2be5.height : 0x0;
+  const _0x134347 = Graphics.boxHeight / 0x2;
+  return _0x8c421a < _0x134347 && _0x8c421a + _0x537e67 > _0x134347 ? 0x4 : $gameSystem.getChoiceListMaxRows();
+};
+Window_ChoiceList.prototype.maxChoiceWidth = function () {
+  let _0x486ae8 = this.getStartingChoiceWidth();
+  for (const _0x923ffa of this._list) {
+    const _0x21e61b = _0x923ffa.name;
+    const _0x3d5e74 = this.getChoiceIndent(_0x21e61b);
+    const _0x2e862b = this.textSizeEx(_0x21e61b).width + _0x3d5e74;
+    const _0x758c7e = Math.ceil(_0x2e862b) + this.itemPadding() * 0x2;
+    _0x486ae8 = Math.max(_0x486ae8, _0x758c7e);
+  }
+  return _0x486ae8;
+};
+Window_ChoiceList.prototype.getStartingChoiceWidth = function () {
+  let _0x553da1 = $gameSystem.getChoiceListMinChoiceWidth();
+  const _0x2b80d9 = $gameMessage.choices();
+  for (const _0x1eb4d5 of _0x2b80d9) {
+    if (_0x1eb4d5.match(/<CHOICE WIDTH:[ ](\d+)>/gi)) {
+      _0x553da1 = Math.max(_0x553da1, Number(RegExp.$1));
+    }
+  }
+  return Math.max(_0x553da1, 0x1);
+};
+Window_ChoiceList.prototype.addChoiceDistance = function () {
+  const _0x13cdb1 = $gameSystem.getChoiceMessageDistance() || 0x0;
+  const _0x3dd39d = this._messageWindow.y;
+  const _0x4cf8c2 = this._messageWindow.height;
+  const _0x5a310c = this._messageWindow._nameBoxWindow;
+  const _0x349913 = _0x5a310c.openness > 0x0 && _0x5a310c.width > 0x0;
+  const _0xe89b5c = _0x349913 ? _0x5a310c.height : 0x0;
+  if (_0x13cdb1 < 0x0 && (this._messageWindow.isClosed() || this._messageWindow.isClosing())) {
+    this.y = Math.round((Graphics.boxHeight - this.height) / 0x2);
+  } else {
+    if (_0x3dd39d >= Graphics.boxHeight / 0x2) {
+      if (_0x13cdb1 >= 0x0) {
+        this.y -= _0x13cdb1;
+      } else {
+        this.y = Math.floor((_0x3dd39d - this.height - _0xe89b5c) / 0x2);
+      }
+    } else {
+      if (_0x13cdb1 >= 0x0) {
+        this.y += _0x13cdb1;
+      } else {
+        const _0x32c1fd = Graphics.boxHeight - (_0x3dd39d + _0x4cf8c2 + _0xe89b5c);
+        this.y += Math.floor((_0x32c1fd - this.height) / 0x2) + _0xe89b5c;
+      }
+    }
+  }
+};
+Window_ChoiceList.prototype.drawItem = function (_0x8c3821) {
+  const _0x11cce0 = this.requestChoiceForegroundImage(_0x8c3821);
+  if (_0x11cce0) {
+    const _0x3084f4 = ImageManager.loadPicture(_0x11cce0);
+    const _0x3b10ae = this.choiceAlignText();
+    const _0x430005 = _0x3b10ae + this.commandName(_0x8c3821);
+    const _0xf9f1fa = this.itemRectWithPadding(_0x8c3821);
+    _0x3084f4.addLoadListener(this.drawChoiceLocationImage.bind(this, _0x8c3821, true, _0x430005, _0xf9f1fa, _0x3084f4));
+    return;
+  }
+  this.drawItemContents(_0x8c3821);
+};
+Window_ChoiceList.prototype.drawItemContents = function (_0xf93449) {
+  const _0x39698c = this.itemRectWithPadding(_0xf93449);
+  const _0x2c1a6d = this.choiceAlignText();
+  const _0x25348a = _0x2c1a6d + this.commandName(_0xf93449);
+  this.changePaintOpacity(this.isCommandEnabled(_0xf93449));
+  const _0x36b43a = this.textSizeEx(_0x25348a).height;
+  const _0x47831b = _0x39698c.x + this.getChoiceIndent(_0x25348a);
+  const _0x50d276 = Math.max(_0x39698c.y, _0x39698c.y + Math.round((_0x39698c.height - _0x36b43a) / 0x2));
+  this.drawTextEx(_0x25348a, _0x47831b, _0x50d276, _0x39698c.width);
+  this.changeChoiceBackgroundColor(_0xf93449);
+  this.requestChoiceBackgroundImage(_0xf93449, _0x25348a, _0x39698c);
+};
+Window_ChoiceList.prototype.choiceAlignText = function () {
+  return $gameSystem.getChoiceListTextAlign() !== "default" ? "<%1>".format($gameSystem.getChoiceListTextAlign()) : '';
+};
+Window_ChoiceList.prototype.getChoiceIndent = function (_0x3cd603) {
+  let _0x5c3eea = 0x0;
+  if (_0x3cd603.match(/<(?:CHOICE|CHOICE |)INDENT:[ ](\d+)>/gi)) {
+    _0x5c3eea = Number(RegExp.$1);
+  }
+  return _0x5c3eea;
+};
+Window_ChoiceList.prototype.changeChoiceBackgroundColor = function (_0x2b0587) {
+  if (!Imported.VisuMZ_0_CoreEngine) {
+    return;
+  }
+  const _0x38e3d1 = this.commandName(_0x2b0587);
+  let _0x4d93b0 = false;
+  let _0x2ef64a = false;
+  let _0x46a832 = ColorManager.itemBackColor1();
+  let _0x52d0b = ColorManager.itemBackColor2();
+  if (_0x38e3d1.match(/<(?:BGCOLOR|BG COLOR):[ ](.*?),(.*?)>/gi)) {
+    _0x46a832 = ColorManager.getColor(RegExp.$1).trim();
+    _0x52d0b = ColorManager.getColor(RegExp.$2).trim();
+    _0x4d93b0 = true;
+  } else {
+    if (_0x38e3d1.match(/<(?:BGCOLOR|BG COLOR):[ ](.*?)>/gi)) {
+      let _0x198d83 = String(RegExp.$1).toLowerCase().trim();
+      switch (_0x198d83) {
+        case 'red':
+          _0x46a832 = _0x52d0b = "#f26c4f";
+          _0x2ef64a = true;
+          break;
+        case "orange":
+          _0x46a832 = _0x52d0b = "#fbaf5d";
+          _0x2ef64a = true;
+          break;
+        case "yellow":
+          _0x46a832 = _0x52d0b = '#fff799';
+          _0x2ef64a = true;
+          break;
+        case "green":
+          _0x46a832 = _0x52d0b = "#7cc576";
+          _0x2ef64a = true;
+          break;
+        case "blue":
+          _0x46a832 = _0x52d0b = '#6dcff6';
+          _0x2ef64a = true;
+          break;
+        case 'purple':
+        case "violet":
+          _0x46a832 = _0x52d0b = "#a186be";
+          _0x2ef64a = true;
+          break;
+        case 'brown':
+          _0x46a832 = _0x52d0b = "#c69c6d";
+          _0x2ef64a = true;
+          break;
+        case "pink":
+          _0x46a832 = _0x52d0b = "#ffc8e0";
+          _0x2ef64a = true;
+          break;
+        case "white":
+          _0x46a832 = _0x52d0b = "#ffffff";
+          _0x2ef64a = true;
+          break;
+        case "gray":
+        case "grey":
+          _0x46a832 = _0x52d0b = "#acacac";
+          _0x2ef64a = true;
+          break;
+        case 'black':
+          _0x46a832 = _0x52d0b = "#707070";
+          _0x2ef64a = true;
+          break;
+        case "yes":
+          _0x46a832 = _0x52d0b = ColorManager.powerUpColor();
+          _0x2ef64a = true;
+          break;
+        case 'no':
+          _0x46a832 = _0x52d0b = ColorManager.powerDownColor();
+          _0x2ef64a = true;
+          break;
+        case "system":
+          _0x46a832 = _0x52d0b = ColorManager.systemColor();
+          _0x2ef64a = true;
+          break;
+        case "crisis":
+          _0x46a832 = _0x52d0b = ColorManager.crisisColor();
+          _0x2ef64a = true;
+          break;
+        default:
+          _0x46a832 = _0x52d0b = ColorManager.getColor(_0x198d83);
+          _0x2ef64a = true;
+          break;
+      }
+      _0x4d93b0 = true;
+    }
+  }
+  if (!_0x4d93b0) {
+    return;
+  }
+  const _0x50a79d = this.itemRect(_0x2b0587);
+  this.contentsBack.clearRect(_0x50a79d.x, _0x50a79d.y, _0x50a79d.width, _0x50a79d.height);
+  this.drawCustomBackgroundColor(_0x50a79d, _0x46a832, _0x52d0b, _0x2ef64a);
+};
+Window_ChoiceList.prototype.drawCustomBackgroundColor = function (_0x4b927e, _0xb0c147, _0x28540a, _0x1803c6) {
+  const _0x541386 = ColorManager.itemBackColor1();
+  const _0x251dd0 = _0xb0c147 ?? ColorManager.itemBackColor1();
+  const _0x6a4ce4 = _0x28540a ?? _0xb0c147;
+  const _0xada0b3 = _0x4b927e.x;
+  const _0x3736e4 = _0x4b927e.y;
+  const _0x3f82d5 = _0x4b927e.width;
+  const _0x1ef5f8 = _0x4b927e.height;
+  this.contentsBack.gradientFillRect(_0xada0b3, _0x3736e4, _0x3f82d5, _0x1ef5f8, _0x251dd0, _0x6a4ce4, true);
+  if (_0x1803c6) {
+    this.contentsBack.gradientFillRect(_0xada0b3, _0x3736e4, _0x3f82d5, _0x1ef5f8, _0x541386, _0x6a4ce4, true);
+  }
+  this.contentsBack.strokeRect(_0xada0b3, _0x3736e4, _0x3f82d5, _0x1ef5f8, _0x541386);
+};
+Window_ChoiceList.prototype.requestChoiceForegroundImage = function (_0x1564a0) {
+  const _0xcdb93d = this.choiceAlignText();
+  const _0x16115d = _0xcdb93d + this.commandName(_0x1564a0);
+  let _0x46fdef = '';
+  if (_0x16115d.match(/<FG(?:| )(?:IMG|IMAGE|PIC|PICTURE):[ ](.*?)>/i)) {
+    _0x46fdef = String(RegExp.$1).trim();
+  } else if (_0x16115d.match(/<FG(?:| )(?:IMG|IMAGE|PIC|PICTURE)[ ]*(.*?):[ ](.*?)>/i)) {
+    _0x46fdef = String(RegExp.$2).trim();
+  }
+  return _0x46fdef;
+};
+Window_ChoiceList.prototype.requestChoiceBackgroundImage = function (_0x3c5298, _0x64994, _0x15ef9c) {
+  let _0x14ea5c = '';
+  if (_0x64994.match(/<BG(?:| )(?:IMG|IMAGE|PIC|PICTURE):[ ](.*?)>/i)) {
+    _0x14ea5c = String(RegExp.$1).trim();
+  } else if (_0x64994.match(/<BG(?:| )(?:IMG|IMAGE|PIC|PICTURE)[ ]*(.*?):[ ](.*?)>/i)) {
+    _0x14ea5c = String(RegExp.$2).trim();
+  }
+  if (_0x14ea5c) {
+    const _0x20efa1 = ImageManager.loadPicture(_0x14ea5c);
+    _0x20efa1.addLoadListener(this.drawChoiceLocationImage.bind(this, _0x3c5298, false, _0x64994, _0x15ef9c, _0x20efa1));
+  }
+};
+Window_ChoiceList.prototype.drawChoiceLocationImage = function (_0x1c9976, _0xa3b92e, _0x4ede69, _0x361204, _0x228b5c) {
+  const _0x1e2d51 = this.choiceAlignText();
+  const _0x613691 = _0x1e2d51 + this.commandName(_0x1c9976);
+  if (_0x4ede69 !== _0x613691) {
+    return;
+  }
+  const _0x52dfb6 = this.itemRectWithPadding(_0x1c9976);
+  if (['x', 'y', "width", "height"].some(_0x17812a => _0x52dfb6[_0x17812a] !== _0x361204[_0x17812a])) {
+    return;
+  }
+  let _0x1cbc7e = 0x0;
+  let _0x249fb0 = '';
+  if (_0xa3b92e && _0x613691.match(/<BG(?:| )(?:IMG|IMAGE|PIC|PICTURE):[ ](.*?)>/i)) {} else {
+    if (_0xa3b92e && _0x613691.match(/<FG(?:| )(?:IMG|IMAGE|PIC|PICTURE)[ ]*(.*?):[ ](.*?)>/i)) {
+      _0x249fb0 = String(RegExp.$1).toLowerCase().trim();
+    } else if (!_0xa3b92e && _0x613691.match(/<BG(?:| )(?:IMG|IMAGE|PIC|PICTURE)[ ]*(.*?):[ ](.*?)>/i)) {
+      _0x249fb0 = String(RegExp.$1).toLowerCase().trim();
+    }
+  }
+  switch (_0x249fb0) {
+    case "lowerleft":
+    case "lower-left":
+    case "lower left":
+    case "downleft":
+    case 'down-left':
+    case "down left":
+    case '1':
+      _0x1cbc7e = 0x1;
+      break;
+    case 'lowercenter':
+    case "lower-center":
+    case "lower center":
+    case "downcenter":
+    case "down-center":
+    case "down center":
+    case 'down':
+    case '2':
+      _0x1cbc7e = 0x2;
+      break;
+    case 'lowerright':
+    case "lower-right":
+    case "lower right":
+    case 'downright':
+    case "down-right":
+    case "down right":
+    case '3':
+      _0x1cbc7e = 0x3;
+      break;
+    case "midleft":
+    case 'middleleft':
+    case "left":
+    case '4':
+      _0x1cbc7e = 0x4;
+      break;
+    case 'midcenter':
+    case 'middlecenter':
+    case "center":
+    case 'centered':
+    case '5':
+      _0x1cbc7e = 0x5;
+      break;
+    case "midright":
+    case "middleright":
+    case "right":
+    case '6':
+      _0x1cbc7e = 0x6;
+      break;
+    case "upperleft":
+    case "upper-left":
+    case "upper left":
+    case "upleft":
+    case 'up-left':
+    case "up left":
+    case '7':
+      _0x1cbc7e = 0x7;
+      break;
+    case "uppercenter":
+    case 'upper-center':
+    case "upper center":
+    case "upcenter":
+    case "up-center":
+    case "up center":
+    case 'up':
+    case '8':
+      _0x1cbc7e = 0x8;
+      break;
+    case "upperright":
+    case "upper-right":
+    case "upper right":
+    case "upright":
+    case 'up-right':
+    case "up right":
+    case '9':
+      _0x1cbc7e = 0x9;
+      break;
+  }
+  const _0x1b5695 = _0xa3b92e ? this.contents : this.contentsBack;
+  const _0x439c17 = this.itemRect(_0x1c9976);
+  if (!_0xa3b92e) {
+    _0x1b5695.clearRect(_0x439c17.x - 0x1, _0x439c17.y - 0x1, _0x439c17.width + 0x2, _0x439c17.height + 0x2);
+  }
+  const _0x26a5b6 = _0x439c17.x + 0x2;
+  const _0x3fca2c = _0x439c17.y + 0x2;
+  const _0x260a3f = _0x439c17.width - 0x4;
+  const _0xfaf7d4 = _0x439c17.height - 0x4;
+  const _0x3cc944 = _0x228b5c.width;
+  const _0x3386b2 = _0x228b5c.height;
+  let _0x290612 = _0x26a5b6;
+  let _0x1d3746 = _0x3fca2c;
+  let _0xd6fdf8 = _0x260a3f;
+  let _0x192cc8 = _0xfaf7d4;
+  const _0x65fb4a = _0x260a3f / _0x3cc944;
+  const _0x56c4e1 = _0xfaf7d4 / _0x3386b2;
+  let _0x42f982 = Math.min(_0x65fb4a, _0x56c4e1);
+  if (_0xa3b92e) {
+    _0x42f982 = Math.min(_0x42f982, 0x1);
+  }
+  if (_0x1cbc7e !== 0x0) {
+    _0xd6fdf8 = Math.round(_0x3cc944 * _0x42f982);
+    _0x192cc8 = Math.round(_0x3386b2 * _0x42f982);
+  }
+  switch (_0x1cbc7e) {
+    case 0x1:
+    case 0x4:
+    case 0x7:
+      _0x290612 = _0x26a5b6;
+      break;
+    case 0x2:
+    case 0x5:
+    case 0x8:
+      _0x290612 += Math.round((_0x260a3f - _0xd6fdf8) / 0x2);
+      break;
+    case 0x3:
+    case 0x6:
+    case 0x9:
+      _0x290612 += _0x260a3f - _0xd6fdf8;
+      break;
+  }
+  switch (_0x1cbc7e) {
+    case 0x7:
+    case 0x8:
+    case 0x9:
+      _0x1d3746 = _0x3fca2c;
+      break;
+    case 0x4:
+    case 0x5:
+    case 0x6:
+      _0x1d3746 += Math.round((_0xfaf7d4 - _0x192cc8) / 0x2);
+      break;
+    case 0x1:
+    case 0x2:
+    case 0x3:
+      _0x1d3746 += _0xfaf7d4 - _0x192cc8;
+      break;
+  }
+  _0x1b5695.blt(_0x228b5c, 0x0, 0x0, _0x3cc944, _0x3386b2, _0x290612, _0x1d3746, _0xd6fdf8, _0x192cc8);
+  if (_0xa3b92e) {
+    this.drawItemContents(_0x1c9976);
+  }
+};
+Window_ChoiceList.prototype.updateHelp = function () {
+  this._helpWindow.clear();
+  if (!this._choiceHelpDescriptions) {
+    return;
+  }
+  const _0x59e009 = this.index();
+  if (this._choiceHelpDescriptions[_0x59e009]) {
+    this._helpWindow.setText(this._choiceHelpDescriptions[_0x59e009]);
+    this._helpWindow.show();
+  } else {
+    this._helpWindow.clear();
+    this._helpWindow.hide();
+  }
+};
+Window_EventItem.prototype.makeItemList = function () {
+  const _0x39d23c = $gameMessage.itemChoiceItypeId();
+  if (_0x39d23c === "skill" && Imported.VisuMZ_1_SkillsStatesCore) {
+    this.makeSkillList();
+  } else {
+    Window_ItemList.prototype.makeItemList.call(this);
+  }
+};
+Window_EventItem.prototype.makeSkillList = function () {
+  const _0x373703 = $gameMessage.itemChoiceActor();
+  this._data = _0x373703 ? _0x373703.skills().filter(_0x53d43f => this.includes(_0x53d43f)) : [];
+  if (this.includes(null)) {
+    this._data.push(null);
+  }
+};
+VisuMZ.MessageCore.Window_EventItem_includes = Window_EventItem.prototype.includes;
+Window_EventItem.prototype.includes = function (_0x369149) {
+  const _0x2bf841 = $gameMessage.itemChoiceItypeId();
+  if (_0x2bf841 === "weapon") {
+    if (!DataManager.isWeapon(_0x369149)) {
+      return false;
+    }
+    const _0xf052d9 = $gameMessage.itemChoiceWtypeId();
+    if (_0xf052d9 > 0x0) {
+      if (_0x369149.wtypeId !== _0xf052d9) {
+        return false;
+      }
+    }
+    return true;
+  } else {
+    if (_0x2bf841 === "armor") {
+      if (!DataManager.isArmor(_0x369149)) {
+        return false;
+      }
+      const _0x5bdc71 = $gameMessage.itemChoiceAtypeId();
+      if (_0x5bdc71 > 0x0) {
+        if (_0x369149.atypeId !== _0x5bdc71) {
+          return false;
+        }
+      }
+      const _0x2386de = $gameMessage.itemChoiceEtypeId();
+      if (_0x2386de > 0x0) {
+        if (_0x369149.etypeId !== _0x2386de) {
+          return false;
+        }
+      }
+      return true;
+    } else {
+      if (_0x2bf841 === 'skill') {
+        if (!DataManager.isSkill(_0x369149)) {
+          return false;
+        }
+        const _0x42e93c = $gameMessage.itemChoiceActor();
+        if (_0x42e93c.isSkillHidden(_0x369149)) {
+          return false;
+        }
+        if (!_0x42e93c.isSkillTypeMatchForUse(_0x369149)) {
+          return false;
+        }
+        const _0x2c5d9f = $gameMessage.itemChoiceStypeId();
+        if (_0x2c5d9f > 0x0) {
+          const _0x2ee841 = DataManager.getSkillTypes(_0x369149);
+          if (!_0x2ee841.includes(_0x2c5d9f)) {
+            return false;
+          }
+        }
+        return true;
+      } else {
+        return VisuMZ.MessageCore.Window_EventItem_includes.call(this, _0x369149);
+      }
+    }
+  }
+};
+VisuMZ.MessageCore.Window_ItemList_drawItemNumber = Window_ItemList.prototype.drawItemNumber;
+Window_ItemList.prototype.drawItemNumber = function (_0x2de45d, _0xd24416, _0x221bab, _0x45e12d) {
+  const _0x19e5e2 = $gameMessage.itemChoiceItypeId();
+  if (_0x19e5e2 === "skill") {
+    const _0x45d858 = $gameMessage.itemChoiceActor();
+    this.drawSkillCost(_0x45d858, _0x2de45d, _0xd24416, _0x221bab, _0x45e12d);
+  } else {
+    VisuMZ.MessageCore.Window_ItemList_drawItemNumber.call(this, _0x2de45d, _0xd24416, _0x221bab, _0x45e12d);
+  }
+};
+Window_MapName.prototype.refreshWithTextCodeSupport = function () {
+  this.contents.clear();
+  let _0x971d2d = $gameMap.displayName();
+  if (_0x971d2d) {
+    const _0x5e477b = this.innerWidth;
+    this.drawBackground(0x0, 0x0, _0x5e477b, this.lineHeight());
+    _0x971d2d = this.realignMapName(_0x971d2d);
+    const _0x397d8a = this.textSizeEx(_0x971d2d).width;
+    this.drawTextEx(_0x971d2d, Math.floor((_0x5e477b - _0x397d8a) / 0x2), 0x0);
+  }
+};
+Window_MapName.prototype.realignMapName = function (_0x3f52e0) {
+  if (_0x3f52e0.match(/<LEFT>/gi)) {
+    this.x = 0x0;
+  } else {
+    if (_0x3f52e0.match(/<CENTER>/gi)) {
+      this.x = Math.floor((Graphics.boxWidth - this.width) / 0x2);
+    } else if (_0x3f52e0.match(/<RIGHT>/gi)) {
+      this.x = Graphics.boxWidth - this.width;
+    }
+  }
+  _0x3f52e0 = _0x3f52e0.replace(/<(?:LEFT|CENTER|RIGHT)>/gi, '');
+  _0x3f52e0 = _0x3f52e0.replace(/<\/(?:LEFT|CENTER|RIGHT)>/gi, '');
+  if (_0x3f52e0.match(/<TOP>/gi)) {
+    this.y = 0x0;
+  } else {
+    if (_0x3f52e0.match(/<MIDDLE>/gi)) {
+      this.y = Math.floor((Graphics.boxHeight - this.height) / 0x2);
+    } else if (_0x3f52e0.match(/<BOTTOM>/gi)) {
+      this.y = Graphics.boxHeight - this.height;
+    }
+  }
+  _0x3f52e0 = _0x3f52e0.replace(/<(?:TOP|MIDDLE|BOTTOM)>/gi, '');
+  _0x3f52e0 = _0x3f52e0.replace(/<\/(?:TOP|MIDDLE|BOTTOM)>/gi, '');
+  if (_0x3f52e0.match(/<X:[ ]([\+\-]\d+)>/gi)) {
+    this.x += Number(RegExp.$1);
+    _0x3f52e0 = _0x3f52e0.replace(/<X:[ ]([\+\-]\d+)>/gi, '');
+  }
+  if (_0x3f52e0.match(/<Y:[ ]([\+\-]\d+)>/gi)) {
+    this.y += Number(RegExp.$1);
+    _0x3f52e0 = _0x3f52e0.replace(/<Y:[ ]([\+\-]\d+)>/gi, '');
+  }
+  return _0x3f52e0;
+};
