@@ -29,7 +29,7 @@ Access the deployed version here: [http://joshuapp5.github.io/Deploy-Test/](http
 *(Note: May experience lag in some browsers)*
 
 ### 2. Windows Executable (Best Experience)
-1. Download the game files from the [OneDrive Link](https://joshuapp5.github.io/Deploy-Test/).
+1. Download the game files from the [OneDrive Link](https://binusianorg-my.sharepoint.com/personal/joshua_pratama_binus_ac_id/Documents/%5B4%5D%20Semester%204/MulMed/Deploy/Labyrinth%20of%20Baator.zip?csf=1&web=1&e=9wgzyg).
 2. Extract the ZIP folder.
 3. Run `Game.exe`.
 
